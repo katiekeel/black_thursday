@@ -1,11 +1,11 @@
 require 'csv'
 require './lib/merchant'
-require './lib/sales_engine'
 
 class MerchantRepository
   attr_reader :merchants
 
-  def initialize(csv_file)
+  def initialize(csv_file, sales_engine)
+    @sales_engine = sales_engine
     @merchants = {}
     populate_merchant_repo(csv_file)
   end
@@ -13,7 +13,7 @@ class MerchantRepository
   def populate_merchant_repo(csv_file)
     merchant_list = CSV.open csv_file, headers: true, header_converters: :symbol
     merchant_list.each do |row|
-      individual = Merchant.new({:id => row[:id], :name => row[:name]})
+      individual = Merchant.new({:id => row[:id], :name => row[:name]}, self)
       @merchants[individual.id] = individual
     end
   end
@@ -57,5 +57,8 @@ class MerchantRepository
     return_matches
   end
 
+  def items(merchant_id)
+    @sales_engine.se_items(merchant_id)
+  end
 
 end

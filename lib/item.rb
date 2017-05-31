@@ -4,7 +4,8 @@ require 'bigdecimal/util'
 class Item
   attr_reader :id, :name, :description, :unit_price, :merchant_id, :created_at, :updated_at
 
-  def initialize(item_hash)
+  def initialize(item_hash, item_repo)
+    @item_repository = item_repo
     @id = item_hash[:id].to_i
     @name = item_hash[:name]
     @description = item_hash[:description]

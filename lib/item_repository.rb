@@ -6,7 +6,8 @@ class ItemRepository
 
   attr_reader :items
 
-  def initialize(csv_file)
+  def initialize(csv_file, sales_engine)
+    @sales_engine = sales_engine
     @items = {}
     populate_items_repo(csv_file)
   end
@@ -14,7 +15,7 @@ class ItemRepository
   def populate_items_repo(csv_file)
     items_list = CSV.open csv_file, headers: true, header_converters: :symbol
     items_list.each do |row|
-      item = Item.new({ :id => row[:id], :name => row[:name], :description => row[:description], :unit_price => row[:unit_price], :merchant_id => row[:merchant_id], :created_at => row[:created_at], :updated_at => row[:updated_at]})
+      item = Item.new({ :id => row[:id], :name => row[:name], :description => row[:description], :unit_price => row[:unit_price], :merchant_id => row[:merchant_id], :created_at => row[:created_at], :updated_at => row[:updated_at]}, self)
       @items[item.id] = item
     end
   end
@@ -76,5 +77,6 @@ class ItemRepository
     end
     merchants_array
   end
+
 
 end

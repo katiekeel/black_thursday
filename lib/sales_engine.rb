@@ -6,8 +6,8 @@ class SalesEngine
   attr_reader :merchants, :items
 
   def initialize(item_merchant_hash)
-    @items = ItemRepository.new(item_merchant_hash[:items])
-    @merchants = MerchantRepository.new(item_merchant_hash[:merchants])
+    @items = ItemRepository.new(item_merchant_hash[:items], self)
+    @merchants = MerchantRepository.new(item_merchant_hash[:merchants], self)
   end
 
 
@@ -15,15 +15,17 @@ class SalesEngine
     se = SalesEngine.new(item_merchant_hash)
   end
 
+  def se_items(merchant_id)
+    @items.find_all_by_merchant_id(merchant_id)
+  end
+
+
 end
 
 se = SalesEngine.from_csv({
   :items     => "./data/items.csv",
   :merchants => "./data/merchants.csv",
 })
+
 merchant = se.merchants.find_by_id(12334112)
-merchant.items
-# => [<item>, <item>, <item>]
-item = se.items.find_by_id(263395237)
-item.merchant
-# => <merchant>
+puts merchant.items
