@@ -6,6 +6,7 @@ class MerchantRepository
   attr_reader :merchants
 
   def initialize(csv_file)
+    @csv_file = csv_file
     @merchants = {}
     populate_merchant_repo(csv_file)
   end
@@ -56,6 +57,5 @@ class MerchantRepository
     end
     return_matches
   end
-
 
 end

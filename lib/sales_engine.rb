@@ -10,7 +10,6 @@ class SalesEngine
     @merchants = MerchantRepository.new(item_merchant_hash[:merchants])
   end
 
-
   def self.from_csv(item_merchant_hash)
     se = SalesEngine.new(item_merchant_hash)
   end
@@ -22,8 +21,8 @@ se = SalesEngine.from_csv({
   :merchants => "./data/merchants.csv",
 })
 merchant = se.merchants.find_by_id(12334112)
-merchant.items
-# => [<item>, <item>, <item>]
-item = se.items.find_by_id(263395237)
-item.merchant
+# merchant.items
+# # => [<item>, <item>, <item>]
+# item = se.items.find_by_id(263395237)
+# item.merchant
 # => <merchant>
