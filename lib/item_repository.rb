@@ -71,11 +71,11 @@ class ItemRepository
   end
 
   def find_all_by_merchant_id(merchant_id)
-    merchants_array = []
+    items_by_merchant_array = []
     @items.each_value do |value|
-      merchants_array << value if value.merchant_id == merchant_id
+      items_by_merchant_array << value if value.merchant_id == merchant_id
     end
-    merchants_array
+    items_by_merchant_array
   end
 
 

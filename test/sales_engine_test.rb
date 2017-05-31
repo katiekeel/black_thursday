@@ -57,7 +57,5 @@ class SalesEngineTest < Minitest::Test
     assert_equal items.find_all_by_merchant_id("kwjalkdwja"), []
   end
 
-  def test_sales_engine_can_call_blah
-  end
 
 end
