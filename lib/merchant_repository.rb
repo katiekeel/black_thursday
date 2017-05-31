@@ -2,7 +2,7 @@ require 'csv'
 require './lib/merchant'
 
 class MerchantRepository
-  attr_reader :merchants
+  attr_reader :merchants, :sales_engine
 
   def initialize(csv_file, sales_engine)
     @sales_engine = sales_engine
@@ -57,8 +57,8 @@ class MerchantRepository
     return_matches
   end
 
-  def items(merchant_id)
-    @sales_engine.se_items(merchant_id)
+  def merchant_repo_items(merchant_id)
+    @sales_engine.sales_engine_items(merchant_id)
   end
 
 end

@@ -1,6 +1,6 @@
 class Merchant
 
-  attr_reader :id, :name
+  attr_reader :id, :name, :merchant_repo
 
   def initialize(id_name_hash, merchant_repo)
     @merchant_repo = merchant_repo
@@ -9,7 +9,7 @@ class Merchant
   end
 
   def items
-    @merchant_repo.items(id)
+    @merchant_repo.merchant_repo_items(id)
   end
 
 end

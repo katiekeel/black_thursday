@@ -33,6 +33,7 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_item_find_by_id
+    skip
     csv_file = "./data/items.csv"
     item_repo = ItemRepository.new(csv_file, sales_engine = nil)
     assert_instance_of Item, item_repo.find_by_id(263395237)
@@ -96,6 +97,12 @@ class ItemRepositoryTest < Minitest::Test
     csv_file = "./data/items.csv"
     item_repo = ItemRepository.new(csv_file, sales_engine = nil)
     assert_equal item_repo.find_all_by_merchant_id("kwjalkdwja"), []
+  end
+
+  def test_find_all_by_merchant_id_with_12334112
+    csv_file = "./data/items.csv"
+    item_repo = ItemRepository.new(csv_file, sales_engine = nil)
+    assert_equal item_repo.find_all_by_merchant_id("12334112").length, 1
   end
 
 end
