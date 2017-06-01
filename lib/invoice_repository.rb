@@ -1,9 +1,12 @@
 require 'csv'
-require './lib/invoice'
+require_relative 'invoice'
 
 class InvoiceRepository
 
-  def initialize(csv_file)
+  attr_reader :invoices
+
+  def initialize(csv_file, sales_engine)
+    @sales_engine = sales_engine
     @invoices = []
     populate_invoices_repo(csv_file)
   end
@@ -11,7 +14,7 @@ class InvoiceRepository
   def populate_invoices_repo(csv_file)
     invoices_list = CSV.open csv_file, headers: true, header_converters: :symbol
     invoices_list.each do |row|
-      invoice = Invoice.new(row)
+      invoice = Invoice.new({:id => row[:id], :customer_id => row[:customer_id], :merchant_id => row[:merchant_id], :status => row[:status], :created_at => row[:created_at], :updated_at => row[:updated_at]}, self)
       @invoices << invoice
     end
     invoices_list.close
@@ -49,5 +52,6 @@ class InvoiceRepository
     end
     return_value
   end
+
 
 end

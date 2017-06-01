@@ -1,5 +1,3 @@
-require './lib/merchant_repository'
-
 class Merchant
 
   attr_reader :id, :name, :merchant_repo
@@ -14,8 +12,8 @@ class Merchant
     @merchant_repo.merchant_repo_items(@id)
   end
 
-end
+  def invoices
+    @merchant_repo.merchant_repo_invoices(@id)
+  end
 
-#
-# merchant = Merchant.new({:id => 12344512, :name => "Daniel"}, {:merchant_repo => "a long list of things"})
-# require 'pry' ; binding.pry
+end
