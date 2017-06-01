@@ -23,17 +23,16 @@ class ItemRepositoryTest < Minitest::Test
   def test_item_repository_can_be_populated
     csv_file = "./data/items.csv"
     item_repo = ItemRepository.new(csv_file, sales_engine = nil)
-    assert_instance_of Item, item_repo.items[263395237]
+    assert_instance_of Item, item_repo.items[0]
   end
 
   def test_item_find_all
     csv_file = "./data/items.csv"
     item_repo = ItemRepository.new(csv_file, sales_engine = nil)
-    assert_equal item_repo.all, item_repo.items.values
+    assert_equal item_repo.all, item_repo.items
   end
 
   def test_item_find_by_id
-    skip
     csv_file = "./data/items.csv"
     item_repo = ItemRepository.new(csv_file, sales_engine = nil)
     assert_instance_of Item, item_repo.find_by_id(263395237)
@@ -61,6 +60,12 @@ class ItemRepositoryTest < Minitest::Test
     csv_file = "./data/items.csv"
     item_repo = ItemRepository.new(csv_file, sales_engine = nil)
     assert_equal item_repo.find_all_with_description("asjdhasuhkjdnas"), []
+  end
+
+  def test_all_returns_array
+    csv_file = "./data/items.csv"
+    item_repo = ItemRepository.new(csv_file, sales_engine = nil)
+    assert_instance_of Array, item_repo.all
   end
 
   def test_find_all_by_price
