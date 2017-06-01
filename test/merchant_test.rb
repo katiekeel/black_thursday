@@ -22,10 +22,4 @@ class MerchantTest < Minitest::Test
     assert_equal "daniel", merchant.name
   end
 
-  def test_merchant_items
-    skip
-    merchant = Merchant.new({:id => 103383, :name => "Daniel"}, merchant_repo = nil)
-    assert_equal merchant.items, nil
-  end
-
 end

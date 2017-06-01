@@ -1,244 +1,24 @@
 {
   "Unit Tests": {
     "coverage": {
-<<<<<<< HEAD
-=======
-      "/Users/katieshermer/Desktop/Turing/1mod/black_thursday/lib/sales_engine.rb": [
-        1,
-        1,
-        null,
-        1,
-        null,
-        1,
-        null,
-        1,
-        7,
-        7,
-        null,
-        null,
-        null,
-        1,
-        7,
-        null,
-        null,
-        null,
-        null,
-        1,
-        null,
-        null,
-        null
-      ],
->>>>>>> array_setup
-      "/Users/katieshermer/Desktop/Turing/1mod/black_thursday/lib/merchant_repository.rb": [
-        1,
-        1,
-        null,
-        1,
-        1,
-        null,
-        1,
-<<<<<<< HEAD
-        10,
-        10,
-        10,
-        null,
-        null,
-        1,
-        10,
-        10,
-        4750,
-        4750,
-=======
-        7,
-        7,
-        null,
-        null,
-        1,
-        7,
-        7,
-        3325,
-        3325,
->>>>>>> array_setup
-        null,
-        7,
-        null,
-        null,
-        1,
-        476,
-        null,
-        null,
-        1,
-<<<<<<< HEAD
-        1,
-        1,
-=======
-        0,
-        0,
-        null,
-        0,
-        0,
-        0,
-        null,
-        null,
-        1,
-        0,
-        0,
-        null,
-        0,
-        0,
-        0,
-        null,
-        null,
-        1,
-        0,
-        0,
-        null,
-        0,
-        0,
-        null,
-        null,
-        null,
-        null
-      ],
-      "/Users/katieshermer/Desktop/Turing/1mod/black_thursday/lib/merchant.rb": [
->>>>>>> array_setup
-        1,
-        1,
-        null,
-<<<<<<< HEAD
-        0,
-=======
-        1,
-        3325,
-        3325,
->>>>>>> array_setup
-        null,
-        null,
-        null,
-        null,
-        null,
-        1,
-<<<<<<< HEAD
-        1,
-=======
-        7,
-        7,
-        null,
-        null,
-        1,
-        7,
-        7,
-        9569,
-        9569,
-        null,
-        7,
-        null,
-        null,
->>>>>>> array_setup
-        1,
-        475,
-        0,
-        null,
-        475,
-        null,
-        null,
-        null,
-        null,
-        null,
-        1,
-        1,
-        1,
-        1367,
-        1,
-        1,
-<<<<<<< HEAD
-        475,
-        40,
-=======
-        null,
-        null,
-        1,
->>>>>>> array_setup
-        null,
-        null,
-        1,
-        null,
-<<<<<<< HEAD
-=======
-        0,
-        0,
->>>>>>> array_setup
-        null,
-        1,
-<<<<<<< HEAD
-=======
-        1367,
-        null,
-        1,
-        1,
-        null,
-        null,
-        1,
-        0,
-        0,
-        0,
-        null,
->>>>>>> array_setup
-        0,
-        0,
-        null,
-        null,
-        1,
-<<<<<<< HEAD
-        0,
-=======
-        2,
-        2734,
-        null,
-        2,
-        2,
->>>>>>> array_setup
-        null,
-        null,
-        null
-      ],
       "/Users/katieshermer/Desktop/Turing/1mod/black_thursday/lib/merchant.rb": [
         1,
         null,
         1,
-<<<<<<< HEAD
-=======
-        9569,
-        9569,
-        9569,
-        9569,
-        9569,
-        9569,
-        9569,
-        null,
->>>>>>> array_setup
         null,
         1,
-        4750,
-        4750,
-        4750,
+        4,
+        4,
+        4,
         null,
         null,
         1,
-<<<<<<< HEAD
-        0,
-=======
-        9569,
->>>>>>> array_setup
+        1,
         null,
         null,
         null
       ]
     },
-<<<<<<< HEAD
-    "timestamp": 1496273295
-=======
-    "timestamp": 1496332608
->>>>>>> array_setup
+    "timestamp": 1496336058
   }
 }
