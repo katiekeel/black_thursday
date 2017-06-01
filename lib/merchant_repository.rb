@@ -1,5 +1,6 @@
 require 'csv'
 require_relative 'merchant'
+require_relative 'csv_opener'
 
 class MerchantRepository
   attr_reader :merchants, :sales_engine
@@ -15,6 +16,7 @@ class MerchantRepository
   end
 
   def populate_merchant_repo(csv_file)
+    # merchant_list = CSVOpener.new(csv_file)
     merchant_list = CSV.open csv_file, headers: true, header_converters: :symbol
     merchant_list.each do |row|
       individual = Merchant.new({:id => row[:id], :name => row[:name]}, self)

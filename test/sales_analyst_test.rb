@@ -87,7 +87,8 @@ class SalesAnalystTest < Minitest::Test
   def test_it_gives_average_price_for_one_merchant
     se = SalesEngine.from_csv({
       :items     => "./data/items.csv",
-      :merchants => "./data/merchants.csv"})
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/items.csv"})
     sa = SalesAnalyst.new(se)
     result = sa.average_item_price_per_merchant(12334165)
     assert_equal 100, result
@@ -102,4 +103,6 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of Array, result
     assert_instance_of String, result[0]
   end
+
+
 end
