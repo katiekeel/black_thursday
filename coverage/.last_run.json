@@ -1,5 +1,9 @@
 {
   "result": {
+<<<<<<< HEAD
     "covered_percent": 89.13
+=======
+    "covered_percent": 77.59
+>>>>>>> array_setup
   }
 }
