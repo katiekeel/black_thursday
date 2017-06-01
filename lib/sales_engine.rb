@@ -3,11 +3,12 @@ require 'item_repository'
 
 class SalesEngine
 
-  attr_reader :merchants, :items
+  attr_reader :merchants, :items, :invoices
 
   def initialize(item_merchant_hash)
     @items = ItemRepository.new(item_merchant_hash[:items], self)
     @merchants = MerchantRepository.new(item_merchant_hash[:merchants], self)
+    @invoices = Invoice.new(item_merchant_hash[:invoices], self)
   end
 
   def self.from_csv(item_merchant_hash)

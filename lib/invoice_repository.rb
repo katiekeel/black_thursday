@@ -3,6 +3,8 @@ require './lib/invoice'
 
 class InvoiceRepository
 
+  attr_reader :invoices                   
+
   def initialize(csv_file)
     @invoices = []
     populate_invoices_repo(csv_file)

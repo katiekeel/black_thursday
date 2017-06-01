@@ -10,6 +10,7 @@ class InvoiceRepositoryTest < Minitest::Test
 
   def test_invoice_repository_exists
     invoices = InvoiceRepository.new('./data/invoices.csv')
+    require 'pry' ; binding.pry
     assert_instance_of InvoiceRepository, invoices
   end
 
