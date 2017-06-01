@@ -87,7 +87,6 @@ class ItemRepository
     find_all_by_merchant_id(merchant_id)
   end
 
-
   def merchant(item_id)
     @sales_engine.merchant(item_id)
   end
