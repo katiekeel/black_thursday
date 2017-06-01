@@ -4,7 +4,5 @@ se = SalesEngine.from_csv({
   :merchants => "./data/merchants.csv",
 })
 
-merchant = se.merchants.find_by_id(12334112)
-merchant = merchant.first
-item = merchant.items.first
-p item.name
+merchant = se.merchants.find_by_id(12334195)
+merchant.items

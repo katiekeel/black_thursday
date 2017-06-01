@@ -27,8 +27,8 @@ class MerchantRepository
     return_value = @merchants.select do |merchant|
       merchant.name == name.downcase
     end
-    puts return_value
-    return return_value if return_value.empty? == false
+    puts return_value.first
+    return return_value.first if return_value.empty? == false
     return nil if return_value.empty?
   end
 
@@ -36,8 +36,8 @@ class MerchantRepository
     return_value = @merchants.select do |merchant|
       merchant.id == id.to_i
     end
-    puts return_value
-    return return_value if return_value.empty? == false
+    puts return_value.first
+    return return_value.first if return_value.empty? == false
     return nil if return_value.empty?
   end
 
