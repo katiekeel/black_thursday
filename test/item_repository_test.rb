@@ -22,6 +22,7 @@ class ItemRepositoryTest < Minitest::Test
 
   def test_item_repository_can_be_populated
     csv_file = "./data/items.csv"
+<<<<<<< HEAD
     item_repo = ItemRepository.new(csv_file, sales_engine = nil)
     assert_instance_of Item, item_repo.items[0]
   end
@@ -30,6 +31,10 @@ class ItemRepositoryTest < Minitest::Test
     csv_file = "./data/items.csv"
     item_repo = ItemRepository.new(csv_file, sales_engine = nil)
     assert_equal item_repo.all, item_repo.items
+=======
+    item_repo = ItemRepository.new(csv_file)
+    assert_instance_of Item, item_repo.items[0]
+>>>>>>> cfa332d42d1f35b68496bdfe219b7c26d03212eb
   end
 
   def test_item_find_by_id

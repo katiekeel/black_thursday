@@ -6,6 +6,7 @@ class ItemRepository
 
   attr_reader :items
 
+
   def initialize(csv_file, sales_engine)
     @sales_engine = sales_engine
     @items = []
