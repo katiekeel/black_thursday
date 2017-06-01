@@ -19,4 +19,7 @@ class SalesEngine
     @items.find_all_by_merchant_id(merchant_id)
   end
 
+  def merchant(item_id)
+    @merchants.merchant(item_id)
+  end
 end

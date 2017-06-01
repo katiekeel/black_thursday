@@ -36,9 +36,9 @@ class MerchantRepository
 
   def find_by_id(id)
     id = id.to_i
-    @merchants.each_key do |key|
+    @merchants.each_value do |key, value|
       if key == id
-        return @merchants[key]
+        return value
       else
         next
       end
@@ -59,6 +59,10 @@ class MerchantRepository
 
   def merchant_repo_items(merchant_id)
     @sales_engine.sales_engine_items(merchant_id)
+  end
+
+  def merchant(item_id)
+    find_by_id(item_id)
   end
 
 end

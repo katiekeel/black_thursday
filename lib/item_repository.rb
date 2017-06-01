@@ -78,5 +78,14 @@ class ItemRepository
     items_by_merchant_array
   end
 
+  def from_sales_engine_by_merchant_id(merchant_id)
+    find_all_by_merchant_id(merchant_id)
+  end
+
+
+  def merchant(item_id)
+    @sales_engine.merchant(item_id)
+  end
+
 
 end

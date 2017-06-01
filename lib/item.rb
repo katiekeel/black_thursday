@@ -23,4 +23,8 @@ class Item
     input = BigDecimal.new(input, input.length)
   end
 
+  def merchant
+    @item_repository.merchant(self.merchant_id)
+  end
+
 end
