@@ -13,4 +13,8 @@ class InvoiceTest < Minitest::Test
     assert_instance_of Invoice, invoice
   end
 
+  def test_invoice_has_an_id
+    invoice = Invoice.new({:id => 27})
+    assert_equal invoice.id, 27
+  end
 end
