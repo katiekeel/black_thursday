@@ -38,7 +38,7 @@ class SalesEngineTest < Minitest::Test
       :items     => "./data/items.csv",
       :merchants => "./data/merchants.csv"})
     items = se.items
-    assert_equal 7, items.find_all_by_price(400.00).length
+    assert_equal 7, items.find_all_by_price(400.00).count
   end
 
   def test_items_can_searched_via_find_by_merchant_id
@@ -46,7 +46,7 @@ class SalesEngineTest < Minitest::Test
       :items     => "./data/items.csv",
       :merchants => "./data/merchants.csv"})
     items = se.items
-    assert_equal 1, items.find_all_by_merchant_id("12334141").length
+    assert_equal 1, items.find_all_by_merchant_id("12334141").count
   end
 
   def test_it_returns_empty_array_with_invalid_merchant_id
@@ -107,7 +107,7 @@ class SalesEngineTest < Minitest::Test
       :merchants => "./data/merchants.csv"})
     merchants = se.merchants
     result = merchants.find_all_by_name("Shop")
-    assert_equal result.length, 26
+    assert_equal result.count, 26
   end
 
   def test_items_find_all_with_description
@@ -117,6 +117,15 @@ class SalesEngineTest < Minitest::Test
     items = se.items
     result = items.find_all_with_description("green")
     assert_equal result.count, 38
+  end
+
+  def test_items_find_all_by_price_in_range
+    se = SalesEngine.from_csv({
+      :items     => "./data/items.csv",
+      :merchants => "./data/merchants.csv"})
+    items = se.items
+    result = items.find_all_by_price_in_range(10..20)
+    assert_equal result.count, 317
   end
 
 
