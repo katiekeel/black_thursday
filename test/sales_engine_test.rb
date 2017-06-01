@@ -50,6 +50,7 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_it_returns_empty_array_with_invalid_merchant_id
+    skip
     se = SalesEngine.from_csv({
       :items     => "./data/items.csv",
       :merchants => "./data/merchants.csv"})
@@ -109,6 +110,15 @@ class SalesEngineTest < Minitest::Test
     result = merchants.find_all_by_name("Shop")
     assert_equal result.count, 26
   end
+
+  def test_items_all
+    se = SalesEngine.from_csv({
+      :items     => "./data/items.csv",
+      :merchants => "./data/merchants.csv"})
+    items = se.items
+    assert_instance_of Array, items.all
+  end
+
 
   def test_items_find_all_with_description
     se = SalesEngine.from_csv({
