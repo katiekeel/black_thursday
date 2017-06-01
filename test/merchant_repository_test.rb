@@ -29,27 +29,27 @@ class MerchantRepoTest < Minitest::Test
   def test_find_by_name
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
     result = merchant.find_by_name("shopin1901")
-    assert_equal "shopin1901", result.first.name
+    assert_equal "shopin1901", result.name
   end
 
   def test_merchants_carry_id
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
     result = merchant.find_by_id("12334105")
-    assert_instance_of Merchant, result.first
+    assert_instance_of Merchant, result
   end
 
   def test_find_bys_return_nil_if_no_match
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
-    result = merchant.find_by_name("Daniel", sales_engine = nil)
+    result = merchant.find_by_name("Daniel")
     result2 = merchant.find_by_id("1233410115")
-    puts result
-    puts result2
+    assert_nil result
+    assert_nil result
   end
 
   def test_it_can_match_with_improper_case
-    merchant = MerchantRepository.new("./data/merchants.csv")
+    merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
     result = merchant.find_by_name("Shopin1901")
-    assert_equal "shopin1901", result.first.name
+    assert_equal "shopin1901", result.name
   end
 
   def test_it_can_return_multiple_name_matches
@@ -64,4 +64,14 @@ class MerchantRepoTest < Minitest::Test
     all_merchants = merchant.all
     assert_equal 475, all_merchants.length
   end
+
+  def test_find_all_by_name_with_justmstyle
+    merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
+    result = merchant.find_all_by_name("justMstyle")
+    find_all_result = result.select do |merchant|
+      merchant.name == "justMstyle"
+    end
+    assert_equal find_all_result.first.name, "justMstyle"
+  end
+
 end

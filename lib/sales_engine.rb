@@ -1,5 +1,6 @@
-require 'merchant_repository'
-require 'item_repository'
+require_relative 'merchant_repository'
+require_relative 'item_repository'
+require_relative 'invoice_repository'
 
 class SalesEngine
 
@@ -8,7 +9,7 @@ class SalesEngine
   def initialize(item_merchant_hash)
     @items = ItemRepository.new(item_merchant_hash[:items], self)
     @merchants = MerchantRepository.new(item_merchant_hash[:merchants], self)
-    @invoices = Invoice.new(item_merchant_hash[:invoices], self)
+    @invoices = InvoiceRepository.new(item_merchant_hash[:invoices], self)
   end
 
   def self.from_csv(item_merchant_hash)
@@ -21,5 +22,9 @@ class SalesEngine
 
   def merchant(item_id)
     @merchants.merchant(item_id)
+  end
+
+  def sales_engine_invoices(merchant_id)
+    @invoices.find_all_by_merchant_id(merchant_id)
   end
 end

@@ -1,13 +1,6 @@
-require './lib/sales_engine'
-<<<<<<< HEAD
-=======
-se = SalesEngine.from_csv({
-  :items     => "./data/items.csv",
-  :merchants => "./data/merchants.csv",
-})
+require './lib/merchant_repository'
 
-merchant = se.merchants.find_by_id(12334112)
-merchant = merchant.first
-item = merchant.items.first
-p item.name
->>>>>>> sales_analyst
+merchant_repo = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
+
+p merchant_repo.find_all_by_name("justMstyle")
+puts merchant_repo.find_all_by_name("justMstyle").include?("justMStyle")
