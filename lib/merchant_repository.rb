@@ -16,6 +16,7 @@ class MerchantRepository
       individual = Merchant.new({:id => row[:id], :name => row[:name]}, self)
       @merchants[individual.id] = individual
     end
+    merchant_list.close
   end
 
   def all

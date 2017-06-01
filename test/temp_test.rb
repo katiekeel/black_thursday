@@ -5,5 +5,5 @@ se = SalesEngine.from_csv({
   :merchants => "./data/merchants.csv",
 })
 item = se.items.find_by_id(263395237)
-# binding.pry
+binding.pry
 item.merchant
