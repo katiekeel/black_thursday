@@ -49,7 +49,7 @@ class MerchantRepository
     return_matches
   end
 
-  def merchant_repo_items(merchant_id)
+  def items(merchant_id)
     @sales_engine.sales_engine_items(merchant_id)
   end
 

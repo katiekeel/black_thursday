@@ -26,40 +26,30 @@ class MerchantRepoTest < Minitest::Test
     assert_equal 475, result2.length
   end
 
-<<<<<<< HEAD:test/merchant_repository_test.rb
-  def test_merchants_attr_reader_has_fixnums_as_keys
-    merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
-    merchant_list = merchant.merchants
-    merchant_1 = merchant_list.keys
-    assert_instance_of Fixnum, merchant_1[0]
-  end
-
-=======
->>>>>>> array_setup:test/merchant_repo_test.rb
   def test_find_by_name
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
     result = merchant.find_by_name("shopin1901")
-    assert_equal "shopin1901", result.first.name
+    assert_equal "shopin1901", result.name
   end
 
   def test_merchants_carry_id
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
     result = merchant.find_by_id("12334105")
-    assert_instance_of Merchant, result.first
+    assert_instance_of Merchant, result
   end
 
   def test_find_bys_return_nil_if_no_match
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
-    result = merchant.find_by_name("Daniel", sales_engine = nil)
+    result = merchant.find_by_name("Daniel")
     result2 = merchant.find_by_id("1233410115")
     puts result
     puts result2
   end
 
   def test_it_can_match_with_improper_case
-    merchant = MerchantRepository.new("./data/merchants.csv")
+    merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
     result = merchant.find_by_name("Shopin1901")
-    assert_equal "shopin1901", result.first.name
+    assert_equal "shopin1901", result.name
   end
 
   def test_it_can_return_multiple_name_matches
