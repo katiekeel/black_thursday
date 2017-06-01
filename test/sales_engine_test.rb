@@ -10,7 +10,7 @@ class SalesEngineTest < Minitest::Test
   def test_it_exists
     se = SalesEngine.from_csv({
     :items     => "./data/items.csv",
-    :merchants => "./data/merchants.csv",
+    :merchants => "./data/merchants.csv"
     })
     items = se.items
     merchants = se.merchants
