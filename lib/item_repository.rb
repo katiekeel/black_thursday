@@ -6,11 +6,14 @@ class ItemRepository
 
   attr_reader :items
 
-
   def initialize(csv_file, sales_engine)
     @sales_engine = sales_engine
     @items = []
     populate_items_repo(csv_file)
+  end
+
+  def inspect
+    "#<#{self.class} #{@merchants.size} rows>"
   end
 
   def populate_items_repo(csv_file)
@@ -23,9 +26,7 @@ class ItemRepository
   end
 
   def all
-    array = []
-    @items.each {|item| array << item}
-    array
+    @items
   end
 
   def find_by_id(id)
@@ -33,7 +34,6 @@ class ItemRepository
     @items.each do |item|
       if item.id == id
         return_value = item
-        puts item
       end
     end
     return_value
@@ -44,7 +44,6 @@ class ItemRepository
     @items.each do |item|
       if item.name == name
         return_value = item
-        puts item
       end
     end
     return_value
@@ -55,7 +54,6 @@ class ItemRepository
     @items.each do |item|
       description_array << item if item.description.include?(description_string)
     end
-    puts description_array
     description_array
   end
 
@@ -64,7 +62,6 @@ class ItemRepository
     @items.each do |item|
       prices_array << item if item.unit_price_to_dollars == item_price
     end
-    puts prices_array
     prices_array
   end
 
@@ -73,7 +70,6 @@ class ItemRepository
     @items.each do |item|
       prices_range_array << item if range.include?(item.unit_price_to_dollars)
     end
-    puts prices_range_array
     prices_range_array
   end
 
@@ -81,7 +77,6 @@ class ItemRepository
     by_merchant_id_array = @items.select do |item|
       item.merchant_id == input_id.to_s
     end
-    puts by_merchant_id_array
     by_merchant_id_array
   end
 

@@ -10,6 +10,10 @@ class MerchantRepository
     populate_merchant_repo(csv_file)
   end
 
+  def inspect
+    "#<#{self.class} #{@merchants.size} rows>"
+  end
+
   def populate_merchant_repo(csv_file)
     merchant_list = CSV.open csv_file, headers: true, header_converters: :symbol
     merchant_list.each do |row|
@@ -26,15 +30,14 @@ class MerchantRepository
   end
 
   def all
-    @merchants.each {|merchant| puts merchant}
+    @merchants
   end
 
   def find_by_name(name)
     return_value = @merchants.select do |merchant|
       merchant.name == name.downcase
     end
-    puts return_value
-    return return_value if return_value.empty? == false
+    return return_value.first if return_value.empty? == false
     return nil if return_value.empty?
   end
 
@@ -50,7 +53,6 @@ class MerchantRepository
     return_matches = @merchants.select do |merchant|
       merchant.name.include?(snippet.downcase)
     end
-    puts return_matches
     return_matches
   end
 

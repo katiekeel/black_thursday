@@ -20,6 +20,10 @@ class InvoiceRepository
     invoices_list.close
   end
 
+  def inspect
+    "#<#{self.class} #{@merchants.size} rows>"
+  end
+
   def all
     @invoices
   end
