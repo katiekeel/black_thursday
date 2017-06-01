@@ -20,14 +20,13 @@ class MerchantRepository
   end
 
   def all
-    @merchants.each {|merchant| puts merchant}
+    @merchants
   end
 
   def find_by_name(name)
     return_value = @merchants.select do |merchant|
       merchant.name == name.downcase
     end
-    puts return_value.first
     return return_value.first if return_value.empty? == false
     return nil if return_value.empty?
   end
@@ -36,7 +35,6 @@ class MerchantRepository
     return_value = @merchants.select do |merchant|
       merchant.id == id.to_i
     end
-    puts return_value.first
     return return_value.first if return_value.empty? == false
     return nil if return_value.empty?
   end
@@ -45,7 +43,6 @@ class MerchantRepository
     return_matches = @merchants.select do |merchant|
       merchant.name.include?(snippet.downcase)
     end
-    puts return_matches
     return_matches
   end
 
@@ -53,8 +50,5 @@ class MerchantRepository
     @sales_engine.sales_engine_items(merchant_id)
   end
 
-  def merchant(item_id)
-    find_by_id(item_id)
-  end
 
 end

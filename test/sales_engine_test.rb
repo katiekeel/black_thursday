@@ -57,5 +57,67 @@ class SalesEngineTest < Minitest::Test
     assert_equal items.find_all_by_merchant_id("kwjalkdwja"), []
   end
 
+  def test_merchants_all
+    se = SalesEngine.from_csv({
+      :items     => "./data/items.csv",
+      :merchants => "./data/merchants.csv"})
+    merchants = se.merchants
+    assert_instance_of Array, merchants.all
+  end
+
+  def test_merchants_find_by_name
+    se = SalesEngine.from_csv({
+      :items     => "./data/items.csv",
+      :merchants => "./data/merchants.csv"})
+    merchants = se.merchants
+    result = merchants.find_by_name("Shopin1901")
+    assert_equal "shopin1901", result.name
+  end
+
+  def test_merchants_find_by_name_with_nil
+    se = SalesEngine.from_csv({
+      :items     => "./data/items.csv",
+      :merchants => "./data/merchants.csv"})
+    merchants = se.merchants
+    result = merchants.find_by_name("asdkjhaiufhenjka")
+    assert_nil result
+  end
+
+  def test_merchants_find_by_id
+    se = SalesEngine.from_csv({
+      :items     => "./data/items.csv",
+      :merchants => "./data/merchants.csv"})
+    merchants = se.merchants
+    result = merchants.find_by_id("12334105")
+    assert_instance_of Merchant, result
+  end
+
+  def test_merchants_find_by_id_with_nil
+    se = SalesEngine.from_csv({
+      :items     => "./data/items.csv",
+      :merchants => "./data/merchants.csv"})
+    merchants = se.merchants
+    result = merchants.find_by_id("1233410115")
+    assert_nil result
+  end
+
+  def test_merchants_find_all_by_name
+    se = SalesEngine.from_csv({
+      :items     => "./data/items.csv",
+      :merchants => "./data/merchants.csv"})
+    merchants = se.merchants
+    result = merchants.find_all_by_name("Shop")
+    assert_equal result.length, 26
+  end
+
+  def test_items_find_all_with_description
+    se = SalesEngine.from_csv({
+      :items     => "./data/items.csv",
+      :merchants => "./data/merchants.csv"})
+    items = se.items
+    result = items.find_all_with_description("green")
+    assert_equal result.count, 38
+  end
+
 
 end

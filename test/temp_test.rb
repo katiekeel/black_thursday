@@ -6,3 +6,6 @@ se = SalesEngine.from_csv({
 
 merchant = se.merchants.find_by_id(12334195)
 merchant.items
+
+item = se.items.find_by_id(263395237)
+item.merchant

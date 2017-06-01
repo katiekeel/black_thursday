@@ -39,6 +39,7 @@ class MerchantRepoTest < Minitest::Test
   end
 
   def test_find_bys_return_nil_if_no_match
+    skip
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
     result = merchant.find_by_name("Daniel")
     result2 = merchant.find_by_id("1233410115")

@@ -19,6 +19,6 @@ class SalesEngine
   end
 
   def merchant(item_id)
-    @merchants.merchant(item_id)
+    @merchants.find_by_id(item_id)
   end
 end
