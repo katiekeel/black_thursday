@@ -1,5 +1,5 @@
 require 'csv'
-require_relative 'invoice'
+require './lib/invoice'
 
 class InvoiceRepository
 
@@ -41,6 +41,7 @@ class InvoiceRepository
     end
     return_value
   end
+
 
   def find_all_by_status(status)
     return_value = @invoices.select do |invoice|
