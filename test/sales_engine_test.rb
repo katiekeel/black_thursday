@@ -9,14 +9,8 @@ class SalesEngineTest < Minitest::Test
 
   def test_it_exists
     se = SalesEngine.from_csv({
-<<<<<<< HEAD
-      :items     => "./data/items.csv",
-      :merchants => "./data/merchants.csv"})
-=======
     :items     => "./data/items.csv",
-    :merchants => "./data/merchants.csv"
-    })
->>>>>>> c37151d42aebd8a2a062534399086a0db992ea4d
+    :merchants => "./data/merchants.csv"})
     items = se.items
     merchants = se.merchants
     assert_instance_of ItemRepository, items

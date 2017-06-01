@@ -1,4 +1,4 @@
-require './lib/sales_engine'
+require_relative 'sales_engine'
 
 
 class SalesAnalyst
@@ -88,10 +88,3 @@ class SalesAnalyst
     golden_items
   end
 end
-#
-se = SalesEngine.from_csv({:items => "./data/items.csv", :merchants => "./data/merchants.csv"})
-sa = SalesAnalyst.new(se)
-sa.golden_items
-# p sa.average_item_price_per_merchant(12334165)
-# p sa.average_average_price_per_merchant
-# p sa.golden_items
