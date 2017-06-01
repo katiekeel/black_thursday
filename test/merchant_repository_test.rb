@@ -68,7 +68,10 @@ class MerchantRepoTest < Minitest::Test
   def test_find_all_by_name_with_justmstyle
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
     result = merchant.find_all_by_name("justMstyle")
-    assert_includes result, "justMstyle"
+    find_all_result = result.select do |merchant|
+      merchant.name == "justMstyle"
+    end
+    assert_equal find_all_result.first.name, "justMstyle"
   end
 
 end
