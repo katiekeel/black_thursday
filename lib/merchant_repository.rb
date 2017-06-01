@@ -2,9 +2,10 @@ require 'csv'
 require_relative 'merchant'
 
 class MerchantRepository
-  attr_reader :merchants
+  attr_reader :merchants, :sales_engine
 
-  def initialize(csv_file)
+  def initialize(csv_file, sales_engine)
+    @sales_engine = sales_engine
     @merchants = []
     populate_merchant_repo(csv_file)
   end
@@ -12,10 +13,16 @@ class MerchantRepository
   def populate_merchant_repo(csv_file)
     merchant_list = CSV.open csv_file, headers: true, header_converters: :symbol
     merchant_list.each do |row|
-      individual = Merchant.new({:id => row[:id], :name => row[:name]})
+      individual = Merchant.new({:id => row[:id], :name => row[:name]}, self)
       @merchants << individual
     end
     merchant_list.close
+  end
+
+  def merchants_container(individual = nil)
+    merchants_container = []
+    merchants_container << individual
+    merchants_container
   end
 
   def all
@@ -35,8 +42,7 @@ class MerchantRepository
     return_value = @merchants.select do |merchant|
       merchant.id == id.to_i
     end
-    puts return_value
-    return return_value if return_value.empty? == false
+    return return_value.first if return_value.empty? == false
     return nil if return_value.empty?
   end
 
@@ -48,5 +54,12 @@ class MerchantRepository
     return_matches
   end
 
+  def merchant_repo_items(merchant_id)
+    @sales_engine.sales_engine_items(merchant_id)
+  end
+
+  def merchant(item_id)
+    find_by_id(item_id)
+  end
 
 end
