@@ -42,8 +42,7 @@ class MerchantRepository
     return_value = @merchants.select do |merchant|
       merchant.id == id.to_i
     end
-    puts return_value
-    return return_value if return_value.empty? == false
+    return return_value.first if return_value.empty? == false
     return nil if return_value.empty?
   end
 

@@ -22,7 +22,3 @@ class SalesEngine
     @merchants.merchant(item_id)
   end
 end
-
-se = SalesEngine.from_csv({:items => "./data/items.csv", :merchants => "./data/merchants.csv",})
-re = se.sales_engine_items(12334112)
-merchant.items
