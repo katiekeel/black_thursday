@@ -1,8 +1,11 @@
 require 'csv'
 require_relative 'invoice'
 require_relative 'csv_opener'
+require_relative 'sales_items'
 
 class InvoiceRepository
+
+  include SalesItems
 
   attr_reader :invoices
 
@@ -30,12 +33,16 @@ class InvoiceRepository
   def all
     @invoices
   end
+  #
+  # def find_by_id(id)
+  #   return_value = @invoices.select do |invoice|
+  #     invoice.id == id.to_i
+  #   end
+  #   return_value.first
+  # end
 
   def find_by_id(id)
-    return_value = @invoices.select do |invoice|
-      invoice.id == id.to_i
-    end
-    return_value.first
+    module_find_by_id(@invoices, id)
   end
 
   def find_all_by_customer_id(customer_id)

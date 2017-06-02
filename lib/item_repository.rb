@@ -1,8 +1,11 @@
 require_relative 'item'
 require 'csv'
 require_relative 'csv_opener'
+require_relative 'sales_items'
 
 class ItemRepository
+
+  include SalesItems
 
   attr_reader :items
 
@@ -15,14 +18,6 @@ class ItemRepository
   # def inspect
   #   "#<#{self.class} #{@merchants.size} rows>"
   # end
-  #
-  # def populate_items_repo(csv_file)
-  #   items_list = CSV.open csv_file, headers: true, header_converters: :symbol
-  #   items_list.each do |row|
-  #     item = Item.new({ :id => row[:id], :name => row[:name], :description => row[:description], :unit_price => row[:unit_price], :merchant_id => row[:merchant_id], :created_at => row[:created_at], :updated_at => row[:updated_at]}, self)
-  #     @items << item
-  #   end
-  #   items_list.close
 
   def populate_items_repo(csv_file, type)
     @items = CSVOpener.new(csv_file, self, type)
@@ -40,13 +35,7 @@ class ItemRepository
   end
 
   def find_by_id(id)
-    return_value = nil
-    @items.each do |item|
-      if item.id == id
-        return_value = item
-      end
-    end
-    return_value
+    module_find_by_id(@items, id)
   end
 
   def find_by_name(name)
