@@ -31,11 +31,5 @@ class InvoiceItemRepository
     return_matches
   end
 
-  def find_all_by_invoice_id(invoice_id)
-    return_matches = @collection.select do |invoice_item|
-      invoice_item.invoice_id == invoice_id
-    end
-    return_matches
-  end
-  
+
 end

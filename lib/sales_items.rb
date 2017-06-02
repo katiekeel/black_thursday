@@ -32,4 +32,11 @@ module SalesItems
     return_matches
   end
 
+
+  def find_all_by_invoice_id(invoice_id, collection = @collection)
+    return_matches = @collection.select do |thing|
+      thing.invoice_id == invoice_id
+    end
+    return_matches
+  end
 end
