@@ -13,4 +13,7 @@ class InvoiceItemTest < Minitest::Test
     assert_instance_of InvoiceItem, invoice_item
   end
 
+  def test_invoice_item_id
+    invoice_item = InvoiceItem.new({:id => 1}, invoice_item_repo = nil)
+  end
 end
