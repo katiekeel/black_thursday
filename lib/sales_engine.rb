@@ -27,4 +27,5 @@ class SalesEngine
   def sales_engine_invoices(merchant_id)
     @invoices.find_all_by_merchant_id(merchant_id)
   end
+    
 end

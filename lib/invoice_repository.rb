@@ -19,11 +19,10 @@ class InvoiceRepository
     @collection = CSVOpener.new(csv_file, self, type)
     @collection = @collection.holder
   end
-  #
-  # def inspect
-  #   "#<#{self.class} #{@merchants.size} rows>"
-  # end
-
+  
+  def inspect
+    "#<#{self.class} #{@merchants.size} rows>"
+  end
 
   def find_all_by_customer_id(customer_id)
     return_value = @collection.select do |invoice|
