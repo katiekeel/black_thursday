@@ -34,7 +34,7 @@ class MerchantRepoTest < Minitest::Test
 
   def test_merchants_carry_id
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
-    result = merchant.find_by_id("12334105")
+    result = merchant.find_by_id(12334105)
     assert_instance_of Merchant, result
   end
 

@@ -17,19 +17,20 @@ class ItemRepositoryTest < Minitest::Test
   def test_item_repository_has_a_populated_items_array
     csv_file = "./data/items.csv"
     item_repo = ItemRepository.new(csv_file, sales_engine = nil)
-    assert_equal item_repo.items.length, 1367
+    assert_equal item_repo.collection.length, 1367
   end
 
   def test_item_repository_can_be_populated
     csv_file = "./data/items.csv"
     item_repo = ItemRepository.new(csv_file, sales_engine = nil)
-    assert_instance_of Item, item_repo.items.first
+    assert_instance_of Item, item_repo.collection.first
   end
 
   def test_item_find_by_id
     csv_file = "./data/items.csv"
     item_repo = ItemRepository.new(csv_file, sales_engine = nil)
-    assert_instance_of Item, item_repo.find_by_id(263395237)
+    item = item_repo.find_by_id(263395237)
+    assert_equal item.id, 263395237
   end
 
   def test_item_find_by_name
