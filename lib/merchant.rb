@@ -5,7 +5,7 @@ class Merchant
   def initialize(id_name_hash, merchant_repo)
     @merchant_repo = merchant_repo
     @id = id_name_hash[:id].to_i
-    @name = id_name_hash[:name].downcase
+    @name = id_name_hash[:name]
   end
 
   def items

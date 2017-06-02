@@ -51,7 +51,7 @@ class MerchantRepository
 
   def find_all_by_name(snippet)
     return_matches = @merchants.select do |merchant|
-      merchant.name.include?(snippet.downcase)
+      merchant.name.include?(snippet)
     end
     return_matches
   end

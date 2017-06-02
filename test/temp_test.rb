@@ -1,6 +1,8 @@
-require './lib/merchant_repository'
+require './lib/item_repository'
 
-merchant_repo = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
+item_repo = ItemRepository.new("./data/items.csv", sales_engine = nil)
 
-p merchant_repo.find_all_by_name("justMstyle")
-puts merchant_repo.find_all_by_name("justMstyle").include?("justMStyle")
+item = item_repo.find_by_id(263395237)
+p item.created_at
+day = DateTime.parse(item.created_at)
+p day.strftime('%a %d %b %Y')

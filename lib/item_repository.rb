@@ -12,9 +12,9 @@ class ItemRepository
     populate_items_repo(csv_file)
   end
 
-  def inspect
-    "#<#{self.class} #{@merchants.size} rows>"
-  end
+  # def inspect
+  #   "#<#{self.class} #{@merchants.size} rows>"
+  # end
 
   def populate_items_repo(csv_file)
     items_list = CSV.open csv_file, headers: true, header_converters: :symbol
