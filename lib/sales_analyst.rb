@@ -1,4 +1,5 @@
 require_relative 'sales_engine'
+require 'bigdecimal'
 
 
 class SalesAnalyst
@@ -89,7 +90,7 @@ class SalesAnalyst
     golden_items = []
     @sales_engine.items.items.each do |item|
         if item.unit_price > stddev
-          golden_items << item
+          golden_items << item.name
         end
     end
     golden_items
@@ -125,7 +126,24 @@ class SalesAnalyst
     stddev = standard_deviation_invoice
     average_item_hash.each_pair do |num, merchant|
       if num > (average_invoices_per_merchant + stddev*2)
-        array << merchant
+        array << merchant.name
+      end
+    end
+    array
+  end
+
+  def bottom_merchants_by_invoice_count
+    average_item_hash = {}
+    merchant_array = @sales_engine.merchants.merchants
+    merchant_array.each do |merchant|
+      x = merchant.invoices
+      average_item_hash[x.length] = merchant
+    end
+    array = []
+    stddev = standard_deviation_invoice
+    average_item_hash.each_pair do |num, merchant|
+      if num < (average_invoices_per_merchant + stddev*2)
+        array << merchant.name
       end
     end
     array
@@ -140,4 +158,17 @@ class SalesAnalyst
     end
     average_array
   end
+
+  def invoice_status(status)
+    array = []
+    @sales_engine.invoices.invoices.each do |invoice|
+      if invoice.status == status.to_s
+        array << invoice
+      end
+    end
+    percentage = (BigDecimal.new(array.length) / BigDecimal.new(@sales_engine.invoices.invoices.length))
+    percentage = percentage.to_f * 100
+    percentage.round(2)
+  end
+
 end
