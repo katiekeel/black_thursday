@@ -20,11 +20,3 @@ class Transaction
   end
 
 end
-
-# id - returns the integer id
-# invoice_id - returns the invoice id
-# credit_card_number - returns the credit card number
-# credit_card_expiration_date - returns the credit card expiration date
-# result - the transaction result
-# created_at - returns a Time instance for the date the transaction was first created
-# updated_at - returns a Time instance for the date the transaction was last modified
