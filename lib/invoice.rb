@@ -18,7 +18,7 @@ class Invoice
   end
 
   def merchant
-    @merchant_id
+    @invoice_repository.merchant(self.merchant_id)
   end
 
 end

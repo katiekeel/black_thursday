@@ -87,4 +87,21 @@ class SalesAnalyst
     end
     golden_items
   end
+
+  def average_invoices_per_merchant
+    average_array = merchant_invoice_array
+    average = (average_array.reduce(0){|sum, length| sum += length})/average_array.length.to_f
+    average = average.round(2)
+    average
+  end
+
+  def merchant_invoice_array
+    average_array = []
+    merchant_array = @sales_engine.merchants.merchants
+    merchant_array.each do |merchant|
+      x = merchant.invoices
+      average_array << x.length
+    end
+    average_array
+  end
 end
