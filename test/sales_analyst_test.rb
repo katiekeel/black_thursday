@@ -127,7 +127,7 @@ class SalesAnalystTest < Minitest::Test
     sa = SalesAnalyst.new(se)
     result = sa.merchants_with_high_item_count
     assert_instance_of Array, result
-    assert_instance_of String, result[0]
+    assert_instance_of Merchant, result[0]
   end
 
   def test_it_gives_average_price_for_one_merchant
@@ -148,7 +148,7 @@ class SalesAnalystTest < Minitest::Test
     sa = SalesAnalyst.new(se)
     result = sa.golden_items
     assert_instance_of Array, result
-    assert_instance_of String, result[0]
+    assert_instance_of Item, result[0]
   end
 
   def test_it_can_return_average_invoices
@@ -170,6 +170,17 @@ class SalesAnalystTest < Minitest::Test
     result = sa.average_invoices_per_merchant_standard_deviation
     assert_instance_of Float, result
     p result
+  end
+
+  def test_it_returns_top_invoiced_merchants
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv"})
+    sa = SalesAnalyst.new(se)
+    result = sa.top_merchants_by_invoice_count
+    assert_instance_of Array, result
+    assert_instance_of Merchant, result[0]
   end
 
 end

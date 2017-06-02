@@ -15,6 +15,13 @@ class SalesAnalyst
     average
   end
 
+  def average_invoices_per_merchant
+    average_array = merchant_invoice_array
+    average = (average_array.reduce(0){|sum, length| sum += length})/average_array.length.to_f
+    average = average.round(2)
+    average
+  end
+
   def average_items_per_merchant_standard_deviation
     standard_deviation
   end
@@ -53,8 +60,8 @@ class SalesAnalyst
     array = []
     stddev = standard_deviation
     average_item_hash.each_pair do |num, merchant|
-      if num > stddev
-        array << merchant.name
+      if num > (average_items_per_merchant + stddev)
+        array << merchant
       end
     end
     array
@@ -82,7 +89,7 @@ class SalesAnalyst
     golden_items = []
     @sales_engine.items.items.each do |item|
         if item.unit_price > stddev
-          golden_items << item.name
+          golden_items << item
         end
     end
     golden_items
@@ -93,6 +100,35 @@ class SalesAnalyst
     average = (average_array.reduce(0){|sum, length| sum += length})/average_array.length.to_f
     average = average.round(2)
     average
+  end
+
+  def average_invoices_per_merchant_standard_deviation
+    standard_deviation_invoice
+  end
+
+  def standard_deviation_invoice
+    average_array = merchant_invoice_array
+    average = average_invoices_per_merchant
+    temporary_math_array = average_array.map{|num| (num-average)**2}
+    standard_dev = Math.sqrt((temporary_math_array.reduce(:+))/(temporary_math_array.length-1))
+    standard_dev.round(2)
+  end
+
+  def top_merchants_by_invoice_count
+    average_item_hash = {}
+    merchant_array = @sales_engine.merchants.merchants
+    merchant_array.each do |merchant|
+      x = merchant.invoices
+      average_item_hash[x.length] = merchant
+    end
+    array = []
+    stddev = standard_deviation_invoice
+    average_item_hash.each_pair do |num, merchant|
+      if num > (average_invoices_per_merchant + stddev*2)
+        array << merchant
+      end
+    end
+    array
   end
 
   def merchant_invoice_array
