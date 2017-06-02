@@ -180,7 +180,7 @@ class SalesAnalyst
       days << day
     end
     max = {}
-    days.each{|day| max[days.count(day)] = day}.uniq
+    days.each{|day| max[day] = days.count(day)}
 
     require 'pry' ; binding.pry
   end
