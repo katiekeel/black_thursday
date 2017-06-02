@@ -16,12 +16,12 @@ class SalesEngine
     se = SalesEngine.new(item_merchant_hash)
   end
 
-  def sales_engine_items(merchant_id)
-    @items.find_all_by_merchant_id(merchant_id)
-  end
-
   def merchant(item_id)
     @merchants.merchant(item_id)
+  end
+
+  def sales_engine_items(merchant_id)
+    @items.find_all_by_merchant_id(merchant_id)
   end
 
   def sales_engine_invoices(merchant_id)

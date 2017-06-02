@@ -1,6 +1,6 @@
 require_relative 'item'
 require 'csv'
-require 'pry'
+require_relative 'csv_opener'
 
 class ItemRepository
 
@@ -9,20 +9,30 @@ class ItemRepository
   def initialize(csv_file, sales_engine)
     @sales_engine = sales_engine
     @items = []
-    populate_items_repo(csv_file)
+    populate_items_repo(csv_file, "item")
   end
 
   # def inspect
   #   "#<#{self.class} #{@merchants.size} rows>"
   # end
+  #
+  # def populate_items_repo(csv_file)
+  #   items_list = CSV.open csv_file, headers: true, header_converters: :symbol
+  #   items_list.each do |row|
+  #     item = Item.new({ :id => row[:id], :name => row[:name], :description => row[:description], :unit_price => row[:unit_price], :merchant_id => row[:merchant_id], :created_at => row[:created_at], :updated_at => row[:updated_at]}, self)
+  #     @items << item
+  #   end
+  #   items_list.close
 
-  def populate_items_repo(csv_file)
-    items_list = CSV.open csv_file, headers: true, header_converters: :symbol
-    items_list.each do |row|
-      item = Item.new({ :id => row[:id], :name => row[:name], :description => row[:description], :unit_price => row[:unit_price], :merchant_id => row[:merchant_id], :created_at => row[:created_at], :updated_at => row[:updated_at]}, self)
-      @items << item
-    end
-    items_list.close
+  def populate_items_repo(csv_file, type)
+    @items = CSVOpener.new(csv_file, self, type)
+    @items = @items.holder
+    # items_list = CSV.open csv_file, headers: true, header_converters: :symbol
+    # items_list.each do |row|
+    #   item = Item.new({ :id => row[:id], :name => row[:name], :description => row[:description], :unit_price => row[:unit_price], :merchant_id => row[:merchant_id], :created_at => row[:created_at], :updated_at => row[:updated_at]}, self)
+    #   @items << item
+    # end
+    # items_list.close
   end
 
   def all
@@ -84,8 +94,8 @@ class ItemRepository
     find_all_by_merchant_id(merchant_id)
   end
 
-  def merchant(item_id)
-    @sales_engine.merchant(item_id)
+  def merchant(merchant_id)
+    @sales_engine.merchant(merchant_id)
   end
 
 end
