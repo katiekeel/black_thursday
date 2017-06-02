@@ -181,8 +181,37 @@ class SalesAnalyst
     end
     max = {}
     days.each{|day| max[day] = days.count(day)}
-
-    require 'pry' ; binding.pry
+    days = max.values
+    average = days.reduce(:+)/days.length
+    temporary_math_array = days.map do |num|
+      (num-average)**2
+    end
+    stddev = Math.sqrt((temporary_math_array.reduce(:+))/(temporary_math_array.length-1))
+    top_days = []
+    max.each_pair do |day, num|
+      if num > average + stddev
+        top_days << to_day(day) #to_day method
+      end
+    end
+    top_days
   end
 
+  def to_day(day)
+    if day = "Wed"
+      day = "Wednesday"
+    elsif day = "Sat"
+      day = "Saturday"
+    elsif day = "Sun"
+      day = "Sunday"
+    elsif day = "Thu"
+      day = "Thursday"
+    elsif day = "Tue"
+      day = "Tuesday"
+    elsif day = "Mon"
+      day = "Monday"
+    elsif day = "Fri"
+      day = "Friday"
+    end
+    day
+  end
 end

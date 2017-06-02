@@ -32,7 +32,6 @@ class CSVOpener
       invoices_list.close
     end
     @holder
-    # require 'pry' ; binding.pry
   end
 
 end
