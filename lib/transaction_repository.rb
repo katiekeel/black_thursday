@@ -17,7 +17,7 @@ class TransactionRepository
   end
 
   def self.from_csv(file)
-    tr = TransactionRepository.new(file)
+    TransactionRepository.new(file)
   end
 
   def populate_transactions_repo(file, type)
@@ -26,16 +26,14 @@ class TransactionRepository
   end
 
   def find_all_by_credit_card_number(cc_number)
-    return_matches = @collection.select do |transaction|
+    @collection.select do |transaction|
       transaction.credit_card_number == cc_number
     end
-    return_matches
   end
 
   def find_all_by_result(result)
-    return_matches = @collection.select do |transaction|
+    @collection.select do |transaction|
       transaction.result == result
     end
-    return_matches
   end
 end

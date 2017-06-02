@@ -16,7 +16,7 @@ class InvoiceItemRepository
   end
 
   def self.from_csv(file)
-    ir = InvoiceItemRepository.new(@file, sales_engine)
+    InvoiceItemRepository.new(@file, sales_engine)
   end
 
   def populate_invoice_items_repo(file, type)
@@ -25,10 +25,9 @@ class InvoiceItemRepository
   end
 
   def find_all_by_item_id(item_id)
-    return_matches = @collection.select do |invoice_item|
+    @collection.select do |invoice_item|
       invoice_item.item_id == item_id
     end
-    return_matches
   end
 
 
