@@ -171,4 +171,18 @@ class SalesAnalyst
     percentage.round(2)
   end
 
+  def top_days_by_invoice_count
+    days = []
+    @sales_engine.invoices.invoices.each do |invoice|
+      day = DateTime.parse(invoice.created_at)
+      day = day.strftime("%a %d %b %Y")
+      day = day[0..2]
+      days << day
+    end
+    max = {}
+    days.each{|day| max[days.count(day)] = day}.uniq
+
+    require 'pry' ; binding.pry
+  end
+
 end

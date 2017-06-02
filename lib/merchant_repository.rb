@@ -8,22 +8,22 @@ class MerchantRepository
   def initialize(csv_file, sales_engine)
     @sales_engine = sales_engine
     @merchants = []
-    populate_merchant_repo(csv_file) #, "merchant")
+    populate_merchant_repo(csv_file, "merchant")
   end
 
   # def inspect
   #   "#<#{self.class} #{@merchants.size} rows>"
   # end
 
-  def populate_merchant_repo(csv_file) #, type)
-    # @merchants = CSVOpener.new(csv_file, type)
-    # @merchants = @merchants.holder
-    merchant_list = CSV.open csv_file, headers: true, header_converters: :symbol
-    merchant_list.each do |row|
-      individual = Merchant.new({:id => row[:id], :name => row[:name]}, self)
-      @merchants << individual
-    end
-    merchant_list.close
+  def populate_merchant_repo(csv_file, type)
+    @merchants = CSVOpener.new(csv_file, self, type)
+    @merchants = @merchants.holder
+    # merchant_list = CSV.open csv_file, headers: true, header_converters: :symbol
+    # merchant_list.each do |row|
+    #   individual = Merchant.new({:id => row[:id], :name => row[:name]}, self)
+    #   @merchants << individual
+    # end
+    # merchant_list.close
   end
 
   def merchants_container(individual = nil)
