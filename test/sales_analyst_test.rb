@@ -201,7 +201,6 @@ class SalesAnalystTest < Minitest::Test
       })
     sa = SalesAnalyst.new(se)
     result = sa.golden_items
-    require 'pry' ; binding.pry
     assert_instance_of Array, result
     assert_instance_of String, result[0]
   end
