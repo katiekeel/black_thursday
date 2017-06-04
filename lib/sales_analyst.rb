@@ -156,7 +156,7 @@ class SalesAnalyst
   def invoice_status(status)
     array = []
     @sales_engine.invoices.collection.each do |invoice|
-      if invoice.status == status.to_s
+      if invoice.status == status
         array << invoice
       end
     end
@@ -168,8 +168,8 @@ class SalesAnalyst
   def top_days_by_invoice_count
     days = []
     @sales_engine.invoices.collection.each do |invoice|
-      day = DateTime.parse(invoice.created_at)
-      day = day.strftime("%a %d %b %Y")
+      day = DateTime.strptime(invoice.created_at.to_s, "%Y-%m-%d %H:%M:%S")
+      day = day.strftime("%A %Y-%m-%d")
       day = day[0..2]
       days << day
     end
@@ -219,7 +219,7 @@ class SalesAnalyst
   end
 
   def total_revenue_by_date(date)
-    date = Date.parse(date)
+    date = Date.parse(date.to_s)
     invoice_ids = invoices_shipped_by_date(date)
     price_hash = find_all_items_by_invoices(invoice_ids)
     total_revenue = []
@@ -227,4 +227,5 @@ class SalesAnalyst
     sum = total_revenue.reduce(:+).to_f/100
     sum = sum.round(2)
   end
+
 end

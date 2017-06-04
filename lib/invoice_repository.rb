@@ -79,7 +79,7 @@ class InvoiceRepository
   def invoices_shipped_by_date(date)
     invoice_ids = []
     @collection.select do |invoice|
-      invoice_date = Date.parse(invoice.created_at)
+      invoice_date = Date.parse(invoice.created_at.to_s)
       if invoice_date <= date && invoice.status == "shipped"
         invoice_ids << invoice.id
       end
