@@ -214,4 +214,6 @@ class SalesAnalyst
     end
     day
   end
+
+
 end

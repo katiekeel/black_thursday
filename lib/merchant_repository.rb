@@ -36,4 +36,8 @@ class MerchantRepository
     @sales_engine.sales_engine_invoices(merchant_id)
   end
 
+  def merchant_repo_customers(merchant_id)
+    @sales_engine.sales_engine_customers(merchant_id)
+  end
+
 end

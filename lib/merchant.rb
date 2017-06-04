@@ -16,4 +16,8 @@ class Merchant
     @merchant_repo.merchant_repo_invoices(@id)
   end
 
+  def customers
+    @merchant_repo.merchant_repo_customers(@id)
+  end
+
 end
