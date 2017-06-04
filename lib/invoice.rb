@@ -37,4 +37,13 @@ class Invoice
     @invoice_repository.find_customer(@customer_id)
   end
 
+  def is_paid_in_full?
+    return true if @status == "shipped" || @status == "returned"
+    return false if @status == "pending"
+  end
+
+  def total
+    @invoice_repository.total(@id)
+  end
+
 end

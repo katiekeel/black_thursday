@@ -42,4 +42,10 @@ class TransactionRepository
       transaction.invoice_id == invoice_id
     end
   end
+
+  def paid_in_full?(id)
+    transaction = find_all_by_invoice_id(id)
+    return true if transaction.first.result == "success"
+    return false if transaction.first.result == "failed"
+  end
 end

@@ -37,7 +37,18 @@ class InvoiceItemRepository
         item_ids << invoice_item.item_id
       end
     end
-    require 'pry' ; binding.pry
     @sales_engine.items.find_items_by_item_ids(item_ids)
   end
+
+  def total(invoice_id)
+    invoice_items = @collection.select do |invoice_item|
+        invoice_item.invoice_id == invoice_id
+    end
+    total = invoice_items.map do |invoice_item|
+      invoice_item.unit_price_to_dollars * invoice_item.quantity
+    end
+    p total.sum
+  end
+
+
 end

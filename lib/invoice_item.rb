@@ -19,4 +19,9 @@ class InvoiceItem
     @updated_at = invoice_item_hash[:updated_at]
   end
 
+  def unit_price_to_dollars
+    @unit_price.to_f / 100
+  end
+
+
 end
