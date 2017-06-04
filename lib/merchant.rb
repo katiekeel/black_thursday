@@ -10,6 +10,7 @@ class Merchant
 
   def items
     @merchant_repo.merchant_repo_items(@id)
+    # require 'pry' ; binding.pry
   end
 
   def invoices

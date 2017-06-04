@@ -16,13 +16,6 @@ class SalesAnalyst
     average
   end
 
-  def average_invoices_per_merchant
-    average_array = merchant_invoice_array
-    average = (average_array.reduce(0){|sum, length| sum += length})/average_array.length.to_f
-    average = average.round(2)
-    average
-  end
-
   def average_items_per_merchant_standard_deviation
     standard_deviation
   end
@@ -38,13 +31,14 @@ class SalesAnalyst
   def average_item_price_per_merchant(merchant_id)
     merchant = @sales_engine.merchants.find_by_id(merchant_id)
     x = merchant.items
+    # require 'pry' ; binding.pry 
     y = x.map{|item| item.unit_price}
     average_price = (y.reduce(:+)/y.length).to_f/100
   end
 
   def average_average_price_per_merchant
     average_array = []
-    @sales_engine.merchants.merchants.each do |merchant|
+    @sales_engine.merchants.collection.each do |merchant|
       id = merchant.id
       average_array << average_item_price_per_merchant(id)
     end
@@ -53,7 +47,7 @@ class SalesAnalyst
 
   def merchants_with_high_item_count
     average_item_hash = {}
-    merchant_array = @sales_engine.merchants.merchants
+    merchant_array = @sales_engine.merchants.collection
     merchant_array.each do |merchant|
       x = merchant.items
       average_item_hash[x.length] = merchant
@@ -70,7 +64,7 @@ class SalesAnalyst
 
   def merchant_average_array
     average_array = []
-    merchant_array = @sales_engine.merchants.merchants
+    merchant_array = @sales_engine.merchants.collection
     merchant_array.each do |merchant|
       x = merchant.items
       average_array << x.length
@@ -80,7 +74,7 @@ class SalesAnalyst
 
   def golden_items
     price_array = []
-    items_array = @sales_engine.items.items
+    items_array = @sales_engine.items.collection
     items_array.each do |item|
       price_array << item.unit_price
     end
@@ -88,7 +82,7 @@ class SalesAnalyst
     temporary_math_array = price_array.map{|num| (num - avgprice)**2 }
     stddev = Math.sqrt((temporary_math_array.reduce(:+))/(temporary_math_array.length - 1))
     golden_items = []
-    @sales_engine.items.items.each do |item|
+    @sales_engine.items.collection.each do |item|
         if item.unit_price > stddev
           golden_items << item.name
         end
@@ -117,7 +111,7 @@ class SalesAnalyst
 
   def top_merchants_by_invoice_count
     average_item_hash = {}
-    merchant_array = @sales_engine.merchants.merchants
+    merchant_array = @sales_engine.merchants.collection
     merchant_array.each do |merchant|
       x = merchant.invoices
       average_item_hash[x.length] = merchant
@@ -134,7 +128,7 @@ class SalesAnalyst
 
   def bottom_merchants_by_invoice_count
     average_item_hash = {}
-    merchant_array = @sales_engine.merchants.merchants
+    merchant_array = @sales_engine.merchants.collection
     merchant_array.each do |merchant|
       x = merchant.invoices
       average_item_hash[x.length] = merchant
@@ -151,7 +145,7 @@ class SalesAnalyst
 
   def merchant_invoice_array
     average_array = []
-    merchant_array = @sales_engine.merchants.merchants
+    merchant_array = @sales_engine.merchants.collection
     merchant_array.each do |merchant|
       x = merchant.invoices
       average_array << x.length
@@ -161,19 +155,19 @@ class SalesAnalyst
 
   def invoice_status(status)
     array = []
-    @sales_engine.invoices.invoices.each do |invoice|
+    @sales_engine.invoices.collection.each do |invoice|
       if invoice.status == status.to_s
         array << invoice
       end
     end
-    percentage = (BigDecimal.new(array.length) / BigDecimal.new(@sales_engine.invoices.invoices.length))
+    percentage = (BigDecimal.new(array.length) / BigDecimal.new(@sales_engine.invoices.collection.length))
     percentage = percentage.to_f * 100
     percentage.round(2)
   end
 
   def top_days_by_invoice_count
     days = []
-    @sales_engine.invoices.invoices.each do |invoice|
+    @sales_engine.invoices.collection.each do |invoice|
       day = DateTime.parse(invoice.created_at)
       day = day.strftime("%a %d %b %Y")
       day = day[0..2]
@@ -198,19 +192,19 @@ class SalesAnalyst
 
   def to_day(day)
     if day = "Wed"
-      day = "Wednesday"
+      day == "Wednesday"
     elsif day = "Sat"
-      day = "Saturday"
+      day == "Saturday"
     elsif day = "Sun"
-      day = "Sunday"
+      day == "Sunday"
     elsif day = "Thu"
-      day = "Thursday"
+      day == "Thursday"
     elsif day = "Tue"
-      day = "Tuesday"
+      day == "Tuesday"
     elsif day = "Mon"
-      day = "Monday"
+      day == "Monday"
     elsif day = "Fri"
-      day = "Friday"
+      day == "Friday"
     end
     day
   end

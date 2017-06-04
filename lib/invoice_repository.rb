@@ -7,7 +7,7 @@ class InvoiceRepository
 
   include SalesItems
 
-  attr_reader :invoices
+  attr_reader :invoices, :collection
 
   def initialize(csv_file, sales_engine)
     @sales_engine = sales_engine
@@ -19,7 +19,7 @@ class InvoiceRepository
     @collection = CSVOpener.new(csv_file, self, type)
     @collection = @collection.holder
   end
-  
+
   def inspect
     "#<#{self.class} #{@merchants.size} rows>"
   end
