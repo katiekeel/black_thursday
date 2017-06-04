@@ -20,6 +20,10 @@ class TransactionRepository
     TransactionRepository.new(file)
   end
 
+  def inspect
+    "#<#{self.class} #{@merchants.size} rows>"
+  end
+
   def populate_transactions_repo(file, type)
     @collection = CSVOpener.new(@file, self, type)
     @collection = @collection.holder

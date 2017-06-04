@@ -15,9 +15,9 @@ class MerchantRepository
     populate_merchant_repo(csv_file, "merchant")
   end
 
-  # def inspect
-  #   "#<#{self.class} #{@merchants.size} rows>"
-  # end
+  def inspect
+    "#<#{self.class} #{@merchants.size} rows>"
+  end
 
   def populate_merchant_repo(csv_file, type)
     @collection = CSVOpener.new(csv_file, self, type)
@@ -28,7 +28,7 @@ class MerchantRepository
     @sales_engine.sales_engine_items(merchant_id)
   end
 
-  def merchant(merchant_id)
+  def merchant_repo_merchant(merchant_id)
     find_by_id(merchant_id)
   end
 

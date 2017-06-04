@@ -10,7 +10,7 @@ class Item
     @name = item_hash[:name]
     @description = item_hash[:description]
     @unit_price = to_big_decimal(item_hash[:unit_price]) unless item_hash[:unit_price] == nil
-    @merchant_id = item_hash[:merchant_id]
+    @merchant_id = item_hash[:merchant_id].to_i
     @created_at = item_hash[:created_at]
     @updated_at = item_hash[:updated_at]
   end
@@ -24,6 +24,6 @@ class Item
   end
 
   def merchant
-    @item_repository.merchant(self.merchant_id)
+    @item_repository.item_repo_merchant(@merchant_id)
   end
 end
