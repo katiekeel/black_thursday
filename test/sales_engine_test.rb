@@ -149,4 +149,35 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of Customer, result
     assert_equal "Sylvester", result.first_name
   end
+
+  def test_find_all_transaction_invoices
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    transaction = se.transactions.find_by_id(40)
+    result = transaction.invoice
+    assert_instance_of Invoice, result
+  end
+
+  def test_find_all_customers_merchants
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    customer = se.customers.find_by_id(30)
+    result = customer.merchants
+    assert_instance_of Array, result
+    assert_instance_of Merchant, result[0]
+    assert_equal 5, result.length
+    assert_equal "thepurplepenshop", result[4].name
+  end
 end

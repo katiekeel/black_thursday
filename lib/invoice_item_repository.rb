@@ -37,7 +37,6 @@ class InvoiceItemRepository
         item_ids << invoice_item.item_id
       end
     end
-    require 'pry' ; binding.pry
     @sales_engine.items.find_items_by_item_ids(item_ids)
   end
 end

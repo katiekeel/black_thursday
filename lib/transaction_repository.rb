@@ -42,4 +42,8 @@ class TransactionRepository
       transaction.invoice_id == invoice_id
     end
   end
+
+  def find_all_invoices_by_id(invoice_id)
+    @sales_engine.invoices.find_by_id(invoice_id)
+  end
 end
