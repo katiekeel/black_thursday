@@ -197,19 +197,19 @@ class SalesAnalyst
   end
 
   def to_day(day)
-    if day = "Wed"
+    if day == "Wed"
       day = "Wednesday"
-    elsif day = "Sat"
+    elsif day == "Sat"
       day = "Saturday"
-    elsif day = "Sun"
+    elsif day == "Sun"
       day = "Sunday"
-    elsif day = "Thu"
+    elsif day == "Thu"
       day = "Thursday"
-    elsif day = "Tue"
+    elsif day == "Tue"
       day = "Tuesday"
-    elsif day = "Mon"
+    elsif day == "Mon"
       day = "Monday"
-    elsif day = "Fri"
+    elsif day == "Fri"
       day = "Friday"
     end
     day
