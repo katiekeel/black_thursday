@@ -18,7 +18,23 @@ class Invoice
   end
 
   def merchant
-    @invoice_repository.merchant(self.merchant_id)
+    @invoice_repository.merchant(@merchant_id)
+  end
+
+  def invoice_items
+    @invoice_repository.find_invoice_items(@id)
+  end
+
+  def items
+    @invoice_repository.find_all_items_by_invoice_id(@id)
+  end
+
+  def transactions
+    @invoice_repository.find_transaction_with_id(@id)
+  end
+
+  def customer
+    @invoice_repository.find_customer(@customer_id)
   end
 
 end

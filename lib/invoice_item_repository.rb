@@ -30,5 +30,14 @@ class InvoiceItemRepository
     end
   end
 
-
+  def find_all_items_by_invoice_id(invoice_id)
+    item_ids = []
+    @collection.each do |invoice_item|
+      if invoice_item.invoice_id == invoice_id
+        item_ids << invoice_item.item_id
+      end
+    end
+    require 'pry' ; binding.pry
+    @sales_engine.items.find_items_by_item_ids(item_ids)
+  end
 end

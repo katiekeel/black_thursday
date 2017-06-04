@@ -34,7 +34,6 @@ module SalesItems
     @collection.select do |thing|
       thing.invoice_id.to_i == invoice_id
     end
-
   end
 
 end

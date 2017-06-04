@@ -53,4 +53,10 @@ class ItemRepository
     @sales_engine.merchant(merchant_id)
   end
 
+  def find_items_by_item_ids(item_id_array)
+    @collection.select do |item|
+      item_id_array.include?(item.id)
+    end
+  end
+
 end

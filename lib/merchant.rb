@@ -18,7 +18,11 @@ class Merchant
   end
 
   def customers
-    @merchant_repo.merchant_repo_customers(@id)
+    iv = invoices
+    iv.map do |invoice|
+      invoice.customers
+    end
+    require 'pry' ; binding.pry
   end
 
 end

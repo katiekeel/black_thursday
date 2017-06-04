@@ -36,4 +36,10 @@ class TransactionRepository
       transaction.result == result
     end
   end
+
+  def find_all_by_invoice_id(invoice_id)
+    @collection.select do |transaction|
+      transaction.invoice_id == invoice_id
+    end
+  end
 end

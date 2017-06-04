@@ -21,7 +21,7 @@ class InvoiceRepository
   end
 
   def inspect
-    "#<#{self.class} #{@merchants.size} rows>"
+    "#<#{self.class} #{@collection.size} rows>"
   end
 
   def find_all_by_customer_id(customer_id)
@@ -42,4 +42,19 @@ class InvoiceRepository
     @sales_engine.merchant(merchant_id)
   end
 
+  def find_invoice_items(invoice_id)
+    @sales_engine.invoice_items.find_all_by_invoice_id(invoice_id)
+  end
+
+  def find_all_items_by_invoice_id(invoice_id)
+    @sales_engine.invoice_items.find_all_items_by_invoice_id(invoice_id)
+  end
+
+  def find_transaction_with_id(invoice_id)
+    @sales_engine.transactions.find_all_by_invoice_id(invoice_id)
+  end
+
+  def find_customer(customer_id)
+    @sales_engine.customers.find_by_id(customer_id)
+  end
 end
