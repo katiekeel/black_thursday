@@ -66,6 +66,7 @@ class InvoiceRepository
       end
     end
     invoice_ids
+  end
 
   def invoice_repo_paid_in_full?(id)
     @sales_engine.invoice_paid_in_full?(id)
@@ -73,5 +74,16 @@ class InvoiceRepository
 
   def total(id)
     @sales_engine.total(id)
+  end
+
+  def invoices_shipped_by_date(date)
+    invoice_ids = []
+    @collection.select do |invoice|
+      invoice_date = Date.parse(invoice.created_at)
+      if invoice_date <= date && invoice.status == "shipped"
+        invoice_ids << invoice.id
+      end
+    end
+    invoice_ids
   end
 end

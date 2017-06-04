@@ -59,4 +59,11 @@ class ItemRepository
     end
   end
 
+  def find_price_given_item_id(item_hash)
+    mappings = {}
+    @collection.select do |item|
+      mappings[item.id] = item.unit_price
+    end
+    item_hash.map {|k, v| [mappings[k], v]}.to_h
+  end
 end

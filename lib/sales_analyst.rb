@@ -1,4 +1,5 @@
 require_relative 'sales_engine'
+require 'date'
 require 'bigdecimal'
 
 
@@ -31,7 +32,6 @@ class SalesAnalyst
   def average_item_price_per_merchant(merchant_id)
     merchant = @sales_engine.merchants.find_by_id(merchant_id)
     x = merchant.items
-    # require 'pry' ; binding.pry 
     y = x.map{|item| item.unit_price}
     average_price = (y.reduce(:+)/y.length).to_f/100
   end
@@ -191,23 +191,40 @@ class SalesAnalyst
   end
 
   def to_day(day)
-    if day = "Wed"
-      day == "Wednesday"
-    elsif day = "Sat"
-      day == "Saturday"
-    elsif day = "Sun"
-      day == "Sunday"
-    elsif day = "Thu"
-      day == "Thursday"
-    elsif day = "Tue"
-      day == "Tuesday"
-    elsif day = "Mon"
-      day == "Monday"
-    elsif day = "Fri"
-      day == "Friday"
+    if day == "Wed"
+      day = "Wednesday"
+    elsif day == "Sat"
+      day = "Saturday"
+    elsif day == "Sun"
+      day = "Sunday"
+    elsif day == "Thu"
+      day = "Thursday"
+    elsif day == "Tue"
+      day = "Tuesday"
+    elsif day == "Mon"
+      day = "Monday"
+    elsif day == "Fri"
+      day = "Friday"
     end
     day
   end
 
 
+  def invoices_shipped_by_date(date)
+    @sales_engine.invoices.invoices_shipped_by_date(date)
+  end
+
+  def find_all_items_by_invoices(invoice_ids)
+    @sales_engine.invoice_items.find_all_items_by_invoices(invoice_ids)
+  end
+
+  def total_revenue_by_date(date)
+    date = Date.parse(date)
+    invoice_ids = invoices_shipped_by_date(date)
+    price_hash = find_all_items_by_invoices(invoice_ids)
+    total_revenue = []
+    price_hash.each_pair { |price, quantity| total_revenue << price * quantity }
+    sum = total_revenue.reduce(:+).to_f/100
+    sum = sum.round(2)
+  end
 end

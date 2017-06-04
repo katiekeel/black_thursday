@@ -10,18 +10,26 @@ class SalesAnalystTest < Minitest::Test
 
   def test_sales_analyst_initiates
     se = SalesEngine.from_csv({
-      :items     => "./data/items.csv",
+      :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     assert_instance_of SalesAnalyst, sa
   end
 
   def test_sales_engine_still_holds_both_repos
     se = SalesEngine.from_csv({
-      :items     => "./data/items.csv",
+      :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     merchant_repo = sa.sales_engine.merchants
     assert_instance_of MerchantRepository, merchant_repo
@@ -33,9 +41,13 @@ class SalesAnalystTest < Minitest::Test
 
   def test_merchants_can_still_be_searched_via_merchant_id
     se = SalesEngine.from_csv({
-      :items     => "./data/items.csv",
+      :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     merchants_array = sa.sales_engine.merchants
     merchant = merchants_array.find_by_id(12334165)
@@ -44,9 +56,13 @@ class SalesAnalystTest < Minitest::Test
 
   def test_items_can_be_searched_by_id
     se = SalesEngine.from_csv({
-      :items     => "./data/items.csv",
+      :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     items_array = sa.sales_engine.items
     item = items_array.find_by_id(263405559)
@@ -55,9 +71,13 @@ class SalesAnalystTest < Minitest::Test
 
   def test_invoices_can_be_searched_by_id
     se = SalesEngine.from_csv({
-      :items     => "./data/items.csv",
+      :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     invoices_array = sa.sales_engine.invoices
     assert_instance_of InvoiceRepository, invoices_array
@@ -67,9 +87,13 @@ class SalesAnalystTest < Minitest::Test
 
   def test_merchants_can_call_all_items
     se = SalesEngine.from_csv({
-      :items     => "./data/items.csv",
+      :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     merchants_array = sa.sales_engine.merchants
     merchant = merchants_array.find_by_id(12334165)
@@ -79,9 +103,13 @@ class SalesAnalystTest < Minitest::Test
 
   def test_merchants_can_call_all_invoices
     se = SalesEngine.from_csv({
-      :items     => "./data/items.csv",
+      :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     merchants_array = sa.sales_engine.merchants
     merchant = merchants_array.find_by_id(12334165)
@@ -91,9 +119,13 @@ class SalesAnalystTest < Minitest::Test
 
   def test_merchants_items_can_be_averaged
     se = SalesEngine.from_csv({
-      :items     => "./data/items.csv",
+      :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     x = sa.average_items_per_merchant
     assert_equal 2.88, x
@@ -101,9 +133,13 @@ class SalesAnalystTest < Minitest::Test
 
   def test_invoices_can_call_merchant_by_id
     se = SalesEngine.from_csv({
-      :items     => "./data/items.csv",
+      :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     invoices_repo = sa.sales_engine.invoices
     invoice = invoices_repo.find_by_id(4985)
@@ -113,9 +149,13 @@ class SalesAnalystTest < Minitest::Test
 
   def test_it_takes_standard_deviation
     se = SalesEngine.from_csv({
-      :items     => "./data/items.csv",
+      :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     result = sa.average_items_per_merchant_standard_deviation
     assert_equal 3.26, result
@@ -123,9 +163,13 @@ class SalesAnalystTest < Minitest::Test
 
   def test_it_lists_merchants_with_most_items
     se = SalesEngine.from_csv({
-      :items     => "./data/items.csv",
+      :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     result = sa.merchants_with_high_item_count
     assert_instance_of Array, result
@@ -134,9 +178,13 @@ class SalesAnalystTest < Minitest::Test
 
   def test_it_gives_average_price_for_one_merchant
     se = SalesEngine.from_csv({
-      :items     => "./data/items.csv",
+      :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     result = sa.average_item_price_per_merchant(12334165)
     assert_equal 100, result
@@ -144,11 +192,16 @@ class SalesAnalystTest < Minitest::Test
 
   def test_golden_items_return_array_with_items
     se = SalesEngine.from_csv({
-      :items     => "./data/items.csv",
+      :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     result = sa.golden_items
+    require 'pry' ; binding.pry
     assert_instance_of Array, result
     assert_instance_of String, result[0]
   end
@@ -157,7 +210,11 @@ class SalesAnalystTest < Minitest::Test
     se = SalesEngine.from_csv({
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     result = sa.average_invoices_per_merchant
     assert_instance_of Float, result
@@ -167,7 +224,11 @@ class SalesAnalystTest < Minitest::Test
     se = SalesEngine.from_csv({
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     result = sa.average_invoices_per_merchant_standard_deviation
     assert_instance_of Float, result
@@ -177,7 +238,11 @@ class SalesAnalystTest < Minitest::Test
     se = SalesEngine.from_csv({
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     result = sa.top_merchants_by_invoice_count
     assert_instance_of Array, result
@@ -185,11 +250,14 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_returns_array_of_bottom_invoiced_merchants
-
     se = SalesEngine.from_csv({
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     # result = sa.bottom_merchants_by_invoice_count
     # assert_instance_of Array, result
@@ -200,7 +268,11 @@ class SalesAnalystTest < Minitest::Test
     se = SalesEngine.from_csv({
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"})
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
     sa = SalesAnalyst.new(se)
     result = sa.invoice_status(:pending)
     result2 = sa.invoice_status(:shipped)
@@ -208,5 +280,18 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 29.55, result
     assert_equal 56.95, result2
     assert_equal 13.5, result3
+  end
+
+  def test_total_revenue_by_date
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    revenue = sa.total_revenue_by_date("2017-01-01")
   end
 end

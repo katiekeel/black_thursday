@@ -45,6 +45,7 @@ class TransactionRepository
 
   def find_all_invoices_by_id(invoice_id)
     @sales_engine.invoices.find_by_id(invoice_id)
+  end
 
   def paid_in_full?(id)
     transaction = find_all_by_invoice_id(id)

@@ -54,4 +54,7 @@ class SalesEngine
     @invoice_items.total(id)
   end
 
+  def find_all_items_by_invoices(invoices)
+    @invoice_items.find_all_items_by_invoices(invoices)
+  end
 end
