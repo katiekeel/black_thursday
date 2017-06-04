@@ -15,9 +15,9 @@ class ItemRepository
     populate_items_repo(csv_file, "item")
   end
 
-  # def inspect
-  #   "#<#{self.class} #{@merchants.size} rows>"
-  # end
+  def inspect
+    "#<#{self.class} #{@merchants.size} rows>"
+  end
 
   def populate_items_repo(csv_file, type)
     @collection = CSVOpener.new(csv_file, self, type)
@@ -26,7 +26,7 @@ class ItemRepository
 
   def find_all_with_description(description_string)
     description_array = @collection.select do |item|
-      item.description.include?(description_string)
+      item.description.downcase.include?(description_string.downcase)
     end
     description_array
   end
@@ -49,8 +49,8 @@ class ItemRepository
     find_all_by_merchant_id(merchant_id)
   end
 
-  def merchant(merchant_id)
-    @sales_engine.merchant(merchant_id)
+  def item_repo_merchant(merchant_id)
+    @sales_engine.sales_engine_merchant(merchant_id)
   end
 
   def find_items_by_item_ids(item_id_array)

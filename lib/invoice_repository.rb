@@ -38,8 +38,8 @@ class InvoiceRepository
     return_value
   end
 
-  def merchant(merchant_id)
-    @sales_engine.merchant(merchant_id)
+  def invoice_repo_merchant(merchant_id)
+    @sales_engine.sales_engine_merchant(merchant_id)
   end
 
   def find_invoice_items(invoice_id)

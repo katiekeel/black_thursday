@@ -1,5 +1,5 @@
 require './lib/sales_engine'
-
+require 'pry'
 
 se = SalesEngine.from_csv({
   :items => "./data/items.csv",
@@ -10,5 +10,5 @@ se = SalesEngine.from_csv({
   :customers => "./data/customers.csv"
 })
 
-invoice = se.invoices.find_by_id(1)
-invoice.total
+transaction = se.transactions.find_by_id(6)
+puts transaction.id

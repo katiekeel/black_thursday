@@ -6,7 +6,7 @@ module SalesItems
 
   def find_by_id(id)
     return_value = @collection.select do |thing|
-      thing.id.to_i == id
+      thing.id == id.to_i
     end
     return_value.first
   end

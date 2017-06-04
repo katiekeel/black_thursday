@@ -22,8 +22,8 @@ class SalesEngine
     se = SalesEngine.new(item_merchant_hash)
   end
 
-  def merchant(item_id)
-    @merchants.merchant(item_id)
+  def sales_engine_merchant(merchant_id)
+    @merchants.merchant_repo_merchant(merchant_id)
   end
 
   def sales_engine_items(merchant_id)
