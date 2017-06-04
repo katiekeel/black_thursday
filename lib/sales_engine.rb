@@ -46,4 +46,12 @@ class SalesEngine
     @invoice_items.find_all_item_ids_by_invoice_id(invoice_id)
   end
 
+  def invoice_paid_in_full?(id)
+    @transactions.paid_in_full?(id)
+  end
+
+  def total(id)
+    @invoice_items.total(id)
+  end
+
 end

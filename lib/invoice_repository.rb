@@ -66,5 +66,12 @@ class InvoiceRepository
       end
     end
     invoice_ids
+
+  def invoice_repo_paid_in_full?(id)
+    @sales_engine.invoice_paid_in_full?(id)
+  end
+
+  def total(id)
+    @sales_engine.total(id)
   end
 end
