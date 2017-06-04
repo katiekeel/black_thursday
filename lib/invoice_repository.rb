@@ -58,6 +58,15 @@ class InvoiceRepository
     @sales_engine.customers.find_by_id(customer_id)
   end
 
+  def find_all_merchant_ids_by_customer_id(customer_id)
+    invoice_ids = []
+    @collection.each do |invoice|
+      if invoice.customer_id == customer_id
+        invoice_ids << invoice.merchant_id
+      end
+    end
+    invoice_ids
+
   def invoice_repo_paid_in_full?(id)
     @sales_engine.invoice_paid_in_full?(id)
   end

@@ -47,6 +47,9 @@ class TransactionRepository
     end
   end
 
+  def find_all_invoices_by_id(invoice_id)
+    @sales_engine.invoices.find_by_id(invoice_id)
+
   def paid_in_full?(id)
     transaction = find_all_by_invoice_id(id)
     return true if transaction.first.result == "success"

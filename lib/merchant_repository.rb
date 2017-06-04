@@ -40,4 +40,9 @@ class MerchantRepository
     @sales_engine.sales_engine_customers(merchant_id)
   end
 
+  def find_all_by_merchant_id(merchant_id_array)
+    @collection.select do |merchant|
+      merchant_id_array.include?(merchant.id)
+    end
+  end
 end

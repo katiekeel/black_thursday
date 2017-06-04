@@ -21,7 +21,6 @@ class Merchant
     iv.map do |invoice|
       invoice.customers
     end
-    require 'pry' ; binding.pry
   end
 
 end

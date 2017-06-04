@@ -15,4 +15,13 @@ class Customer
     @updated_at = customer_hash[:updated_at]
   end
 
+  def merchant_ids
+    @customer_repo.find_merchant_ids_by_id(@id)
+  end
+
+  def merchants
+    merchant_id_array = merchant_ids
+    @customer_repo.find_all_merchants_by_ids(merchant_id_array)
+  end
+
 end

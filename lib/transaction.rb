@@ -19,5 +19,8 @@ class Transaction
     @updated_at = transaction_hash[:updated_at]
   end
 
+  def invoice
+    @transaction_repo.find_all_invoices_by_id(@invoice_id)
+  end
 
 end
