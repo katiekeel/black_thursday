@@ -19,13 +19,31 @@ class SalesEngine
     @item_repo = ItemRepository.new(item_merchant_hash[:items], self)
     @merchants = MerchantRepository.new(item_merchant_hash[:merchants], self)
     @invoice_repo = InvoiceRepository.new(item_merchant_hash[:invoices], self)
-    @invoice_items = InvoiceItemRepository.from_csv(item_merchant_hash[:invoice_items], self)
-    @transactions = TransactionRepository.from_csv(item_merchant_hash[:transactions], self)
-    @customers = CustomerRepository.from_csv(item_merchant_hash[:customers], self)
+    @invoice_items = create_invoice_item_repo(item_merchant_hash[:invoice_items])
+    @transactions = create_transaction_repo(item_merchant_hash[:transactions])
+    @customers = create_customers_repo(item_merchant_hash[:customers])
   end
 
   def self.from_csv(item_merchant_hash)
     SalesEngine.new(item_merchant_hash)
+  end
+
+  def create_invoice_item_repo(invoice_items_list)
+    @invoice_items = InvoiceItemRepository.new(self)
+    @invoice_items.from_csv(invoice_items_list)
+    invoice_items = @invoice_items
+  end
+
+  def create_transaction_repo(transactions_list)
+    @transactions = TransactionRepository.new(self)
+    @transactions.from_csv(transactions_list)
+    transactions = @transactions
+  end
+
+  def create_customers_repo(customers_list)
+    @customers = CustomerRepository.new(self)
+    @customers.from_csv(customers_list)
+    customers = @customers
   end
 
   def merchant(merchant_id)
