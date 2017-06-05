@@ -29,20 +29,22 @@ class SalesAnalyst
     standard_dev.round(2)
   end
 
-  def average_item_price_per_merchant(merchant_id)
+  def average_item_price_for_merchant(merchant_id)
     merchant = @sales_engine.merchants.find_by_id(merchant_id)
     x = merchant.items
     y = x.map{|item| item.unit_price}
-    average_price = (y.reduce(:+)/y.length).to_f/100
+    average_price = (y.reduce(:+)/y.length)
+    average_price = BigDecimal.new(average_price).round(2)
   end
 
   def average_average_price_per_merchant
     average_array = []
     @sales_engine.merchants.collection.each do |merchant|
       id = merchant.id
-      average_array << average_item_price_per_merchant(id)
+      average_array << average_item_price_for_merchant(id)
     end
-    average_average = (average_array.reduce(:+)/average_array.length).to_f/100
+    average_average = (average_array.reduce(:+)/average_array.length)
+    average_average = BigDecimal.new(average_average).round(2)
   end
 
   def merchants_with_high_item_count

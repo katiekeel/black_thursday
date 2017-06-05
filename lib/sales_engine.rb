@@ -54,7 +54,6 @@ class SalesEngine
     @invoice_items.total(id)
   end
 
-<<<<<<< HEAD
   def sales_engine_find_customers(merchant_id)
     @invoices.find_customers(merchant_id)
   end
