@@ -20,6 +20,6 @@ class Item
   end
 
   def merchant
-    @item_repository.item_repo_merchant(@merchant_id)
+    @item_repository.merchant(@merchant_id)
   end
 end

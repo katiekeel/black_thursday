@@ -1,5 +1,4 @@
-require './lib/sales_engine'
-require 'pry'
+require_relative 'sales_analyst'
 
 se = SalesEngine.from_csv({
   :items => "./data/items.csv",
@@ -10,5 +9,5 @@ se = SalesEngine.from_csv({
   :customers => "./data/customers.csv"
 })
 
-customer = se.customers.find_by_id(30)
-puts customer.merchants
+sa = SalesAnalyst.new(se)
+p sa.merchants_with_high_item_count

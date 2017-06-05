@@ -26,11 +26,11 @@ class Invoice
   end
 
   def items
-    @invoice_repository.find_all_items_by_invoice_id(@id)
+    @invoice_repository.items(@id)
   end
 
   def transactions
-    @invoice_repository.find_transaction_with_id(@id)
+    @invoice_repository.transactions(@id)
   end
 
   def customer

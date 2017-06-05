@@ -20,7 +20,7 @@ class Transaction
   end
 
   def invoice
-    @transaction_repo.find_all_invoices_by_id(@invoice_id)
+    @transaction_repo.invoice(@invoice_id)
   end
 
 end

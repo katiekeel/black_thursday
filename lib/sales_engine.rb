@@ -7,12 +7,17 @@ require_relative 'transaction_repository'
 
 class SalesEngine
 
-  attr_reader :merchants, :items, :invoices, :invoice_items, :transactions, :customers
+  attr_reader :merchants,
+              :item_repo,
+              :invoice_repo,
+              :invoice_items,
+              :transactions,
+              :customers
 
   def initialize(item_merchant_hash)
-    @items = ItemRepository.new(item_merchant_hash[:items], self)
+    @item_repo = ItemRepository.new(item_merchant_hash[:items], self)
     @merchants = MerchantRepository.new(item_merchant_hash[:merchants], self)
-    @invoices = InvoiceRepository.new(item_merchant_hash[:invoices], self)
+    @invoice_repo = InvoiceRepository.new(item_merchant_hash[:invoices], self)
     @invoice_items = InvoiceItemRepository.new(item_merchant_hash[:invoice_items], self)
     @transactions = TransactionRepository.new(item_merchant_hash[:transactions], self)
     @customers = CustomerRepository.new(item_merchant_hash[:customers], self)
@@ -22,24 +27,89 @@ class SalesEngine
     se = SalesEngine.new(item_merchant_hash)
   end
 
-  def sales_engine_merchant(merchant_id)
-    @merchants.merchant_repo_merchant(merchant_id)
+  def merchant(merchant_id)
+    @merchants.find_by_id(merchant_id)
   end
 
-  def sales_engine_items(merchant_id)
-    @items.find_all_by_merchant_id(merchant_id)
+  def items(merchant_id = nil)
+    if self == Item
+      @item_repo.find_all_by_merchant_id(merchant_id)
+    else
+      @item_repo
+    end
   end
 
-  def sales_engine_invoices(merchant_id)
-    @invoices.find_all_by_merchant_id(merchant_id)
+  def invoices(merchant_id = nil)
+    if self == Invoice
+      @invoice_repo.find_all_by_merchant_id(merchant_id)
+    else
+      @invoice_repo
+    end
   end
 
-  def sales_engine_customers(merchant_id)
-    @customers.find_all_by_merchant_id(merchant_id)
+  def find_invoice_items_by_invoice_id(invoice_id)
+    result = @invoice_items.find_all_by_invoice_id(invoice_id)
+    extract_item_ids(result)
+    find_items_by_multiple_item_ids(result)
+  end
+
+  def extract_item_ids(result)
+    result = result.map do |invoice_item|
+      invoice_item.item_id
+    end
+  end
+
+  def find_items_by_multiple_item_ids(item_ids)
+    @item_repo.find_by_multiple_item_ids(item_ids)
+  end
+
+  def find_transactions_by_invoice_id(invoice_id)
+    @transactions.find_all_by_invoice_id(invoice_id)
+  end
+
+  def customer(customer_id)
+    @customers.find_by_id(customer_id)
+  end
+
+  def find_invoice_by_transaction_invoice_id(invoice_id)
+    @invoice_repo.find_by_id(invoice_id)
+  end
+
+  def find_customers_by_merchant_id(merchant_id)
+    result = @invoice_repo.find_all_by_merchant_id(merchant_id)
+    result = extract_customers(result)
+    find_multiple_customers_by_id(result)
+  end
+
+  def extract_customers(invoices)
+    invoices = invoices.map do |invoice|
+      invoice.customer_id
+    end
+  end
+
+  def find_multiple_customers_by_id(customer_ids)
+    @customers.find_multiple_customers_by_id(customer_ids)
+  end
+
+  def find_merchants_by_customer_id(customer_id)
+    invoices = @invoice_repo.find_all_by_customer_id(customer_id)
+    merchant_ids = extract_merchants(invoices)
+    find_multiple_merchants_by_id(merchant_ids)
+  end
+
+  def extract_merchants(invoices)
+    # binding.pry
+    invoices = invoices.map do |invoice|
+      invoice.merchant_id
+    end
+  end
+
+  def find_multiple_merchants_by_id(merchant_ids)
+    @merchants.find_multiple_merchants_by_id(merchant_ids)
   end
 
   def sales_engine_items_by_invoice_id(invoice_id)
-    @items.find_all_by_invoice_id(invoice_id)
+    @item_repo.find_all_by_invoice_id(invoice_id)
   end
 
   def sale_engine_invoice_items_item_ids(invoice_id)
@@ -54,21 +124,11 @@ class SalesEngine
     @invoice_items.total(id)
   end
 
-  def sales_engine_find_customers(merchant_id)
-    @invoices.find_customers(merchant_id)
-  end
-
-  def find_customers(customers)
-    @customers.find_customers_by_id(customers)
-  end
 
   def is_paid_in_full?(invoice_id)
     @transactions.is_paid_in_full?(invoice_id)
   end
 
-  def customer(customer_id)
-    @customers.find_by_id(customer_id)
-  end
 
   def find_all_items_by_invoices(invoices)
     @invoice_items.find_all_items_by_invoices(invoices)
