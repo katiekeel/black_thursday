@@ -33,11 +33,6 @@ class ItemTest < Minitest::Test
     assert_equal item.unit_price, 0.15099e3
   end
 
-  def test_item_price_length_is_three
-    item = Item.new({:unit_price => "109"}, item_repo = nil)
-    assert_equal item.unit_price, 0.109e1
-  end
-
   def test_item_price_is_big_decimal
     item = Item.new({:unit_price => "109"}, item_repo = nil)
     assert_instance_of BigDecimal, item.unit_price
@@ -85,6 +80,11 @@ class ItemTest < Minitest::Test
   def test_item_price_in_dollars_five
     item = Item.new({:unit_price => "10990"}, item_repo = nil)
     assert_equal item.unit_price_to_dollars, 109.90
+  end
+
+  def test_item_has_item_repo
+    item = Item.new({:unit_price => "10990"}, item_repo = nil)
+    assert_nil item.item_repository
   end
 
 end
