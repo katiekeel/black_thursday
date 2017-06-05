@@ -1,5 +1,4 @@
 require_relative 'item'
-require 'csv'
 require_relative 'csv_opener'
 require_relative 'sales_items'
 

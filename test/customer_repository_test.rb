@@ -12,7 +12,7 @@ class CustomerRepositoryTest < Minitest::Test
   def test_customer_repository_can_be_populated
     cr = CustomerRepository.new(sales_engine = nil)
     cr.from_csv("./data/customers.csv")
-    assert_equal cr.collection.length, 1000
+    assert_equal cr.collection.count, 1000
   end
 
   def test_customer_repository_all

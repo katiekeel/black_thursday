@@ -77,5 +77,11 @@ class TransactionRepositoryTest < Minitest::Test
     assert_empty transactions
   end
 
+  def test_if_invoice_is_paid_in_full
+    tr = TransactionRepository.new(sales_engine = nil)
+    tr.from_csv("./data/transactions.csv")
+    assert tr.is_paid_in_full?(1)
+  end
+
 
 end

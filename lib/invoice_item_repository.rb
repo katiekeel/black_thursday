@@ -39,7 +39,7 @@ class InvoiceItemRepository
         invoice_item.invoice_id == invoice_id
     end
     total = invoice_items.map do |invoice_item|
-      invoice_item.unit_price * invoice_item.quantity
+      invoice_item.unit_price_to_dollars * invoice_item.quantity
     end
     total.reduce(:+)
   end

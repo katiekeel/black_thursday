@@ -1,5 +1,4 @@
 require_relative 'transaction'
-require_relative 'sales_engine'
 require_relative 'sales_items'
 require_relative 'csv_opener'
 

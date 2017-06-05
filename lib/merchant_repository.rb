@@ -1,4 +1,3 @@
-require 'csv'
 require_relative 'merchant'
 require_relative 'csv_opener'
 require_relative 'sales_items'
