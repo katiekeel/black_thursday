@@ -6,9 +6,9 @@ class InvoiceItemRepository
 
   include SalesItems
 
-  attr_reader :collection
+  attr_reader :collection, :file
 
-  def initialize(file, sales_engine)
+  def initialize(sales_engine)
     @file = file
     @sales_engine = sales_engine
     @collection = []
