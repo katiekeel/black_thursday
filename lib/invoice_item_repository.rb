@@ -12,11 +12,11 @@ class InvoiceItemRepository
     @file = file
     @sales_engine = sales_engine
     @collection = []
-    populate_invoice_items_repo(@file, "invoice_item")
   end
 
-  def self.from_csv(file)
-    InvoiceItemRepository.new(@file, sales_engine)
+  def from_csv(file, sales_engine = nil)
+    @file = file
+    populate_invoice_items_repo(@file, "invoice_item")
   end
 
   def populate_invoice_items_repo(file, type)

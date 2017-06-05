@@ -7,17 +7,17 @@ class TransactionRepository
 
   include SalesItems
 
-  attr_reader :collection
+  attr_reader :collection, :file
 
-  def initialize(file, sales_engine)
+  def initialize(sales_engine)
     @file = file
-    @collection = []
     @sales_engine = sales_engine
-    populate_transactions_repo(@file, "transaction")
+    @collection = []
   end
 
-  def self.from_csv(file)
-    TransactionRepository.new(file)
+  def from_csv(file)
+    @file = file
+    populate_transactions_repo(@file, "transaction")
   end
 
   def inspect

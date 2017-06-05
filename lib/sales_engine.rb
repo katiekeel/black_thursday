@@ -15,12 +15,13 @@ class SalesEngine
               :customers
 
   def initialize(item_merchant_hash)
+    @item_merchant_hash = item_merchant_hash
     @item_repo = ItemRepository.new(item_merchant_hash[:items], self)
     @merchants = MerchantRepository.new(item_merchant_hash[:merchants], self)
     @invoice_repo = InvoiceRepository.new(item_merchant_hash[:invoices], self)
-    @invoice_items = InvoiceItemRepository.new(item_merchant_hash[:invoice_items], self)
-    @transactions = TransactionRepository.new(item_merchant_hash[:transactions], self)
-    @customers = CustomerRepository.new(item_merchant_hash[:customers], self)
+    @invoice_items = InvoiceItemRepository.from_csv(item_merchant_hash[:invoice_items], self)
+    @transactions = TransactionRepository.from_csv(item_merchant_hash[:transactions], self)
+    @customers = CustomerRepository.from_csv(item_merchant_hash[:customers], self)
   end
 
   def self.from_csv(item_merchant_hash)
