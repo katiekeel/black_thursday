@@ -14,7 +14,7 @@ class Customer
     @created_at = customer_hash[:created_at]
     @updated_at = customer_hash[:updated_at]
   end
-  
+
   def merchants
     @customer_repo.merchants(@id)
   end
