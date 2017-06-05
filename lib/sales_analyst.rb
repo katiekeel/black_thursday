@@ -240,7 +240,14 @@ class SalesAnalyst
 
   def merchants_with_pending_invoices
     invoices = @sales_engine.invoices.collection.find_all {|invoice| invoice.status.to_s == "pending"}
-    merchant_ids = invoices.map{|invoice| invoice.merchant_id}
-    require 'pry' ; binding.pry
+    merchant_ids = invoices.map{|invoice| invoice.merchant_id}.uniq!
+    @sales_engine.merchants.find_all_by_merchant_id(merchant_ids)
+  end
+
+  def merchants_with_only_one_item
+    merchant_ids = @sales_engine.items.collection.map{|item| item.merchant_id}
+    merchants = merchant_ids.group_by(&:itself)
+    merchants = merchants.select{|key, val| val.length == 1}.keys
+    @sales_engine.merchants.find_all_by_merchant_id(merchants)
   end
 end
