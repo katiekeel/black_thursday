@@ -50,8 +50,8 @@ class InvoiceRepository
     @sales_engine.customer(customer_id)
   end
 
-  def invoice_repo_merchant(merchant_id)
-    @sales_engine.sales_engine_merchant(merchant_id)
+  def merchant(merchant_id)
+    @sales_engine.find_merchant_by_invoice_id(merchant_id)
   end
 
   def find_invoice_items(invoice_id)

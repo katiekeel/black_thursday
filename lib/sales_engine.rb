@@ -32,11 +32,15 @@ class SalesEngine
   end
 
   def items(merchant_id = nil)
-    if self == Item
+    if self.class == Item
       @item_repo.find_all_by_merchant_id(merchant_id)
     else
       @item_repo
     end
+  end
+
+  def find_items_by_merchant_id(merchant_id)
+    @item_repo.find_all_by_merchant_id(merchant_id)
   end
 
   def invoices(merchant_id = nil)
@@ -47,9 +51,13 @@ class SalesEngine
     end
   end
 
+  def find_invoices_by_merchant_id(merchant_id)
+    @invoice_repo.find_all_by_merchant_id(merchant_id)
+  end
+
   def find_invoice_items_by_invoice_id(invoice_id)
     result = @invoice_items.find_all_by_invoice_id(invoice_id)
-    extract_item_ids(result)
+    result = extract_item_ids(result)
     find_items_by_multiple_item_ids(result)
   end
 
@@ -98,7 +106,6 @@ class SalesEngine
   end
 
   def extract_merchants(invoices)
-    # binding.pry
     invoices = invoices.map do |invoice|
       invoice.merchant_id
     end
@@ -108,12 +115,12 @@ class SalesEngine
     @merchants.find_multiple_merchants_by_id(merchant_ids)
   end
 
-  def sales_engine_items_by_invoice_id(invoice_id)
-    @item_repo.find_all_by_invoice_id(invoice_id)
+  def find_merchant_by_invoice_id(merchant_id)
+    @merchants.find_by_id(merchant_id)
   end
 
-  def sale_engine_invoice_items_item_ids(invoice_id)
-    @invoice_items.find_all_item_ids_by_invoice_id(invoice_id)
+  def sales_engine_items_by_invoice_id(invoice_id)
+    @item_repo.find_all_by_invoice_id(invoice_id)
   end
 
   def invoice_paid_in_full?(id)
@@ -124,11 +131,9 @@ class SalesEngine
     @invoice_items.total(id)
   end
 
-
   def is_paid_in_full?(invoice_id)
     @transactions.is_paid_in_full?(invoice_id)
   end
-
 
   def find_all_items_by_invoices(invoices)
     @invoice_items.find_all_items_by_invoices(invoices)

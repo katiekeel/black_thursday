@@ -25,11 +25,11 @@ class MerchantRepository
   end
 
   def items(merchant_id)
-    @sales_engine.items(merchant_id)
+    @sales_engine.find_items_by_merchant_id(merchant_id)
   end
 
   def invoices(merchant_id)
-    @sales_engine.invoices(merchant_id)
+    @sales_engine.find_invoices_by_merchant_id(merchant_id)
   end
 
   def customers(merchant_id)
