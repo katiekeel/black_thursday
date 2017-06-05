@@ -23,5 +23,4 @@ class InvoiceItem
     price = @unit_price.to_f
     price.round(2)
   end
-  
 end

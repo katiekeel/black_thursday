@@ -290,7 +290,7 @@ class SalesAnalystTest < Minitest::Test
     sa = SalesAnalyst.new(se)
     invoice = se.invoices.find_by_id(20)
     result = invoice.total
-    assert_equal Float, result
+    assert_instance_of BigDecimal, result
   end
 
   def test_status_percentages_all_work

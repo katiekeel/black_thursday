@@ -26,7 +26,13 @@ module SalesItems
 
   def find_all_by_merchant_id(merchant_id)
     @collection.select do |thing|
-      thing.merchant_id == merchant_id || thing.id == merchant_id
+      thing.id == merchant_id
+    end
+  end
+
+  def find_all_by_merchant_ids(merchant_id_array)
+    @collection.select do |merchant|
+      merchant_id_array.include?(merchant.id)
     end
   end
 

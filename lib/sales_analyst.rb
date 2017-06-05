@@ -237,19 +237,20 @@ class SalesAnalyst
     price_array = @sales_engine.invoice_items.map_hash(invoices_ids)
     hash = Hash[merchant_ids.zip(price_array)].sort_by{|key, val| val}.reverse!
     top_sellers = hash[0..x-1].to_h
-    @sales_engine.merchants.find_all_by_merchant_id(top_sellers.keys)
+    @sales_engine.merchants.find_all_by_merchant_ids(top_sellers.keys)
   end
 
   def merchants_with_pending_invoices
     invoices = @sales_engine.invoices.collection.find_all {|invoice| invoice.status.to_s == "pending"}
     merchant_ids = invoices.map{|invoice| invoice.merchant_id}.uniq!
-    @sales_engine.merchants.find_all_by_merchant_id(merchant_ids)
+    @sales_engine.merchants.find_all_by_merchant_ids(merchant_ids)
   end
 
   def merchants_with_only_one_item
     merchant_ids = @sales_engine.items.collection.map{|item| item.merchant_id}
     merchants = merchant_ids.group_by(&:itself)
     merchants = merchants.select{|key, val| val.length == 1}.keys
-    @sales_engine.merchants.find_all_by_merchant_id(merchants)
+    # require 'pry' ; binding.pry
+    @sales_engine.merchants.find_all_by_merchant_ids(merchants)
   end
 end
