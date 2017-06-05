@@ -30,17 +30,34 @@ class ItemTest < Minitest::Test
 
   def test_item_has_a_price
     item = Item.new({:unit_price => "1099"}, item_repo = nil)
-    assert_equal item.unit_price, 0.1099e4
+    assert_equal item.unit_price, 0.1099e2
   end
 
   def test_item_has_another_price
     item = Item.new({:unit_price => "15099"}, item_repo = nil)
-    assert_equal item.unit_price, 0.15099e5
+    assert_equal item.unit_price, 0.15099e3
   end
 
   def test_item_price_length_is_three
     item = Item.new({:unit_price => "109"}, item_repo = nil)
-    assert_equal item.unit_price, 0.109e3
+    assert_equal item.unit_price, 0.109e1
+  end
+
+  def test_item_price_is_big_decimal
+    item = Item.new({:unit_price => "109"}, item_repo = nil)
+    assert_instance_of BigDecimal, item.unit_price
+  end
+
+  def test_item_price_to_dollars
+    item = Item.new({:unit_price => "109"}, item_repo = nil)
+    item_price = item.unit_price_to_dollars
+    assert_equal item_price, 1.09
+  end
+
+  def test_item_price_in_dollars_is_a_float
+    item = Item.new({:unit_price => "109"}, item_repo = nil)
+    item_price = item.unit_price_to_dollars
+    assert_instance_of Float, item_price
   end
 
   def test_item_has_a_merchant_id

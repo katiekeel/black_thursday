@@ -1,4 +1,13 @@
-require_relative 'item_repository'
+require_relative 'sales_analyst'
 
-item_repo = ItemRepository.new('./data/items.csv', sales_engine = nil)
-item_repo.find_by_id(263550472)
+se = SalesEngine.from_csv({
+  :items => "./data/items.csv",
+  :merchants => "./data/merchants.csv",
+  :invoices => "./data/invoices.csv",
+  :invoice_items => "./data/invoice_items.csv",
+  :transactions => "./data/transactions.csv",
+  :customers => "./data/customers.csv"
+})
+
+sa = SalesAnalyst.new(se)
+p sa.merchants_with_high_item_count

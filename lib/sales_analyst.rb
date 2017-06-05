@@ -29,20 +29,22 @@ class SalesAnalyst
     standard_dev.round(2)
   end
 
-  def average_item_price_per_merchant(merchant_id)
+  def average_item_price_for_merchant(merchant_id)
     merchant = @sales_engine.merchants.find_by_id(merchant_id)
     x = merchant.items
     y = x.map{|item| item.unit_price}
-    average_price = (y.reduce(:+)/y.length).to_f/100
+    average_price = (y.reduce(:+)/y.length)
+    average_price = BigDecimal.new(average_price).round(2)
   end
 
   def average_average_price_per_merchant
     average_array = []
     @sales_engine.merchants.collection.each do |merchant|
       id = merchant.id
-      average_array << average_item_price_per_merchant(id)
+      average_array << average_item_price_for_merchant(id)
     end
-    average_average = (average_array.reduce(:+)/average_array.length).to_f/100
+    average_average = (average_array.reduce(:+)/average_array.length)
+    average_average = BigDecimal.new(average_average).round(2)
   end
 
   def merchants_with_high_item_count
@@ -50,11 +52,11 @@ class SalesAnalyst
     merchant_array = @sales_engine.merchants.collection
     merchant_array.each do |merchant|
       x = merchant.items
-      average_item_hash[x.length] = merchant
+      average_item_hash[merchant] = x.length
     end
     array = []
     stddev = standard_deviation
-    average_item_hash.each_pair do |num, merchant|
+    average_item_hash.each_pair do |merchant, num|
       if num > (average_items_per_merchant + stddev)
         array << merchant
       end
@@ -83,8 +85,8 @@ class SalesAnalyst
     stddev = Math.sqrt((temporary_math_array.reduce(:+))/(temporary_math_array.length - 1))
     golden_items = []
     @sales_engine.items.collection.each do |item|
-        if item.unit_price > stddev
-          golden_items << item.name
+        if item.unit_price > avgprice + stddev*2
+          golden_items << item
         end
     end
     golden_items
@@ -114,13 +116,13 @@ class SalesAnalyst
     merchant_array = @sales_engine.merchants.collection
     merchant_array.each do |merchant|
       x = merchant.invoices
-      average_item_hash[x.length] = merchant
+      average_item_hash[merchant] = x.length
     end
     array = []
     stddev = standard_deviation_invoice
-    average_item_hash.each_pair do |num, merchant|
+    average_item_hash.each_pair do |merchant, num|
       if num > (average_invoices_per_merchant + stddev*2)
-        array << merchant.name
+        array << merchant
       end
     end
     array
@@ -131,13 +133,13 @@ class SalesAnalyst
     merchant_array = @sales_engine.merchants.collection
     merchant_array.each do |merchant|
       x = merchant.invoices
-      average_item_hash[x.length] = merchant
+      average_item_hash[merchant] = x.length
     end
     array = []
     stddev = standard_deviation_invoice
-    average_item_hash.each_pair do |num, merchant|
-      if num < (average_invoices_per_merchant + stddev*2)
-        array << merchant.name
+    average_item_hash.each_pair do |merchant, num|
+      if num < (average_invoices_per_merchant - stddev*2)
+        array << merchant
       end
     end
     array

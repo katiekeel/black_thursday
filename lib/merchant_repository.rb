@@ -24,25 +24,21 @@ class MerchantRepository
     @collection = @collection.holder
   end
 
-  def merchant_repo_items(merchant_id)
-    @sales_engine.sales_engine_items(merchant_id)
+  def items(merchant_id)
+    @sales_engine.find_items_by_merchant_id(merchant_id)
   end
 
-  def merchant_repo_merchant(merchant_id)
-    find_by_id(merchant_id)
+  def invoices(merchant_id)
+    @sales_engine.find_invoices_by_merchant_id(merchant_id)
   end
 
-  def merchant_repo_invoices(merchant_id)
-    @sales_engine.sales_engine_invoices(merchant_id)
+  def customers(merchant_id)
+    @sales_engine.find_customers_by_merchant_id(merchant_id)
   end
 
-  def merchant_repo_customers(merchant_id)
-    @sales_engine.sales_engine_customers(merchant_id)
-  end
-
-  def find_all_by_merchant_id(merchant_id_array)
-    @collection.select do |merchant|
-      merchant_id_array.include?(merchant.id)
+  def find_multiple_merchants_by_id(merchant_ids)
+    results = merchant_ids.map do |merchant_id|
+      find_by_id(merchant_id)
     end
   end
 end

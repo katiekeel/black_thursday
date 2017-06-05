@@ -45,12 +45,18 @@ class ItemRepository
     prices_range_array
   end
 
-  def from_sales_engine_by_merchant_id(merchant_id)
-    find_all_by_merchant_id(merchant_id)
+  # def from_sales_engine_by_merchant_id(merchant_id)
+  #   find_all_by_merchant_id(merchant_id)
+  # end
+
+  def merchant(merchant_id)
+    @sales_engine.merchant(merchant_id)
   end
 
-  def item_repo_merchant(merchant_id)
-    @sales_engine.sales_engine_merchant(merchant_id)
+  def find_by_multiple_item_ids(item_ids)
+    results = item_ids.map do |item_id|
+      find_by_id(item_id)
+    end
   end
 
   def find_items_by_item_ids(item_id_array)

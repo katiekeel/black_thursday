@@ -10,5 +10,5 @@ se = SalesEngine.from_csv({
   :customers => "./data/customers.csv"
 })
 
-transaction = se.transactions.find_by_id(6)
-puts transaction.id
+invoice = se.invoices.find_by_id(20)
+puts invoice.items

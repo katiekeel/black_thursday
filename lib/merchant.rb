@@ -9,18 +9,15 @@ class Merchant
   end
 
   def items
-    @merchant_repo.merchant_repo_items(@id)
+    @merchant_repo.items(@id)
   end
 
   def invoices
-    @merchant_repo.merchant_repo_invoices(@id)
+    @merchant_repo.invoices(@id)
   end
 
   def customers
-    iv = invoices
-    iv.map do |invoice|
-      invoice.customers
-    end
+    @merchant_repo.customers(id)
   end
 
 end

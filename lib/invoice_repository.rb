@@ -38,8 +38,20 @@ class InvoiceRepository
     return_value
   end
 
-  def invoice_repo_merchant(merchant_id)
-    @sales_engine.sales_engine_merchant(merchant_id)
+  def items(id)
+    @sales_engine.find_invoice_items_by_invoice_id(id)
+  end
+
+  def transactions(invoice_id)
+    @sales_engine.find_transactions_by_invoice_id(invoice_id)
+  end
+
+  def customer(customer_id)
+    @sales_engine.customer(customer_id)
+  end
+
+  def merchant(merchant_id)
+    @sales_engine.find_merchant_by_invoice_id(merchant_id)
   end
 
   def find_invoice_items(invoice_id)
@@ -47,25 +59,7 @@ class InvoiceRepository
   end
 
   def find_all_items_by_invoice_id(invoice_id)
-    @sales_engine.invoice_items.find_all_items_by_invoice_id(invoice_id)
-  end
-
-  def find_transaction_with_id(invoice_id)
-    @sales_engine.transactions.find_all_by_invoice_id(invoice_id)
-  end
-
-  def find_customer(customer_id)
-    @sales_engine.customers.find_by_id(customer_id)
-  end
-
-  def find_all_merchant_ids_by_customer_id(customer_id)
-    invoice_ids = []
-    @collection.each do |invoice|
-      if invoice.customer_id == customer_id
-        invoice_ids << invoice.merchant_id
-      end
-    end
-    invoice_ids
+    @sales_engine.find_all_items_by_invoice_id(invoice_id)
   end
 
   def invoice_repo_paid_in_full?(id)
@@ -75,6 +69,11 @@ class InvoiceRepository
   def total(id)
     @sales_engine.total(id)
   end
+
+  def is_paid_in_full?(invoice_id)
+    @sales_engine.is_paid_in_full?(invoice_id)
+  end
+
 
   def invoices_shipped_by_date(date)
     invoice_ids = []

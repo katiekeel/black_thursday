@@ -40,11 +40,15 @@ class CustomerRepository
     end
   end
 
-  def find_merchant_ids_by_id(customer_id)
-    @sales_engine.invoices.find_all_merchant_ids_by_customer_id(customer_id)
+  def find_multiple_customers_by_id(customer_ids)
+    results = customer_ids.map do |customer_id|
+      find_by_id(customer_id)
+    end
+    results.uniq
   end
 
-  def find_all_merchants_by_ids(merchant_array)
-    merchant_array.map {|merchant_id| @sales_engine.merchants.find_by_id(merchant_id)}
+  def merchants(customer_id)
+    @sales_engine.find_merchants_by_customer_id(customer_id)
   end
+
 end

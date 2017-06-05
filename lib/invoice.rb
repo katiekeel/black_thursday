@@ -18,7 +18,7 @@ class Invoice
   end
 
   def merchant
-    @invoice_repository.invoice_repo_merchant(@merchant_id)
+    @invoice_repository.merchant(@merchant_id)
   end
 
   def invoice_items
@@ -26,24 +26,25 @@ class Invoice
   end
 
   def items
-    @invoice_repository.find_all_items_by_invoice_id(@id)
+    @invoice_repository.items(@id)
   end
 
   def transactions
-    @invoice_repository.find_transaction_with_id(@id)
+    @invoice_repository.transactions(@id)
   end
 
   def customer
-    @invoice_repository.find_customer(@customer_id)
+    @invoice_repository.customer(@customer_id)
   end
 
   def is_paid_in_full?
-    return true if @status == "shipped" || @status == "returned"
-    return false if @status == "pending"
+    @invoice_repository.is_paid_in_full?(@id)
   end
 
   def total
-    @invoice_repository.total(@id)
+    if is_paid_in_full? == true
+      @invoice_repository.total(@id)
+    end
   end
 
 end
