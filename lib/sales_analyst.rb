@@ -227,4 +227,14 @@ class SalesAnalyst
     sum = total_revenue.reduce(:+).to_f/100
     sum = sum.round(2)
   end
+
+  def top_revenue_earners
+    invoices = @sales_engine.invoices.collection.find_all do |invoice|
+      invoice.status.to_s == "shipped"
+    end
+    require 'pry' ; binding.pry
+    merchant_ids = invoices.map do |invoice|
+      invoice.merchant_id
+    end
+  end
 end
