@@ -74,12 +74,21 @@ class InvoiceRepository
     @sales_engine.is_paid_in_full?(invoice_id)
   end
 
+  def find_all_merchant_ids_by_id(customer_id)
+    merchant_ids = []
+    @collection.each do |invoice|
+      if invoice.customer_id == customer_id
+        merchant_ids << invoice.merchant_id
+      end
+    end
+    merchant_ids
+  end
 
   def invoices_shipped_by_date(date)
     invoice_ids = []
     @collection.select do |invoice|
-      invoice_date = Date.parse(invoice.created_at.to_s)
-      if invoice_date <= date && invoice.status == "shipped"
+      invoice_date = Time.parse(invoice.created_at.to_s)
+      if invoice_date == date #&& invoice.status.to_s == "shipped"
         invoice_ids << invoice.id
       end
     end

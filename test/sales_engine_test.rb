@@ -178,6 +178,6 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of Array, result
     assert_instance_of Merchant, result[0]
     assert_equal 5, result.length
-    assert_equal "thepurplepenshop", result[4].name
+    assert_equal "SweetheartDarling", result[4].name
   end
 end

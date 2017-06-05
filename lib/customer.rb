@@ -21,7 +21,7 @@ class Customer
 
   def merchants
     merchant_id_array = merchant_ids
-    @customer_repo.find_all_merchants_by_ids(merchant_id_array)
+    @customer_repo.find_my_merchants(merchant_id_array)
   end
 
 end

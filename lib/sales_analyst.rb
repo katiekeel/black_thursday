@@ -221,12 +221,11 @@ class SalesAnalyst
   end
 
   def total_revenue_by_date(date)
-    date = Date.parse(date.to_s)
     invoice_ids = invoices_shipped_by_date(date)
     price_hash = find_all_items_by_invoices(invoice_ids)
     total_revenue = []
     price_hash.each_pair { |price, quantity| total_revenue << price * quantity}
-    sum = total_revenue.reduce(:+).to_f/100
+    sum = total_revenue.reduce(:+)
     sum = sum.round(2)
   end
 
@@ -236,6 +235,7 @@ class SalesAnalyst
     invoices_ids = invoices.map{|invoice| invoice.id}
     price_array = @sales_engine.invoice_items.map_hash(invoices_ids)
     hash = Hash[merchant_ids.zip(price_array)].sort_by{|key, val| val}.reverse!
+    require 'pry' ;binding.pry
     top_sellers = hash[0..x-1].to_h
     @sales_engine.merchants.find_all_by_merchant_ids(top_sellers.keys)
   end
@@ -254,3 +254,17 @@ class SalesAnalyst
     @sales_engine.merchants.find_all_by_merchant_ids(merchants)
   end
 end
+#
+# se = SalesEngine.from_csv({
+#   :items => "./data/items.csv",
+#   :merchants => "./data/merchants.csv",
+#   :invoices => "./data/invoices.csv",
+#   :invoice_items => "./data/invoice_items.csv",
+#   :transactions => "./data/transactions.csv",
+#   :customers => "./data/customers.csv"
+#   })
+# sa = SalesAnalyst.new(se)
+# date = Time.parse("2009-02-07")
+# date2 = Date.parse("2009-02-07")
+# require 'pry' ; binding.pry
+# sa.total_revenue_by_date(date)
