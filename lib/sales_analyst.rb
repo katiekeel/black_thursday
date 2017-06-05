@@ -223,18 +223,16 @@ class SalesAnalyst
     invoice_ids = invoices_shipped_by_date(date)
     price_hash = find_all_items_by_invoices(invoice_ids)
     total_revenue = []
-    price_hash.each_pair { |price, quantity| total_revenue << price * quantity }
+    price_hash.each_pair { |price, quantity| total_revenue << price * quantity}
     sum = total_revenue.reduce(:+).to_f/100
     sum = sum.round(2)
   end
 
   def top_revenue_earners
-    invoices = @sales_engine.invoices.collection.find_all do |invoice|
-      invoice.status.to_s == "shipped"
-    end
+    invoices = @sales_engine.invoices.collection.find_all {|invoice| invoice.status.to_s == "shipped"}
+    merchant_ids = invoices.map {|invoice| invoice.merchant_id}
+    invoices_ids = invoices.map{|invoice| invoice.id}
+    price_array = @sales_engine.invoice_items.map_hash(invoices_ids)
     require 'pry' ; binding.pry
-    merchant_ids = invoices.map do |invoice|
-      invoice.merchant_id
-    end
   end
 end

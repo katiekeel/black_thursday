@@ -23,7 +23,7 @@ class InvoiceItemRepository
     @collection = CSVOpener.new(@file, self, type)
     @collection = @collection.holder
   end
-  
+
   def inspect
     "#<#{self.class} #{@merchants.size} rows>"
   end
@@ -64,5 +64,14 @@ class InvoiceItemRepository
     item_hash
   end
 
-
+  def map_hash(invoice_ids)
+    invoice_ids = invoice_ids
+    price_array = []
+    @collection.each do |invoice_item|
+      if invoice_ids.include?(invoice_item.invoice_id) == true
+        price_array << invoice_item.quantity * invoice_item.unit_price_to_dollars
+      end
+    end
+    price_array
+  end
 end
