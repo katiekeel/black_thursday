@@ -94,4 +94,15 @@ class InvoiceRepository
     @sales_engine.is_paid_in_full?(invoice_id)
   end
 
+
+  def invoices_shipped_by_date(date)
+    invoice_ids = []
+    @collection.select do |invoice|
+      invoice_date = Date.parse(invoice.created_at.to_s)
+      if invoice_date <= date && invoice.status == "shipped"
+        invoice_ids << invoice.id
+      end
+    end
+    invoice_ids
+  end
 end

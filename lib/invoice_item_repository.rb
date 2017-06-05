@@ -54,5 +54,15 @@ class InvoiceItemRepository
     p total.sum
   end
 
+  def find_all_items_by_invoices(invoice_ids)
+    item_hash = {}
+    item_ids = @collection.each do |invoice_item|
+      if invoice_ids.include?(invoice_item.invoice_id) == true
+        item_hash[invoice_item.unit_price] = invoice_item.quantity
+      end
+    end
+    item_hash
+  end
+
 
 end

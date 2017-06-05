@@ -54,6 +54,7 @@ class SalesEngine
     @invoice_items.total(id)
   end
 
+<<<<<<< HEAD
   def sales_engine_find_customers(merchant_id)
     @invoices.find_customers(merchant_id)
   end
@@ -70,4 +71,7 @@ class SalesEngine
     @customers.find_by_id(customer_id)
   end
 
+  def find_all_items_by_invoices(invoices)
+    @invoice_items.find_all_items_by_invoices(invoices)
+  end
 end
