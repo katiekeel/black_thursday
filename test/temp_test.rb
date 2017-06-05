@@ -1,14 +1,7 @@
 require './lib/sales_engine'
 require 'pry'
 
-se = SalesEngine.from_csv({
-  :items => "./data/items.csv",
-  :merchants => "./data/merchants.csv",
-  :invoices => "./data/invoices.csv",
-  :invoice_items => "./data/invoice_items.csv",
-  :transactions => "./data/transactions.csv",
-  :customers => "./data/customers.csv"
-})
-
-invoice = se.invoices.find_by_id(20)
-puts invoice.items
+invoice_item_repo = InvoiceItemRepository.new("./data/invoice_items.csv", sales_engine = nil)
+invoice_item = invoice_item_repo.find_by_id(1)
+binding.pry
+puts invoice_item.created_at

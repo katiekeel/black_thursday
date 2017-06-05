@@ -14,12 +14,13 @@ class InvoiceItem
     @item_id = invoice_item_hash[:item_id].to_i
     @invoice_id = invoice_item_hash[:invoice_id].to_i
     @quantity = invoice_item_hash[:quantity].to_i
-    @unit_price = BigDecimal.new(item_hash[:unit_price]) / 100 unless item_hash[:unit_price] == nil
+    @unit_price = BigDecimal.new(invoice_item_hash[:unit_price]) / 100 unless invoice_item_hash[:unit_price] == nil
+    @created_at = invoice_item_hash[:created_at]
     @updated_at = invoice_item_hash[:updated_at]
   end
 
   def unit_price_to_dollars
-    @unit_price.to_f
+    @unit_price.to_f.round(2)
   end
 
 end
