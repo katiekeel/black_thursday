@@ -54,4 +54,20 @@ class SalesEngine
     @invoice_items.total(id)
   end
 
+  def sales_engine_find_customers(merchant_id)
+    @invoices.find_customers(merchant_id)
+  end
+
+  def find_customers(customers)
+    @customers.find_customers_by_id(customers)
+  end
+
+  def is_paid_in_full?(invoice_id)
+    @transactions.is_paid_in_full?(invoice_id)
+  end
+
+  def customer(customer_id)
+    @customers.find_by_id(customer_id)
+  end
+
 end

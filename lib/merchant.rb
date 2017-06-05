@@ -17,10 +17,7 @@ class Merchant
   end
 
   def customers
-    iv = invoices
-    iv.map do |invoice|
-      invoice.customers
-    end
+    @merchant_repo.customers(id)
   end
 
 end

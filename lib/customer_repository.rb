@@ -47,4 +47,16 @@ class CustomerRepository
   def find_all_merchants_by_ids(merchant_array)
     merchant_array.map {|merchant_id| @sales_engine.merchants.find_by_id(merchant_id)}
   end
+
+  def find_customers_by_id(customers)
+    customers_by_id = []
+    customers.each do |customer|
+      @collection.each do |each_customer|
+        if customer == each_customer.id
+          customers_by_id << each_customer
+        end
+      end
+    end
+    customers_by_id.uniq
+  end
 end

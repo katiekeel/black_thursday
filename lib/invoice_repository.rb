@@ -54,8 +54,8 @@ class InvoiceRepository
     @sales_engine.transactions.find_all_by_invoice_id(invoice_id)
   end
 
-  def find_customer(customer_id)
-    @sales_engine.customers.find_by_id(customer_id)
+  def customer(customer_id)
+    @sales_engine.customer(customer_id)
   end
 
   def find_all_merchant_ids_by_customer_id(customer_id)
@@ -66,6 +66,7 @@ class InvoiceRepository
       end
     end
     invoice_ids
+  end
 
   def invoice_repo_paid_in_full?(id)
     @sales_engine.invoice_paid_in_full?(id)
@@ -74,4 +75,23 @@ class InvoiceRepository
   def total(id)
     @sales_engine.total(id)
   end
+
+  def find_customers(merchant_id)
+    invoices = @collection.select do |invoice|
+      invoice.merchant_id == merchant_id
+    end
+    select_customers(invoices)
+  end
+
+  def select_customers(invoices)
+    customers = invoices.map do |invoice|
+      invoice.customer_id
+    end
+    @sales_engine.find_customers(customers)
+  end
+
+  def is_paid_in_full?(invoice_id)
+    @sales_engine.is_paid_in_full?(invoice_id)
+  end
+
 end

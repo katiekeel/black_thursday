@@ -49,10 +49,17 @@ class TransactionRepository
 
   def find_all_invoices_by_id(invoice_id)
     @sales_engine.invoices.find_by_id(invoice_id)
-
-  def paid_in_full?(id)
-    transaction = find_all_by_invoice_id(id)
-    return true if transaction.first.result == "success"
-    return false if transaction.first.result == "failed"
   end
+
+  def is_paid_in_full?(invoice_id)
+    all_by_invoice_id = find_all_by_invoice_id(invoice_id)
+    return false if all_by_invoice_id.empty?
+    all_by_invoice_id.each do |transaction|
+      if transaction.result == "failed"
+        return false
+      end
+    end
+    true
+  end
+
 end
