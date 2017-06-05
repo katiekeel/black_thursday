@@ -44,7 +44,7 @@ class InvoiceRepositoryTest < Minitest::Test
   def test_find_all_by_customer_id_with_nil
     invoices = InvoiceRepository.new('./data/invoices.csv', sales_engine = nil)
     invoice = invoices.find_all_by_customer_id(91287398217897194798)
-    assert_equal invoice, []
+    assert_empty invoice
   end
 
   def test_find_all_by_merchant_id
@@ -56,31 +56,31 @@ class InvoiceRepositoryTest < Minitest::Test
   def test_find_all_by_merchant_id_with_nil
     invoices = InvoiceRepository.new('./data/invoices.csv', sales_engine = nil)
     invoice = invoices.find_all_by_merchant_id(1294785628294028494308)
-    assert_equal invoice, []
+    assert_empty invoice
   end
 
   def test_find_all_by_status_shipped
     invoices = InvoiceRepository.new('./data/invoices.csv', sales_engine = nil)
-    invoice = invoices.find_all_by_status("shipped")
+    invoice = invoices.find_all_by_status(:shipped)
     assert_equal invoice.count, 2839
   end
 
   def test_find_all_by_status_pending
     invoices = InvoiceRepository.new('./data/invoices.csv', sales_engine = nil)
-    invoice = invoices.find_all_by_status("pending")
+    invoice = invoices.find_all_by_status(:pending)
     assert_equal invoice.count, 1473
   end
 
   def test_find_all_by_status_returned
     invoices = InvoiceRepository.new('./data/invoices.csv', sales_engine = nil)
-    invoice = invoices.find_all_by_status("returned")
+    invoice = invoices.find_all_by_status(:returned)
     assert_equal invoice.count, 673
   end
 
   def test_find_all_by_status_with_nil
     invoices = InvoiceRepository.new('./data/invoices.csv', sales_engine = nil)
     invoice = invoices.find_all_by_status("cats!")
-    assert_equal invoice, []
+    assert_empty invoice
   end
 
 end
