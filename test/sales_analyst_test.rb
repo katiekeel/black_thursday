@@ -148,6 +148,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_takes_standard_deviation
+    skip
     se = SalesEngine.from_csv({
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",

@@ -63,6 +63,4 @@ class InvoiceItemRepository
     end
     item_hash
   end
-
-
 end
