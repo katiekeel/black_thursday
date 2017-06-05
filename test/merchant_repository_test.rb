@@ -14,27 +14,27 @@ class MerchantRepoTest < Minitest::Test
 
   def test_it_initiates_with_hash
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
-    result = merchant.merchants
+    result = merchant.collection
     assert_instance_of Array, result
   end
 
   def test_it_can_populate_array_with_all_475_merchants
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
-    result = merchant.merchants
+    result = merchant.collection
     assert_instance_of Array, result
-    result2 = merchant.merchants
+    result2 = merchant.collection
     assert_equal 475, result2.length
   end
 
   def test_find_by_name
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
-    result = merchant.find_by_name("shopin1901")
-    assert_equal "shopin1901", result.name
+    result = merchant.find_by_name("Shopin1901")
+    assert_equal "Shopin1901", result.name
   end
 
   def test_merchants_carry_id
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
-    result = merchant.find_by_id("12334105")
+    result = merchant.find_by_id(12334105)
     assert_instance_of Merchant, result
   end
 
@@ -48,8 +48,8 @@ class MerchantRepoTest < Minitest::Test
 
   def test_it_can_match_with_improper_case
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
-    result = merchant.find_by_name("Shopin1901")
-    assert_equal "shopin1901", result.name
+    result = merchant.find_by_name("shopin1901")
+    assert_equal "Shopin1901", result.name
   end
 
   def test_it_can_return_multiple_name_matches
@@ -68,7 +68,7 @@ class MerchantRepoTest < Minitest::Test
   def test_find_all_by_name_with_justmstyle
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
     result = merchant.find_all_by_name("justMstyle")
-    assert_equal result.first.name, "justmstyle"
+    assert_equal result.first.name, "justMstyle"
   end
 
 end

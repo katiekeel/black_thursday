@@ -1,74 +1,44 @@
 require 'csv'
 require_relative 'merchant'
 require_relative 'csv_opener'
+require_relative 'sales_items'
 
 class MerchantRepository
-  attr_reader :merchants, :sales_engine
+
+  include SalesItems
+
+  attr_reader :collection, :sales_engine
 
   def initialize(csv_file, sales_engine)
     @sales_engine = sales_engine
-    @merchants = []
+    @collection = []
     populate_merchant_repo(csv_file, "merchant")
   end
 
-  # def inspect
-  #   "#<#{self.class} #{@merchants.size} rows>"
-  # end
+  def inspect
+    "#<#{self.class} #{@merchants.size} rows>"
+  end
 
   def populate_merchant_repo(csv_file, type)
-    @merchants = CSVOpener.new(csv_file, self, type)
-    @merchants = @merchants.holder
-    # merchant_list = CSV.open csv_file, headers: true, header_converters: :symbol
-    # merchant_list.each do |row|
-    #   individual = Merchant.new({:id => row[:id], :name => row[:name]}, self)
-    #   @merchants << individual
-    # end
-    # merchant_list.close
+    @collection = CSVOpener.new(csv_file, self, type)
+    @collection = @collection.holder
   end
 
-  def merchants_container(individual = nil)
-    merchants_container = []
-    merchants_container << individual
-    merchants_container
+  def items(merchant_id)
+    @sales_engine.find_items_by_merchant_id(merchant_id)
   end
 
-  def all
-    @merchants
+  def invoices(merchant_id)
+    @sales_engine.find_invoices_by_merchant_id(merchant_id)
   end
 
-  def find_by_name(name)
-    return_value = @merchants.select do |merchant|
-      merchant.name == name.downcase
+  def customers(merchant_id)
+    @sales_engine.find_customers_by_merchant_id(merchant_id)
+  end
+
+  def find_multiple_merchants_by_id(merchant_ids)
+    results = merchant_ids.map do |merchant_id|
+      find_by_id(merchant_id)
     end
-    return return_value.first if return_value.empty? == false
-    return nil if return_value.empty?
   end
-
-  def find_by_id(id)
-    return_value = @merchants.select do |merchant|
-      merchant.id == id.to_i
-    end
-    return return_value.first if return_value.empty? == false
-    return nil if return_value.empty?
-  end
-
-  def find_all_by_name(snippet)
-    return_matches = @merchants.select do |merchant|
-      merchant.name.include?(snippet.downcase)
-    end
-    return_matches
-  end
-
-  def merchant_repo_items(merchant_id)
-    @sales_engine.sales_engine_items(merchant_id)
-  end
-
-  def merchant(merchant_id)
-    find_by_id(merchant_id)
-  end
-
-  def merchant_repo_invoices(merchant_id)
-    @sales_engine.sales_engine_invoices(merchant_id)
-  end
-
 end

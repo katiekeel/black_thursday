@@ -1,67 +1,88 @@
 require 'csv'
 require_relative 'invoice'
 require_relative 'csv_opener'
+require_relative 'sales_items'
 
 class InvoiceRepository
 
-  attr_reader :invoices
+  include SalesItems
+
+  attr_reader :invoices, :collection
 
   def initialize(csv_file, sales_engine)
     @sales_engine = sales_engine
-    @invoices = []
+    @collection = []
     populate_invoices_repo(csv_file, "invoice")
   end
 
   def populate_invoices_repo(csv_file, type)
-    @invoices = CSVOpener.new(csv_file, self, type)
-    @invoices = @invoices.holder
-    # invoices_list = CSV.open csv_file, headers: true, header_converters: :symbol
-    # invoices_list.each do |row|
-    #   invoice = Invoice.new({:id => row[:id], :customer_id => row[:customer_id], :merchant_id => row[:merchant_id], :status => row[:status], :created_at => row[:created_at], :updated_at => row[:updated_at]}, self)
-    #   @invoices << invoice
-    # end
-    # invoices_list.close
-  end
-  #
-  # def inspect
-  #   "#<#{self.class} #{@merchants.size} rows>"
-  # end
-
-  def all
-    @invoices
+    @collection = CSVOpener.new(csv_file, self, type)
+    @collection = @collection.holder
   end
 
-  def find_by_id(id)
-    return_value = @invoices.select do |invoice|
-      invoice.id == id.to_i
-    end
-    return_value.first
+  def inspect
+    "#<#{self.class} #{@collection.size} rows>"
   end
 
   def find_all_by_customer_id(customer_id)
-    return_value = @invoices.select do |invoice|
+    return_value = @collection.select do |invoice|
       invoice.customer_id == customer_id
     end
     return_value
   end
 
-  def find_all_by_merchant_id(merchant_id)
-    return_value = @invoices.select do |invoice|
-      invoice.merchant_id == merchant_id
-    end
-    return_value
-  end
-
-
   def find_all_by_status(status)
-    return_value = @invoices.select do |invoice|
+    return_value = @collection.select do |invoice|
       invoice.status == status
     end
     return_value
   end
 
-  def merchant(merchant_id)
-    @sales_engine.merchant(merchant_id)
+  def items(id)
+    @sales_engine.find_invoice_items_by_invoice_id(id)
   end
 
+  def transactions(invoice_id)
+    @sales_engine.find_transactions_by_invoice_id(invoice_id)
+  end
+
+  def customer(customer_id)
+    @sales_engine.customer(customer_id)
+  end
+
+  def merchant(merchant_id)
+    @sales_engine.find_merchant_by_invoice_id(merchant_id)
+  end
+
+  def find_invoice_items(invoice_id)
+    @sales_engine.invoice_items.find_all_by_invoice_id(invoice_id)
+  end
+
+  def find_all_items_by_invoice_id(invoice_id)
+    @sales_engine.find_all_items_by_invoice_id(invoice_id)
+  end
+
+  def invoice_repo_paid_in_full?(id)
+    @sales_engine.invoice_paid_in_full?(id)
+  end
+
+  def total(id)
+    @sales_engine.total(id)
+  end
+
+  def is_paid_in_full?(invoice_id)
+    @sales_engine.is_paid_in_full?(invoice_id)
+  end
+
+
+  def invoices_shipped_by_date(date)
+    invoice_ids = []
+    @collection.select do |invoice|
+      invoice_date = Date.parse(invoice.created_at.to_s)
+      if invoice_date <= date && invoice.status == "shipped"
+        invoice_ids << invoice.id
+      end
+    end
+    invoice_ids
+  end
 end
