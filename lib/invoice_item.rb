@@ -23,18 +23,5 @@ class InvoiceItem
     price = @unit_price.to_f
     price.round(2)
   end
-
-  def create_unit_price(price)
-    price = to_big_decimal(price)
-    price = unit_price_to_dollars(price)
-  end
-
-  def to_big_decimal(price)
-    price = BigDecimal.new(price, price.length)
-  end
-
-  def unit_price_to_dollars(price)
-    price = price / 100
-  end
-
+  
 end
