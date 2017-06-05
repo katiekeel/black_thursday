@@ -21,6 +21,13 @@ class ItemRepositoryTest < Minitest::Test
     assert_instance_of Item, item_repo.collection.first
   end
 
+  def test_item_repository_all
+    csv_file = "./data/items.csv"
+    item_repo = ItemRepository.new(csv_file, sales_engine = nil)
+    assert_instance_of Array, item_repo.all
+    assert_equal item_repo.all.length, 1367
+  end
+
   def test_item_find_by_id
     csv_file = "./data/items.csv"
     item_repo = ItemRepository.new(csv_file, sales_engine = nil)
