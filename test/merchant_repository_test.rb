@@ -28,6 +28,12 @@ class MerchantRepoTest < Minitest::Test
     assert_equal "Shopin1901", result.name
   end
 
+  def test_find_by_name_with_nil
+    merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
+    result = merchant.find_by_name("asjkhdakjhdjakhdwa")
+    assert_nil result
+  end
+
   def test_merchants_carry_id
     merchant = MerchantRepository.new("./data/merchants.csv", sales_engine = nil)
     result = merchant.find_by_id(12334105)
