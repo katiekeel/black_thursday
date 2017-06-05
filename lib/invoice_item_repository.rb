@@ -67,8 +67,12 @@ class InvoiceItemRepository
   def map_hash(invoice_ids)
     invoice_ids = invoice_ids
     price_array = []
+    id = nil
     @collection.each do |invoice_item|
-      if invoice_ids.include?(invoice_item.invoice_id) == true
+      if id == invoice_item.invoice_id && invoice_ids.include?(invoice_item.invoice_id) == true
+        price_array[-1] = price_array[-1] + (invoice_item.quantity * invoice_item.unit_price_to_dollars)
+      elsif invoice_ids.include?(invoice_item.invoice_id) == true && invoice_item.invoice_id != id
+        id = invoice_item.invoice_id
         price_array << invoice_item.quantity * invoice_item.unit_price_to_dollars
       end
     end

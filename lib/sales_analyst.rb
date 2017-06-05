@@ -228,11 +228,19 @@ class SalesAnalyst
     sum = sum.round(2)
   end
 
-  def top_revenue_earners
+  def top_revenue_earners(x=20)
     invoices = @sales_engine.invoices.collection.find_all {|invoice| invoice.status.to_s == "shipped"}
     merchant_ids = invoices.map {|invoice| invoice.merchant_id}
     invoices_ids = invoices.map{|invoice| invoice.id}
     price_array = @sales_engine.invoice_items.map_hash(invoices_ids)
+    hash = Hash[merchant_ids.zip(price_array)].sort_by{|key, val| val}.reverse!
+    top_sellers = hash[0..x-1].to_h
+    @sales_engine.merchants.find_all_by_merchant_id(top_sellers.keys)
+  end
+
+  def merchants_with_pending_invoices
+    invoices = @sales_engine.invoices.collection.find_all {|invoice| invoice.status.to_s == "pending"}
+    merchant_ids = invoices.map{|invoice| invoice.merchant_id}
     require 'pry' ; binding.pry
   end
 end

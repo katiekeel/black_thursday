@@ -321,7 +321,23 @@ class SalesAnalystTest < Minitest::Test
       :customers => "./data/customers.csv"
       })
     sa = SalesAnalyst.new(se)
-    result = sa.top_revenue_earners
-    assert_instance_of Merchant.id, result[0]
+    result = sa.top_revenue_earners(5)
+    assert_instance_of Merchant, result[0]
+    assert_equal 5, result.length
+    result2 = sa.top_revenue_earners
+    assert_equal 20, result2.length
+  end
+
+  def test_merchants_with_pending_invoices
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    result = sa.merchants_with_pending_invoices
   end
 end
