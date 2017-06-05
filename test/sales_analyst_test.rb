@@ -264,6 +264,21 @@ class SalesAnalystTest < Minitest::Test
     result = sa.top_days_by_invoice_count
   end
 
+  def test_invoice_total_returns_total
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    invoice = se.invoices.find_by_id(20)
+    result = invoice.total
+    assert_equal Float, result
+  end
+
   def test_status_percentages_all_work
     se = SalesEngine.from_csv({
       :items => "./data/items.csv",

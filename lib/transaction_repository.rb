@@ -54,11 +54,10 @@ class TransactionRepository
   def is_paid_in_full?(invoice_id)
     all_by_invoice_id = find_all_by_invoice_id(invoice_id)
     return false if all_by_invoice_id.empty?
-    all_by_invoice_id.each do |transaction|
-      if transaction.result == "failed"
-        return false
-      end
+    results = all_by_invoice_id.map do |transaction|
+      transaction.result
     end
+    return false if results.include?("failed")
+    return true if results.include?("failed") == false
   end
-
 end

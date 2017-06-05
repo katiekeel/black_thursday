@@ -51,7 +51,7 @@ class InvoiceItemRepository
     total = invoice_items.map do |invoice_item|
       invoice_item.unit_price * invoice_item.quantity
     end
-    p total.sum
+    total.reduce(:+)
   end
 
   def find_all_items_by_invoices(invoice_ids)
