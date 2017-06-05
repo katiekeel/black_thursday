@@ -59,7 +59,6 @@ class TransactionRepository
         return false
       end
     end
-    true
   end
 
 end

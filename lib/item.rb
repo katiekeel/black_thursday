@@ -19,7 +19,6 @@ class Item
     @unit_price.to_f
   end
 
-
   def merchant
     @item_repository.item_repo_merchant(@merchant_id)
   end
