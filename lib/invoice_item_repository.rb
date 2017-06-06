@@ -23,9 +23,9 @@ class InvoiceItemRepository
     @collection = CSVOpener.new(@file, self, type)
     @collection = @collection.holder
   end
-  
+
   def inspect
-    "#<#{self.class} #{@invoice_items.size} rows>"
+    "#<#{self.class} #{@collection.size} rows>"
   end
 
   def find_all_by_item_id(item_id)
@@ -52,5 +52,11 @@ class InvoiceItemRepository
       end
     end
     item_hash
+  end
+
+  def find_by_multiple_item_ids(item_ids)
+    item_ids.map do |item_id|
+      find_all_by_item_id(item_id)
+    end
   end
 end

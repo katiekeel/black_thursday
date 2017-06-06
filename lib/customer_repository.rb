@@ -25,7 +25,7 @@ class CustomerRepository
   end
 
   def inspect
-    "#<#{self.class} #{@customers.size} rows>"
+    "#<#{self.class} #{@collection.size} rows>"
   end
 
   def find_all_by_first_name(first_name)

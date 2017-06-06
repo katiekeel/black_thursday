@@ -1,5 +1,5 @@
 require './test/test_helper'
-require '.lib/sales_analyst'
+require './lib/sales_analyst'
 
 class SalesAnalystTest < Minitest::Test
 
@@ -317,6 +317,7 @@ class SalesAnalystTest < Minitest::Test
     sa = SalesAnalyst.new(se)
     single_item_merchants = sa.merchants_with_only_one_item
     assert_equal single_item_merchants.length, 243
+    assert_instance_of Merchant, single_item_merchants.first
   end
 
 end

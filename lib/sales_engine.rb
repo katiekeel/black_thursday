@@ -76,11 +76,11 @@ class SalesEngine
 
   def find_invoice_items_by_invoice_id(invoice_id)
     result = @invoice_items.find_all_by_invoice_id(invoice_id)
-    result = extract_item_ids(result)
+    result = extract_invoice_item_item_ids(result)
     find_items_by_multiple_item_ids(result)
   end
 
-  def extract_item_ids(result)
+  def extract_invoice_item_item_ids(result)
     result = result.map do |invoice_item|
       invoice_item.item_id
     end
@@ -168,6 +168,67 @@ class SalesEngine
     all_merchant_ids.reject do |merchant_id|
       all_merchant_ids.count(merchant_id) > 1
     end
+  end
+
+  def revenue_by_merchant(merchant_id)
+    all_invoices_by_merchant = @invoice_repo.find_all_by_merchant_id(merchant_id)
+    totals = all_invoices_by_merchant.map do |invoice|
+      invoice.total.to_f
+    end
+    totals.sum.to_d
+  end
+
+  def most_sold_item_for_merchant(merchant_id)
+    items_by_merchant = @item_repo.find_all_by_merchant_id(merchant_id)
+    item_ids_by_merchant = extract_item_ids(items_by_merchant)
+    binding.pry
+
+    merchant_invoice_items = @invoice_items.find_by_multiple_item_ids(item_ids_by_merchant).flatten
+    grouped_items_by_item_id = group_items_by_item_id(merchant_invoice_items)
+    items_by_quantity = combine_quantity(grouped_items_by_item_id)
+    highest_quantity_items = check_for_tie(items_by_quantity)
+    highest_quantity_items = find_highest_quantity(items_by_quantity) if highest_quantity_items.nil?
+    @item_repo.find_by_multiple_item_ids(highest_quantity_items)
+  end
+
+  def extract_item_ids(items_by_merchant)
+    items_by_merchant.map do |item|
+      item.id
+    end
+  end
+
+  def group_items_by_item_id(merchant_invoice_items)
+    # Returns a hash with item_ids as keys and an array of the invoice_items as values
+    merchant_invoice_items.group_by do |invoice_item|
+      invoice_item.item_id
+    end
+  end
+
+  def combine_quantity(grouped_items_by_item_id)
+    grouped_items_by_item_id.each do |key, value|
+      invoice_item_quantity = 0
+      value.each do |invoice_item|
+        invoice_item_quantity += invoice_item.quantity
+      end
+      grouped_items_by_item_id[key] = invoice_item_quantity
+    end
+  end
+
+  def check_for_tie(items_by_quantity)
+    tied_items = items_by_quantity.group_by {|key, value| value}
+    mult_items = []
+    tied_items.map do |key, value|
+      if value.length > 1
+        value.each do |value|
+          mult_items << value.first
+        end
+      end
+    end
+    mult_items
+  end
+
+  def find_highest_quantity(items_by_quantity)
+    items_by_quantity.max_by {|key, value| value}
   end
 
 end
