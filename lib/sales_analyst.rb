@@ -2,7 +2,6 @@ require_relative 'sales_engine'
 require 'date'
 require 'bigdecimal'
 
-
 class SalesAnalyst
   attr_reader :sales_engine
 
