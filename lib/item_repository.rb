@@ -13,10 +13,10 @@ class ItemRepository
     @collection = []
     populate_items_repo(csv_file, "item")
   end
-
-  def inspect
-    "#<#{self.class} #{@item_repo.size} rows>"
-  end
+  # 
+  # def inspect
+  #   "#<#{self.class} #{@collection.size} rows>"
+  # end
 
   def populate_items_repo(csv_file, type)
     @collection = CSVOpener.new(csv_file, self, type)

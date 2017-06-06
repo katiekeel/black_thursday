@@ -13,10 +13,10 @@ class MerchantRepository
     @collection = []
     populate_merchant_repo(csv_file, "merchant")
   end
-  
-  def inspect
-    "#<#{self.class} #{@merchants.size} rows>"
-  end
+  # 
+  # def inspect
+  #   "#<#{self.class} #{@collection.size} rows>"
+  # end
 
   def populate_merchant_repo(csv_file, type)
     @collection = CSVOpener.new(csv_file, self, type)

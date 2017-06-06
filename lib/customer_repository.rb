@@ -23,10 +23,10 @@ class CustomerRepository
     @collection = CSVOpener.new(@file, self, type)
     @collection = @collection.holder
   end
-
-  def inspect
-    "#<#{self.class} #{@customers.size} rows>"
-  end
+  # 
+  # def inspect
+  #   "#<#{self.class} #{@collection.size} rows>"
+  # end
 
   def find_all_by_first_name(first_name)
     @collection.select do |customer|
