@@ -12,5 +12,5 @@ se = SalesEngine.from_csv({
 })
 
 sa = SalesAnalyst.new(se)
-binding.pry
-puts sa.merchants_with_only_one_item.length
+# binding.pry
+puts sa.most_sold_item_for_merchant(12334189)

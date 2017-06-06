@@ -28,6 +28,7 @@ class InvoiceItemRepository
   #   "#<#{self.class} #{@collection.size} rows>"
   # end
 
+
   def find_all_by_item_id(item_id)
     @collection.select do |invoice_item|
       invoice_item.item_id == item_id
@@ -52,5 +53,11 @@ class InvoiceItemRepository
       end
     end
     item_hash
+  end
+
+  def find_by_multiple_item_ids(item_ids)
+    item_ids.map do |item_id|
+      find_all_by_item_id(item_id)
+    end
   end
 end

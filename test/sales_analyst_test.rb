@@ -316,7 +316,8 @@ class SalesAnalystTest < Minitest::Test
       })
     sa = SalesAnalyst.new(se)
     single_item_merchants = sa.merchants_with_only_one_item
-    assert_equal 243, single_item_merchants.length
+    assert_equal single_item_merchants.length, 243
+    assert_instance_of Merchant, single_item_merchants.first
   end
 
 end

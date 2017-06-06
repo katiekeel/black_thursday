@@ -18,6 +18,7 @@ class ItemRepository
   #   "#<#{self.class} #{@collection.size} rows>"
   # end
 
+
   def populate_items_repo(csv_file, type)
     @collection = CSVOpener.new(csv_file, self, type)
     @collection = @collection.holder
@@ -73,8 +74,9 @@ class ItemRepository
   end
 
   def merchants_with_only_one_item
-    @collection.each do |item|
+    merchant_ids = @collection.map do |item|
       item.merchant_id
     end
+    merchant_ids
   end
 end
