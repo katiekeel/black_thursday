@@ -1,6 +1,5 @@
-# require './lib/invoice_item_repository'
-# require './lib/item_repository'
 require './lib/sales_engine'
+require './lib/sales_analyst'
 require 'pry'
 
 se = SalesEngine.from_csv({
@@ -12,6 +11,6 @@ se = SalesEngine.from_csv({
   :customers => "./data/customers.csv"
 })
 
-invoice = se.invoices.find_by_id(1)
-# binding.pry
-puts invoice.total
+sa = SalesAnalyst.new(se)
+binding.pry
+puts sa.merchants_with_only_one_item.length

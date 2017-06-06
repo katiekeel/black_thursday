@@ -230,4 +230,8 @@ class SalesAnalyst
     sum = sum.round(2)
   end
 
+  def merchants_with_only_one_item
+    @sales_engine.merchants_with_only_one_item
+  end
+
 end

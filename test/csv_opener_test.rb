@@ -1,8 +1,4 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest'
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require './lib/csv_opener'
 
 class CSVOpenerTest < Minitest::Test

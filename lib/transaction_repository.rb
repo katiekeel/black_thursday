@@ -20,7 +20,7 @@ class TransactionRepository
   end
 
   def inspect
-    "#<#{self.class} #{@collection.size} rows>"
+    "#<#{self.class} #{@transactions.size} rows>"
   end
 
   def populate_transactions_repo(file, type)

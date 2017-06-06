@@ -157,4 +157,17 @@ class SalesEngine
   def find_all_items_by_invoices(invoices)
     @invoice_items.find_all_items_by_invoices(invoices)
   end
+
+  def merchants_with_only_one_item
+    all_merchant_ids = @item_repo.merchants_with_only_one_item
+    single_item_merchants = extract_single_item_merchants(all_merchant_ids)
+    find_multiple_merchants_by_id(single_item_merchants)
+  end
+
+  def extract_single_item_merchants(all_merchant_ids)
+    all_merchant_ids.reject do |merchant_id|
+      all_merchant_ids.count(merchant_id) > 1
+    end
+  end
+
 end

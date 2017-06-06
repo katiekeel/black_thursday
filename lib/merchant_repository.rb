@@ -13,7 +13,7 @@ class MerchantRepository
     @collection = []
     populate_merchant_repo(csv_file, "merchant")
   end
-
+  
   def inspect
     "#<#{self.class} #{@merchants.size} rows>"
   end

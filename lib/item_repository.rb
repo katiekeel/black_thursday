@@ -15,7 +15,7 @@ class ItemRepository
   end
 
   def inspect
-    "#<#{self.class} #{@merchants.size} rows>"
+    "#<#{self.class} #{@item_repo.size} rows>"
   end
 
   def populate_items_repo(csv_file, type)
@@ -70,5 +70,11 @@ class ItemRepository
       mappings[item.id] = item.unit_price
     end
     item_hash.map {|k, v| [mappings[k], v]}.to_h
+  end
+
+  def merchants_with_only_one_item
+    @collection.each do |item|
+      item.merchant_id
+    end
   end
 end

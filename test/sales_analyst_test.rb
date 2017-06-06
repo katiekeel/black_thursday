@@ -1,10 +1,5 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest'
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/sales_analyst'
-require './lib/sales_engine'
+require './test/test_helper'
+require '.lib/sales_analyst'
 
 class SalesAnalystTest < Minitest::Test
 
@@ -309,4 +304,19 @@ class SalesAnalystTest < Minitest::Test
     sa = SalesAnalyst.new(se)
     revenue = sa.total_revenue_by_date("2017-01-01")
   end
+
+  def test_merchants_with_only_one_item
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    single_item_merchants = sa.merchants_with_only_one_item
+    assert_equal single_item_merchants.length, 243
+  end
+
 end
