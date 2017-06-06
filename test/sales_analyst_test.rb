@@ -1,5 +1,5 @@
 require './test/test_helper'
-require '.lib/sales_analyst'
+require './lib/sales_analyst'
 
 class SalesAnalystTest < Minitest::Test
 
@@ -198,7 +198,7 @@ class SalesAnalystTest < Minitest::Test
     sa = SalesAnalyst.new(se)
     result = sa.golden_items
     assert_instance_of Array, result
-    assert_instance_of String, result[0]
+    assert_instance_of Item, result[0]
   end
 
   def test_it_can_return_average_invoices
@@ -316,7 +316,7 @@ class SalesAnalystTest < Minitest::Test
       })
     sa = SalesAnalyst.new(se)
     single_item_merchants = sa.merchants_with_only_one_item
-    assert_equal single_item_merchants.length, 243
+    assert_equal 243, single_item_merchants.length
   end
 
 end
