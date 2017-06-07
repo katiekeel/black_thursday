@@ -42,6 +42,10 @@ class Invoice
     @invoice_repository.is_paid_in_full?(@id)
   end
 
+  def is_pending?
+    @invoice_repository.is_pending?(@id)
+  end
+
   def total
     return 0 if is_paid_in_full? == false
     @invoice_repository.total(@id).to_d

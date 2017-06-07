@@ -246,7 +246,7 @@ class SalesAnalyst
   end
 
   def pending_invoices
-    @sales_engine.invoices.all.select{|invoice| invoice.is_paid_in_full? == false}
+    @sales_engine.invoices.all.select{|invoice| invoice.is_pending? == true}
   end
 
   def merchants_with_pending_invoices

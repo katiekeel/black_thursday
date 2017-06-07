@@ -69,6 +69,10 @@ class InvoiceRepository
     @sales_engine.is_paid_in_full?(invoice_id)
   end
 
+  def is_pending?(invoice_id)
+    @sales_engine.is_pending?(invoice_id)
+  end
+
   def invoices_shipped_by_date(date)
     invoice_ids = []
     @collection.select do |invoice|

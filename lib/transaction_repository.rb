@@ -58,4 +58,13 @@ class TransactionRepository
     return false if results.include?("failed") || all_by_invoice_id.empty?
     return true if results.include?("failed") == false
   end
+
+  def is_pending?(invoice_id)
+    all_by_invoice_id = find_all_by_invoice_id(invoice_id)
+    results = all_by_invoice_id.map do |transaction|
+      transaction.result
+    end
+    return true if results.include?("success")
+    return false if results.all?{|result| result == "failed"} || all_by_invoice_id.empty?
+  end
 end
