@@ -241,4 +241,8 @@ class SalesAnalyst
     # require 'pry' ; binding.pry
     @sales_engine.merchants.find_multiple_merchants_by_id(merchants)
   end
+
+  def top_revenue_earners(x=20)
+    invoices = @sales_engine.invoices.collection.find_all {|invoice| invoice.is_paid_in_full?}
+    require 'pry' ;binding.pry
 end
