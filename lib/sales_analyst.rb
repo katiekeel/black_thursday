@@ -238,16 +238,44 @@ class SalesAnalyst
     merchant_ids = @sales_engine.items.collection.map{|item| item.merchant_id}
     merchants = merchant_ids.group_by(&:itself)
     merchants = merchants.select{|key, val| val.length == 1}.keys
-    # require 'pry' ; binding.pry
     @sales_engine.merchants.find_multiple_merchants_by_id(merchants)
   end
 
   def top_revenue_earners(x=20)
+<<<<<<< HEAD
     @sales_engine.merchants.top_revenue_earners(x)
   end
 
   def pending_invoices
     @sales_engine.invoices.all.select{|invoice| invoice.is_paid_in_full? == false}
+=======
+    invoices = @sales_engine.invoices.collection.find_all {|invoice| invoice.is_paid_in_full?}
+    invoice_totals = invoices.map{|invoice| invoice.total}
+    merchant_ids = invoices.map{|invoice| invoice.merchant_id}
+    merchants = merchant_ids.map{|merchant_id| @sales_engine.merchants.find_by_id(merchant_id)}
+    create_revenue_hash(x, merchants, invoices, invoice_totals)
+  end
+
+  def create_revenue_hash(x, merchants, invoices, invoice_totals)
+    invoices.map {}
+    @sales_engine.merchants_with_only_one_item
+  end
+
+  def merchants_with_only_one_item_registered_in_month
+    @sales_engine.merchants_with_only_one_item_registered_in_month
+  end
+
+  def revenue_by_merchant(merchant_id)
+    @sales_engine.revenue_by_merchant(merchant_id)
+  end
+
+  def most_sold_item_for_merchant(merchant_id)
+    @sales_engine.most_sold_item_for_merchant(merchant_id)
+  end
+
+  def best_item_for_merchant(merchant_id)
+    @sales_engine.best_item_for_merchant(merchant_id)
+>>>>>>> 8139a5f52db23a042e997793fc1a4dcbc1a66643
   end
 
   def merchants_with_pending_invoices

@@ -13,7 +13,9 @@ module SalesItems
 
   def find_by_name(name)
     return_value = @collection.select do |thing|
-      thing.name == name.downcase || thing.name == name || thing.name.downcase == name
+      thing.name == name.downcase ||
+      thing.name == name ||
+      thing.name.downcase == name
     end
     return_value.first
   end

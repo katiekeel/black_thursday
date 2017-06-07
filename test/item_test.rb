@@ -1,10 +1,5 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest'
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/item.rb'
-require 'pry'
+require './test/test_helper'
+require './lib/item'
 
 class ItemTest < Minitest::Test
 
@@ -36,11 +31,6 @@ class ItemTest < Minitest::Test
   def test_item_has_another_price
     item = Item.new({:unit_price => "15099"}, item_repo = nil)
     assert_equal item.unit_price, 0.15099e3
-  end
-
-  def test_item_price_length_is_three
-    item = Item.new({:unit_price => "109"}, item_repo = nil)
-    assert_equal item.unit_price, 0.109e1
   end
 
   def test_item_price_is_big_decimal
@@ -90,6 +80,11 @@ class ItemTest < Minitest::Test
   def test_item_price_in_dollars_five
     item = Item.new({:unit_price => "10990"}, item_repo = nil)
     assert_equal item.unit_price_to_dollars, 109.90
+  end
+
+  def test_item_has_item_repo
+    item = Item.new({:unit_price => "10990"}, item_repo = nil)
+    assert_nil item.item_repository
   end
 
 end

@@ -1,10 +1,5 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest'
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require './lib/sales_analyst'
-require './lib/sales_engine'
 
 class SalesAnalystTest < Minitest::Test
 
@@ -375,8 +370,280 @@ class SalesAnalystTest < Minitest::Test
     sa = SalesAnalyst.new(se)
     result = sa.merchants_with_pending_invoices
 
+<<<<<<< HEAD
     require 'pry' ; binding.pry
     assert_equal 467, result.length
+=======
+  def test_merchants_can_call_all_items
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    merchants_array = sa.sales_engine.merchants
+    merchant = merchants_array.find_by_id(12334165)
+    items = merchant.items
+    assert_instance_of Array, items
+  end
+
+  def test_merchants_can_call_all_invoices
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    merchants_array = sa.sales_engine.merchants
+    merchant = merchants_array.find_by_id(12334165)
+    invoices = merchant.invoices
+    assert_instance_of Array, invoices
+  end
+
+  def test_merchants_items_can_be_averaged
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    x = sa.average_items_per_merchant
+    assert_equal 2.88, x
+  end
+
+  def test_invoices_can_call_merchant_by_id
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    invoices_repo = sa.sales_engine.invoices
+    invoice = invoices_repo.find_by_id(4985)
+    merchant = invoice.merchant
+    assert_instance_of Merchant, merchant
+  end
+
+  def test_it_takes_standard_deviation
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    result = sa.average_items_per_merchant_standard_deviation
+    assert_equal 3.26, result
+  end
+
+  def test_it_lists_merchants_with_most_items
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    result = sa.merchants_with_high_item_count
+    assert_instance_of Array, result
+    assert_instance_of Merchant, result[0]
+  end
+
+  def test_it_gives_average_price_for_one_merchant
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    result = sa.average_item_price_for_merchant(12334165)
+    assert_equal 100, result
+  end
+
+  def test_golden_items_return_array_with_items
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    result = sa.golden_items
+    assert_instance_of Array, result
+    assert_instance_of Item, result[0]
+  end
+
+  def test_it_can_return_average_invoices
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    result = sa.average_invoices_per_merchant
+    assert_instance_of Float, result
+  end
+
+  def test_it_calculates_invoice_standard_deviation
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    result = sa.average_invoices_per_merchant_standard_deviation
+    assert_instance_of Float, result
+  end
+
+  def test_it_returns_top_invoiced_merchants
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    result = sa.top_merchants_by_invoice_count
+    assert_instance_of Array, result
+    assert_instance_of Merchant, result[0]
+  end
+
+  def test_it_returns_array_of_bottom_invoiced_merchants
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    # result = sa.bottom_merchants_by_invoice_count
+    # assert_instance_of Array, result
+    result = sa.top_days_by_invoice_count
+  end
+
+  def test_invoice_total_returns_total
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    invoice = se.invoices.find_by_id(20)
+    result = invoice.total
+    assert_equal BigDecimal, result
+  end
+
+  def test_status_percentages_all_work
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    result = sa.invoice_status(:pending)
+    result2 = sa.invoice_status(:shipped)
+    result3 = sa.invoice_status(:returned)
+    assert_equal 29.55, result
+    assert_equal 56.95, result2
+    assert_equal 13.5, result3
+  end
+
+  def test_total_revenue_by_date
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    revenue = sa.total_revenue_by_date("2017-01-01")
+  end
+
+  def test_merchants_with_only_one_item
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    single_item_merchants = sa.merchants_with_only_one_item
+    assert_equal single_item_merchants.length, 243
+    assert_instance_of Merchant, single_item_merchants.first
+  end
+
+  def test_it_puts_out_top_revenue_earners
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    result = sa.top_revenue_earners(10)
+    assert_equal 10, result.length
+    assert_equal Merchant, result[0].class
+    assert_equal 12334634, result.first.id
+    assert_equal 12335747, result.last.id
+>>>>>>> 8139a5f52db23a042e997793fc1a4dcbc1a66643
   end
   #
   # def test_total_revenue_works
