@@ -235,6 +235,7 @@ class SalesAnalyst
   end
 
   def merchants_with_only_one_item
+<<<<<<< HEAD
     merchant_ids = @sales_engine.items.collection.map{|item| item.merchant_id}
     merchants = merchant_ids.group_by(&:itself)
     merchants = merchants.select{|key, val| val.length == 1}.keys
@@ -253,6 +254,23 @@ class SalesAnalyst
 
   def create_revenue_hash(x, merchants, invoices, invoice_totals)
     invoices.map {}
+    @sales_engine.merchants_with_only_one_item
+  end
+
+  def merchants_with_only_one_item_registered_in_month
+    @sales_engine.merchants_with_only_one_item_registered_in_month
+  end
+
+  def revenue_by_merchant(merchant_id)
+    @sales_engine.revenue_by_merchant(merchant_id)
+  end
+
+  def most_sold_item_for_merchant(merchant_id)
+    @sales_engine.most_sold_item_for_merchant(merchant_id)
+  end
+
+  def best_item_for_merchant(merchant_id)
+    @sales_engine.best_item_for_merchant(merchant_id)
   end
 
 end

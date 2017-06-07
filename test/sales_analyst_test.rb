@@ -1,10 +1,5 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest'
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require './lib/sales_analyst'
-require './lib/sales_engine'
 
 class SalesAnalystTest < Minitest::Test
 
@@ -330,7 +325,6 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_merchants_with_only_one_item
-    skip
     se = SalesEngine.from_csv({
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
@@ -340,9 +334,9 @@ class SalesAnalystTest < Minitest::Test
       :customers => "./data/customers.csv"
       })
     sa = SalesAnalyst.new(se)
-    result = sa.merchants_with_only_one_item
-    assert_instance_of Merchant, result[0]
-    assert_equal 243, result.length
+    single_item_merchants = sa.merchants_with_only_one_item
+    assert_equal single_item_merchants.length, 243
+    assert_instance_of Merchant, single_item_merchants.first
   end
 
   def test_it_puts_out_top_revenue_earners

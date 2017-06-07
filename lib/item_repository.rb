@@ -1,5 +1,4 @@
 require_relative 'item'
-require 'csv'
 require_relative 'csv_opener'
 require_relative 'sales_items'
 
@@ -71,5 +70,12 @@ class ItemRepository
       mappings[item.id] = item.unit_price
     end
     item_hash.map {|k, v| [mappings[k], v]}.to_h
+  end
+
+  def merchants_with_only_one_item
+    merchant_ids = @collection.map do |item|
+      item.merchant_id
+    end
+    merchant_ids
   end
 end

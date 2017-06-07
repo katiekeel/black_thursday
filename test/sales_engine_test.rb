@@ -1,8 +1,4 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest'
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require './lib/sales_engine'
 
 class SalesEngineTest < Minitest::Test
@@ -14,8 +10,7 @@ class SalesEngineTest < Minitest::Test
       :invoices => "./data/invoices.csv",
       :invoice_items => "./data/invoice_items.csv",
       :transactions => "./data/transactions.csv",
-      :customers => "./data/customers.csv"
-      })
+      :customers => "./data/customers.csv"})
     items = se.items
     merchants = se.merchants
     assert_instance_of ItemRepository, items
@@ -29,8 +24,7 @@ class SalesEngineTest < Minitest::Test
       :invoices => "./data/invoices.csv",
       :invoice_items => "./data/invoice_items.csv",
       :transactions => "./data/transactions.csv",
-      :customers => "./data/customers.csv"
-      })
+      :customers => "./data/customers.csv"})
     items = se.items
     assert_instance_of Item, items.find_by_id(263395237)
   end
@@ -88,7 +82,6 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_merchant_customers_puts_array_of_all_customers
-    skip
     se = SalesEngine.from_csv({
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
@@ -99,9 +92,8 @@ class SalesEngineTest < Minitest::Test
       })
     merchant = se.merchants.find_by_id(12335938)
     result = merchant.customers
-
     assert_instance_of Array, result
-    assert_equal 1, result[0]
+    assert_equal 16, result.length
   end
 
   def test_invoice_dot_items_puts_array_of_all_items

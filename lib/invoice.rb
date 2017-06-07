@@ -1,6 +1,7 @@
 class Invoice
 
-  attr_reader :id,
+  attr_reader :invoice_repository,
+              :id,
               :customer_id,
               :merchant_id,
               :status,
@@ -43,7 +44,7 @@ class Invoice
 
   def total
     if is_paid_in_full? == true
-      @invoice_repository.total(@id)
+      @invoice_repository.total(@id).to_d
     end
   end
 

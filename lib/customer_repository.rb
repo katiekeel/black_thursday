@@ -6,17 +6,17 @@ class CustomerRepository
 
   include SalesItems
 
-  attr_reader :collection
+  attr_reader :collection, :file
 
-  def initialize(file, sales_engine)
+  def initialize(sales_engine)
     @file = file
     @sales_engine = sales_engine
     @collection = []
-    populate_customers_repo(@file, "customer")
   end
 
-  def self.from_csv(file)
-    CustomerRepository.new(file, self, type)
+  def from_csv(file)
+    @file = file
+    populate_customers_repo(@file, "customer")
   end
 
   def populate_customers_repo(file, type)

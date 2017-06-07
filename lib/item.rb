@@ -3,7 +3,8 @@ require 'bigdecimal/util'
 
 class Item
 
-  attr_reader :id,
+  attr_reader :item_repository,
+              :id,
               :name,
               :description,
               :unit_price,
