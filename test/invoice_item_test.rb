@@ -35,7 +35,7 @@ class InvoiceItemTest < Minitest::Test
 
   def test_invoice_item_unit_price
     invoice_item = InvoiceItem.new({:unit_price => 1}, invoice_item_repo = nil)
-    assert_equal invoice_item.unit_price, 1
+    assert_equal invoice_item.unit_price, 0.1e-1
   end
 
   def test_invoice_item_created_at
@@ -50,4 +50,8 @@ class InvoiceItemTest < Minitest::Test
     assert_equal invoice_item.updated_at, time
   end
 
+  def test_invoice_item_unit_price_to_dollars
+    invoice_item = InvoiceItem.new({:unit_price => 199}, invoice_item_repo = nil)
+    assert_equal invoice_item.unit_price_to_dollars, 1.99
+  end
 end
