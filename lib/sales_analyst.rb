@@ -11,8 +11,8 @@ class SalesAnalyst
   end
 
   def average_items_per_merchant
-    avg_ary = merchant_average_array
-    average =(avg_ary.reduce(0){|sum,length|sum += length})/avg_ary.length.to_f
+    average_array = merchant_average_array
+    average = (average_array.reduce(0){|sum, length| sum += length})/average_array.length.to_f
     average = average.round(2)
     average
   end
@@ -22,10 +22,10 @@ class SalesAnalyst
   end
 
   def standard_deviation
-    avg_ary = merchant_average_array
+    average_array = merchant_average_array
     average = average_items_per_merchant
-    squares = avg_ary.map{|num| (num-average)**2}
-    standard_dev = Math.sqrt((squares.reduce(:+))/(squares.length-1))
+    temporary_math_array = average_array.map{|num| (num-average)**2}
+    standard_dev = Math.sqrt((temporary_math_array.reduce(:+))/(temporary_math_array.length-1))
     standard_dev.round(2)
   end
 
@@ -38,12 +38,12 @@ class SalesAnalyst
   end
 
   def average_average_price_per_merchant
-    avg_ary = []
+    average_array = []
     @sales_engine.merchants.collection.each do |merchant|
       id = merchant.id
-      avg_ary << average_item_price_for_merchant(id)
+      average_array << average_item_price_for_merchant(id)
     end
-    average_average = (avg_ary.reduce(:+)/avg_ary.length)
+    average_average = (average_array.reduce(:+)/average_array.length)
     average_average = BigDecimal.new(average_average).round(2)
   end
 
@@ -81,8 +81,8 @@ class SalesAnalyst
       price_array << item.unit_price
     end
     avgprice = (price_array.reduce(:+)/price_array.length)
-    squares = price_array.map{|num| (num - avgprice)**2 }
-    stddev = Math.sqrt((squares.reduce(:+))/(squares.length - 1))
+    temporary_math_array = price_array.map{|num| (num - avgprice)**2 }
+    stddev = Math.sqrt((temporary_math_array.reduce(:+))/(temporary_math_array.length - 1))
     golden_items = []
     @sales_engine.items.collection.each do |item|
         if item.unit_price > avgprice + stddev*2
@@ -93,10 +93,10 @@ class SalesAnalyst
   end
 
   def average_invoices_per_merchant
-    avg_ary = merchant_invoice_array
-    avg = (avg_ary.reduce(0){|sum, length| sum += length})/avg_ary.length.to_f
-    avg = avg.round(2)
-    avg
+    average_array = merchant_invoice_array
+    average = (average_array.reduce(0){|sum, length| sum += length})/average_array.length.to_f
+    average = average.round(2)
+    average
   end
 
   def average_invoices_per_merchant_standard_deviation
@@ -104,10 +104,10 @@ class SalesAnalyst
   end
 
   def standard_deviation_invoice
-    avg_ary = merchant_invoice_array
+    average_array = merchant_invoice_array
     average = average_invoices_per_merchant
-    squares = avg_ary.map{|num| (num-average)**2}
-    standard_dev = Math.sqrt((squares.reduce(:+))/(squares.length-1))
+    temporary_math_array = average_array.map{|num| (num-average)**2}
+    standard_dev = Math.sqrt((temporary_math_array.reduce(:+))/(temporary_math_array.length-1))
     standard_dev.round(2)
   end
 
@@ -162,8 +162,7 @@ class SalesAnalyst
         array << invoice
       end
     end
-    length = @sales_engine.invoices.collection.length
-    percentage = (BigDecimal.new(array.length) / BigDecimal.new(length))
+    percentage = (BigDecimal.new(array.length) / BigDecimal.new(@sales_engine.invoices.collection.length))
     percentage = percentage.to_f * 100
     percentage.round(2)
   end
@@ -176,22 +175,18 @@ class SalesAnalyst
       day = day[0..2]
       days << day
     end
-    find_top_days(days)
-  end
-
-  def find_top_days(days)
     max = {}
     days.each{|day| max[day] = days.count(day)}
     days = max.values
     average = days.reduce(:+)/days.length
-    squares = days.map do |num|
+    temporary_math_array = days.map do |num|
       (num-average)**2
     end
-    stddev = Math.sqrt((squares.reduce(:+))/(squares.length-1))
+    stddev = Math.sqrt((temporary_math_array.reduce(:+))/(temporary_math_array.length-1))
     top_days = []
     max.each_pair do |day, num|
       if num > average + stddev
-        top_days << to_day(day)
+        top_days << to_day(day) #to_day method
       end
     end
     top_days
@@ -216,6 +211,7 @@ class SalesAnalyst
     day
   end
 
+
   def invoices_shipped_by_date(date)
     @sales_engine.invoices.invoices_shipped_by_date(date)
   end
@@ -229,74 +225,9 @@ class SalesAnalyst
     invoice_ids = invoices_shipped_by_date(date)
     price_hash = find_all_items_by_invoices(invoice_ids)
     total_revenue = []
-    price_hash.each_pair { |price, quantity| total_revenue << price * quantity}
+    price_hash.each_pair { |price, quantity| total_revenue << price * quantity }
     sum = total_revenue.reduce(:+).to_f/100
     sum = sum.round(2)
   end
-
-  def merchants_with_only_one_item
-    merchant_ids = @sales_engine.items.collection.map{|item| item.merchant_id}
-    merchants = merchant_ids.group_by(&:itself)
-    merchants = merchants.select{|key, val| val.length == 1}.keys
-    @sales_engine.merchants.find_multiple_merchants_by_id(merchants)
-  end
-
-  def top_revenue_earners(x=20)
-    @sales_engine.merchants.top_revenue_earners(x)
-  end
-
-  def pending_invoices
-    @sales_engine.invoices.all.select{|invoice| invoice.is_paid_in_full? == false}
-  end
-
-  def merchants_with_pending_invoices
-    pv = pending_invoices
-    merchants = pv.map{|invoice| invoice.merchant}.uniq
-  end
-
-  def merchants_with_only_one_item_registered_in_month
-    @sales_engine.merchants_with_only_one_item_registered_in_month
-  end
-
-  def revenue_by_merchant(merchant_id)
-    @sales_engine.revenue_by_merchant(merchant_id)
-  end
-
-  def most_sold_item_for_merchant(merchant_id)
-    @sales_engine.most_sold_item_for_merchant(merchant_id)
-  end
-
-  def best_item_for_merchant(merchant_id)
-    @sales_engine.best_item_for_merchant(merchant_id)
-  end
-  #
-  #   invoices = @sales_engine.invoices.collection.select {|invoice| invoice.is_paid_in_full?}
-  #   # invoices = invoices.delete_if{|invoice| invoice.status.to_s == "returned" || invoice.status.to_s == "pending"}
-  #   # invoices = invoices.map {|invoice| invoice.total}
-  #   require 'pry' ; binding.pry
-  #   invoice_ids = invoices.map{|invoice| invoice.id}
-  #   #invoice_totals = invoices.map{|invoice| invoice.total}
-  #   # merchant_ids = invoices.map{|invoice| invoice.merchant_id}
-  #   # merchants = merchant_ids.map{|merchant_id| @sales_engine.merchants.find_by_id(merchant_id)}
-  #   convert_to_merchants(create_revenue_hash(invoice_ids))
-  # end
-
-  # def create_revenue_hash(invoice_ids)
-  #   @sales_engine.invoice_items.create_revenue_hash(invoice_ids)
-  # end
-  #
-  # def convert_to_merchants(revenue_hash)
-  #   invoices_hash = {}
-  #   revenue_hash.each_key do |inv_id|
-  #     invoices_hash[@sales_engine.invoices.find_by_id(inv_id)] = revenue_hash[inv_id]
-  #   end
-  #   total_revenue_hash = {}
-  #   invoices_hash.each_key do |invoice|
-  #     total_revenue_hash[invoice.merchant] = invoices_hash[invoice]
-  #   end
-  #   total_revenue_hash
-  #   require 'pry' ;binding.pry
-  # end
-
 
 end
