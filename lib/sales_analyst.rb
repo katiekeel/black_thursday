@@ -238,7 +238,6 @@ class SalesAnalyst
     merchant_ids = @sales_engine.items.collection.map{|item| item.merchant_id}
     merchants = merchant_ids.group_by(&:itself)
     merchants = merchants.select{|key, val| val.length == 1}.keys
-    # require 'pry' ; binding.pry
     @sales_engine.merchants.find_multiple_merchants_by_id(merchants)
   end
 
@@ -248,7 +247,6 @@ class SalesAnalyst
     merchant_ids = invoices.map{|invoice| invoice.merchant_id}
     merchants = merchant_ids.map{|merchant_id| @sales_engine.merchants.find_by_id(merchant_id)}
     create_revenue_hash(x, merchants, invoices, invoice_totals)
-    require 'pry' ;binding.pry
   end
 
   def create_revenue_hash(x, merchants, invoices, invoice_totals)
