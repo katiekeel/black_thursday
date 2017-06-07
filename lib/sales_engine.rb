@@ -19,9 +19,12 @@ class SalesEngine
     @item_repo = ItemRepository.new(item_merchant_hash[:items], self)
     @merchants = MerchantRepository.new(item_merchant_hash[:merchants], self)
     @invoice_repo = InvoiceRepository.new(item_merchant_hash[:invoices], self)
-    @invoice_items = create_invoice_item_repo(item_merchant_hash[:invoice_items])
-    @transactions = create_transaction_repo(item_merchant_hash[:transactions])
-    @customers = create_customers_repo(item_merchant_hash[:customers])
+    @invoice_items =
+      create_invoice_item_repo(item_merchant_hash[:invoice_items])
+    @transactions =
+      create_transaction_repo(item_merchant_hash[:transactions])
+    @customers =
+      create_customers_repo(item_merchant_hash[:customers])
   end
 
   def self.from_csv(item_merchant_hash)
@@ -171,8 +174,8 @@ class SalesEngine
   end
 
   def revenue_by_merchant(merchant_id)
-    all_invoices_by_merchant = @invoice_repo.find_all_by_merchant_id(merchant_id)
-    totals = all_invoices_by_merchant.map do |invoice|
+    all_inv_by_merchant = @invoice_repo.find_all_by_merchant_id(merchant_id)
+    totals = all_inv_by_merchant.map do |invoice|
       invoice.total.to_f
     end
     totals.sum.to_d
@@ -180,15 +183,14 @@ class SalesEngine
 
   def most_sold_item_for_merchant(merchant_id)
     items_by_merchant = @item_repo.find_all_by_merchant_id(merchant_id)
-    item_ids_by_merchant = extract_item_ids(items_by_merchant)
-    binding.pry
-
-    merchant_invoice_items = @invoice_items.find_by_multiple_item_ids(item_ids_by_merchant).flatten
-    grouped_items_by_item_id = group_items_by_item_id(merchant_invoice_items)
-    items_by_quantity = combine_quantity(grouped_items_by_item_id)
-    highest_quantity_items = check_for_tie(items_by_quantity)
-    highest_quantity_items = find_highest_quantity(items_by_quantity) if highest_quantity_items.nil?
-    @item_repo.find_by_multiple_item_ids(highest_quantity_items)
+    item_ids_merch = extract_item_ids(items_by_merchant)
+    merch_inv_items = @invoice_items.find_by_multiple_item_ids(item_ids_merch)
+    merch_inv_items = merch_inv_items.flatten
+    grouped_items_by_item_id = group_items_by_item_id(merch_inv_items)
+    items_by_quant = combine_quantity(grouped_items_by_item_id)
+    high_quant_items = check_for_tie(items_by_quant)
+    high_quant_items = find_highest(items_by_quant) if high_quant_items.nil?
+    @item_repo.find_by_multiple_item_ids(high_quantity_items)
   end
 
   def extract_item_ids(items_by_merchant)
@@ -198,7 +200,6 @@ class SalesEngine
   end
 
   def group_items_by_item_id(merchant_invoice_items)
-    # Returns a hash with item_ids as keys and an array of the invoice_items as values
     merchant_invoice_items.group_by do |invoice_item|
       invoice_item.item_id
     end
@@ -227,7 +228,7 @@ class SalesEngine
     mult_items
   end
 
-  def find_highest_quantity(items_by_quantity)
+  def find_highest(items_by_quantity)
     items_by_quantity.max_by {|key, value| value}
   end
 

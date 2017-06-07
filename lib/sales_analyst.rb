@@ -235,7 +235,6 @@ class SalesAnalyst
   end
 
   def merchants_with_only_one_item
-<<<<<<< HEAD
     merchant_ids = @sales_engine.items.collection.map{|item| item.merchant_id}
     merchants = merchant_ids.group_by(&:itself)
     merchants = merchants.select{|key, val| val.length == 1}.keys
