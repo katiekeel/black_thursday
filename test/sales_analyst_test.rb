@@ -643,19 +643,20 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 12334634, result.first.id
     assert_equal 12335747, result.last.id
   end
-  #
-  # def test_total_revenue_works
-  #   se = SalesEngine.from_csv({
-  #     :items => "./data/items.csv",
-  #     :merchants => "./data/merchants.csv",
-  #     :invoices => "./data/invoices.csv",
-  #     :invoice_items => "./data/invoice_items.csv",
-  #     :transactions => "./data/transactions.csv",
-  #     :customers => "./data/customers.csv"
-  #     })
-  #   sa = SalesAnalyst.new(se)
-  #   merchant1 = sa.sales_engine.merchants.total_revenue(12334634)
-  #   merchant2 = sa.sales_engine.merchants.total_revenue(12335747)
-  #   merchant3 = sa.sales_engine.merchants.total_revenue(12334960)
-  # end
+
+  def test_total_revenue_works
+    skip
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    merchant1 = sa.sales_engine.merchants.total_revenue(12334634)
+    merchant2 = sa.sales_engine.merchants.total_revenue(12335747)
+    merchant3 = sa.sales_engine.merchants.total_revenue(12334960)
+  end
 end
