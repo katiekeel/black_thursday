@@ -145,10 +145,6 @@ class SalesEngine
     @item_repo.find_all_by_invoice_id(invoice_id)
   end
 
-  def invoice_paid_in_full?(id)
-    @transactions.paid_in_full?(id)
-  end
-
   def total(id)
     @invoice_items.total(id)
   end
@@ -159,6 +155,11 @@ class SalesEngine
 
   def find_all_items_by_invoices(invoices)
     @invoice_items.find_all_items_by_invoices(invoices)
+  end
+
+  def total_revenue_by_merchant_id(merchant_id)
+    invoices = @invoice_repo.find_all_by_merchant_id(merchant_id)
+    total = invoices.reduce(0){|sum, invoice| sum + invoice.total}
   end
 
   def merchants_with_only_one_item
@@ -231,5 +232,4 @@ class SalesEngine
   def find_highest(items_by_quantity)
     items_by_quantity.max_by {|key, value| value}
   end
-
 end
