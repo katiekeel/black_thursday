@@ -244,5 +244,15 @@ class SalesAnalyst
 
   def top_revenue_earners(x=20)
     invoices = @sales_engine.invoices.collection.find_all {|invoice| invoice.is_paid_in_full?}
+    invoice_totals = invoices.map{|invoice| invoice.total}
+    merchant_ids = invoices.map{|invoice| invoice.merchant_id}
+    merchants = merchant_ids.map{|merchant_id| @sales_engine.merchants.find_by_id(merchant_id)}
+    create_revenue_hash(x, merchants, invoices, invoice_totals)
     require 'pry' ;binding.pry
+  end
+
+  def create_revenue_hash(x, merchants, invoices, invoice_totals)
+    invoices.map {}
+  end
+
 end
