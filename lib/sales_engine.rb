@@ -153,6 +153,10 @@ class SalesEngine
     @transactions.is_paid_in_full?(invoice_id)
   end
 
+  def is_pending?(invoice_id)
+    @transactions.is_pending?(invoice_id)
+  end
+
   def find_all_items_by_invoices(invoices)
     @invoice_items.find_all_items_by_invoices(invoices)
   end

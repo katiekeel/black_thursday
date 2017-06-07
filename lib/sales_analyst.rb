@@ -230,4 +230,72 @@ class SalesAnalyst
     sum = sum.round(2)
   end
 
+<<<<<<< HEAD
+=======
+  def merchants_with_only_one_item
+    merchant_ids = @sales_engine.items.collection.map{|item| item.merchant_id}
+    merchants = merchant_ids.group_by(&:itself)
+    merchants = merchants.select{|key, val| val.length == 1}.keys
+    @sales_engine.merchants.find_multiple_merchants_by_id(merchants)
+  end
+
+  def top_revenue_earners(x=20)
+    @sales_engine.merchants.top_revenue_earners(x)
+  end
+
+  def pending_invoices
+    @sales_engine.invoices.all.select{|invoice| invoice.is_pending? == true}
+  end
+
+  def merchants_with_pending_invoices
+    pv = pending_invoices
+    merchants = pv.map{|invoice| invoice.merchant}.uniq
+  end
+
+  def merchants_with_only_one_item_registered_in_month
+    @sales_engine.merchants_with_only_one_item_registered_in_month
+  end
+
+  def revenue_by_merchant(merchant_id)
+    @sales_engine.revenue_by_merchant(merchant_id)
+  end
+
+  def most_sold_item_for_merchant(merchant_id)
+    @sales_engine.most_sold_item_for_merchant(merchant_id)
+  end
+
+  def best_item_for_merchant(merchant_id)
+    @sales_engine.best_item_for_merchant(merchant_id)
+  end
+  #
+  #   invoices = @sales_engine.invoices.collection.select {|invoice| invoice.is_paid_in_full?}
+  #   # invoices = invoices.delete_if{|invoice| invoice.status.to_s == "returned" || invoice.status.to_s == "pending"}
+  #   # invoices = invoices.map {|invoice| invoice.total}
+  #   require 'pry' ; binding.pry
+  #   invoice_ids = invoices.map{|invoice| invoice.id}
+  #   #invoice_totals = invoices.map{|invoice| invoice.total}
+  #   # merchant_ids = invoices.map{|invoice| invoice.merchant_id}
+  #   # merchants = merchant_ids.map{|merchant_id| @sales_engine.merchants.find_by_id(merchant_id)}
+  #   convert_to_merchants(create_revenue_hash(invoice_ids))
+  # end
+
+  # def create_revenue_hash(invoice_ids)
+  #   @sales_engine.invoice_items.create_revenue_hash(invoice_ids)
+  # end
+  #
+  # def convert_to_merchants(revenue_hash)
+  #   invoices_hash = {}
+  #   revenue_hash.each_key do |inv_id|
+  #     invoices_hash[@sales_engine.invoices.find_by_id(inv_id)] = revenue_hash[inv_id]
+  #   end
+  #   total_revenue_hash = {}
+  #   invoices_hash.each_key do |invoice|
+  #     total_revenue_hash[invoice.merchant] = invoices_hash[invoice]
+  #   end
+  #   total_revenue_hash
+  #   require 'pry' ;binding.pry
+  # end
+
+
+>>>>>>> 93e98b87df068780593f03ea3be426bd189663c5
 end
