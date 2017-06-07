@@ -245,6 +245,16 @@ class SalesAnalyst
   def top_revenue_earners(x=20)
     @sales_engine.merchants.top_revenue_earners(x)
   end
+
+  def pending_invoices
+    @sales_engine.invoices.all.select{|invoice| invoice.is_paid_in_full? == false}
+  end
+
+  def merchants_with_pending_invoices
+    pv = pending_invoices
+    require 'pry' ; binding.pry
+    merchants = pv.map{|invoice| invoice.merchant}.uniq
+  end
   #
   #   invoices = @sales_engine.invoices.collection.select {|invoice| invoice.is_paid_in_full?}
   #   # invoices = invoices.delete_if{|invoice| invoice.status.to_s == "returned" || invoice.status.to_s == "pending"}
