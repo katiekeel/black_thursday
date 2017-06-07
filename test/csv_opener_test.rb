@@ -2,8 +2,8 @@ require './test/test_helper'
 require './lib/csv_opener'
 
 class CSVOpenerTest < Minitest::Test
+
   def test_it_exists_and_requires_three_arguments
-    skip
     cs = CSVOpener.new("./data/merchants.csv", "repo", "merchant")
     assert_instance_of CSVOpener, cs
   end
@@ -14,7 +14,7 @@ class CSVOpenerTest < Minitest::Test
     assert_instance_of Array, result
     assert_instance_of Merchant, result.first
     result2 = result.first
-    assert_equal "shopin1901", result2.name
+    assert_equal "Shopin1901", result2.name
   end
 
   def test_it_can_return_merch_repo_for_item_entry
@@ -22,7 +22,7 @@ class CSVOpenerTest < Minitest::Test
     result = cs.holder
     assert_instance_of Array, result
     assert_instance_of Item, result.first
-    assert_equal 1200.0, result.first.unit_price.to_f
+    assert_equal 12.0, result.first.unit_price.to_f
   end
 
   def test_it_can_return_merch_repo_for_invoice_entry
