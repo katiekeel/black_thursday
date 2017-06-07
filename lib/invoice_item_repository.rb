@@ -41,7 +41,7 @@ class InvoiceItemRepository
     total = invoice_items.map do |invoice_item|
       invoice_item.unit_price * invoice_item.quantity
     end
-    total.reduce(:+)
+    total.reduce(0){|sum, n| sum + n}
   end
 
   def find_all_items_by_invoices(invoice_ids)
@@ -53,4 +53,20 @@ class InvoiceItemRepository
     end
     item_hash
   end
+
+  # def create_revenue_hash(invoice_ids)
+  #   invoices = invoice_ids
+  #   revenue_hash = {}
+  #   id = nil
+  #   @collection.each do |invoice_item|
+  #     inv_id = invoice_item.invoice_id
+  #     if id == inv_id && invoices.include?(inv_id) == true
+  #       revenue_hash[inv_id] = revenue_hash[inv_id] + (invoice_item.quantity * invoice_item.unit_price_to_dollars)
+  #     elsif invoices.include?(inv_id) == true && inv_id != id
+  #       id = inv_id
+  #       revenue_hash[inv_id] = invoice_item.quantity * invoice_item.unit_price_to_dollars
+  #     end
+  #   end
+  #   revenue_hash
+  # end
 end

@@ -62,10 +62,6 @@ class InvoiceRepository
     @sales_engine.find_all_items_by_invoice_id(invoice_id)
   end
 
-  def invoice_repo_paid_in_full?(id)
-    @sales_engine.invoice_paid_in_full?(id)
-  end
-
   def total(id)
     @sales_engine.total(id)
   end
@@ -73,7 +69,6 @@ class InvoiceRepository
   def is_paid_in_full?(invoice_id)
     @sales_engine.is_paid_in_full?(invoice_id)
   end
-
 
   def invoices_shipped_by_date(date)
     invoice_ids = []

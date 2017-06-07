@@ -70,5 +70,4 @@ class MerchantRepoTest < Minitest::Test
     result = merchant.find_all_by_name("justMstyle")
     assert_equal result.first.name, "justMstyle"
   end
-
 end

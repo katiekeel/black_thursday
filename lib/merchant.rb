@@ -20,4 +20,7 @@ class Merchant
     @merchant_repo.customers(id)
   end
 
+  def total_revenue
+    @merchant_repo.total_revenue(@id)
+  end
 end

@@ -123,10 +123,6 @@ class SalesEngine
     @item_repo.find_all_by_invoice_id(invoice_id)
   end
 
-  def invoice_paid_in_full?(id)
-    @transactions.paid_in_full?(id)
-  end
-
   def total(id)
     @invoice_items.total(id)
   end
@@ -137,5 +133,10 @@ class SalesEngine
 
   def find_all_items_by_invoices(invoices)
     @invoice_items.find_all_items_by_invoices(invoices)
+  end
+
+  def total_revenue_by_merchant_id(merchant_id)
+    invoices = @invoice_repo.find_all_by_merchant_id(merchant_id)
+    total = invoices.reduce(0){|sum, invoice| sum + invoice.total}
   end
 end
