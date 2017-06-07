@@ -43,14 +43,11 @@ class Invoice
   end
 
   def total
-<<<<<<< HEAD
     return 0 if is_paid_in_full? == false
     @invoice_repository.total(@id)
-=======
-    if is_paid_in_full? == true
-      @invoice_repository.total(@id).to_d
-    end
->>>>>>> 8139a5f52db23a042e997793fc1a4dcbc1a66643
+    # if is_paid_in_full? == true
+    #   @invoice_repository.total(@id).to_d
+    # end
   end
 
 end

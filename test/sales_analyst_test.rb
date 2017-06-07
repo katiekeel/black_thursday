@@ -310,19 +310,19 @@ class SalesAnalystTest < Minitest::Test
   #   assert_equal 13.5, result3
   # end
   #
-  # def test_total_revenue_by_date
-  #
-  #   se = SalesEngine.from_csv({
-  #     :items => "./data/items.csv",
-  #     :merchants => "./data/merchants.csv",
-  #     :invoices => "./data/invoices.csv",
-  #     :invoice_items => "./data/invoice_items.csv",
-  #     :transactions => "./data/transactions.csv",
-  #     :customers => "./data/customers.csv"
-  #     })
-  #   sa = SalesAnalyst.new(se)
-  #   revenue = sa.total_revenue_by_date("2017-01-01")
-  # end
+  def test_total_revenue_by_date
+
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    revenue = sa.total_revenue_by_date("2017-01-01")
+  end
   #
   # def test_merchants_with_only_one_item
   #
@@ -369,11 +369,8 @@ class SalesAnalystTest < Minitest::Test
       })
     sa = SalesAnalyst.new(se)
     result = sa.merchants_with_pending_invoices
+  end
 
-<<<<<<< HEAD
-    require 'pry' ; binding.pry
-    assert_equal 467, result.length
-=======
   def test_merchants_can_call_all_items
     skip
     se = SalesEngine.from_csv({
@@ -600,7 +597,6 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_total_revenue_by_date
-    skip
     se = SalesEngine.from_csv({
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
@@ -611,9 +607,11 @@ class SalesAnalystTest < Minitest::Test
       })
     sa = SalesAnalyst.new(se)
     revenue = sa.total_revenue_by_date("2017-01-01")
+    assert_equal 4525, revenue
   end
 
   def test_merchants_with_only_one_item
+    skip
     se = SalesEngine.from_csv({
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
@@ -629,6 +627,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_puts_out_top_revenue_earners
+    skip
     se = SalesEngine.from_csv({
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
@@ -643,7 +642,6 @@ class SalesAnalystTest < Minitest::Test
     assert_equal Merchant, result[0].class
     assert_equal 12334634, result.first.id
     assert_equal 12335747, result.last.id
->>>>>>> 8139a5f52db23a042e997793fc1a4dcbc1a66643
   end
   #
   # def test_total_revenue_works

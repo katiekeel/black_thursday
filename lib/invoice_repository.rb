@@ -78,5 +78,6 @@ class InvoiceRepository
       end
     end
     invoice_ids
+    require 'pry' ; binding.pry
   end
 end
