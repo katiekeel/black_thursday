@@ -187,7 +187,7 @@ class SalesAnalystTest < Minitest::Test
       :customers => "./data/customers.csv"
       })
     sa = SalesAnalyst.new(se)
-    result = sa.average_item_price_per_merchant(12334165)
+    result = sa.average_item_price_for_merchant(12334165)
     assert_equal 100, result
   end
 
@@ -203,7 +203,7 @@ class SalesAnalystTest < Minitest::Test
     sa = SalesAnalyst.new(se)
     result = sa.golden_items
     assert_instance_of Array, result
-    assert_instance_of String, result[0]
+    assert_instance_of Item, result[0]
   end
 
   def test_it_can_return_average_invoices
@@ -246,7 +246,7 @@ class SalesAnalystTest < Minitest::Test
     sa = SalesAnalyst.new(se)
     result = sa.top_merchants_by_invoice_count
     assert_instance_of Array, result
-    assert_instance_of String, result[0]
+    assert_instance_of Merchant, result[0]
   end
 
   def test_it_returns_array_of_bottom_invoiced_merchants
@@ -276,7 +276,7 @@ class SalesAnalystTest < Minitest::Test
     sa = SalesAnalyst.new(se)
     invoice = se.invoices.find_by_id(20)
     result = invoice.total
-    assert_equal Float, result
+    assert_equal BigDecimal, result
   end
 
   def test_status_percentages_all_work

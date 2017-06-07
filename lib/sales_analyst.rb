@@ -175,6 +175,10 @@ class SalesAnalyst
       day = day[0..2]
       days << day
     end
+    find_top_days(days)
+  end
+
+  def find_top_days(days)
     max = {}
     days.each{|day| max[day] = days.count(day)}
     days = max.values
@@ -186,7 +190,7 @@ class SalesAnalyst
     top_days = []
     max.each_pair do |day, num|
       if num > average + stddev
-        top_days << to_day(day) #to_day method
+        top_days << to_day(day) 
       end
     end
     top_days

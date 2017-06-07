@@ -16,7 +16,7 @@ class MerchantRepository
   end
 
   def inspect
-    "#<#{self.class} #{@merchants.size} rows>"
+    "#<#{self.class} #{@collection.size} rows>"
   end
 
   def populate_merchant_repo(csv_file, type)
