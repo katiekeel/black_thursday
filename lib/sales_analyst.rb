@@ -190,7 +190,7 @@ class SalesAnalyst
     top_days = []
     max.each_pair do |day, num|
       if num > average + stddev
-        top_days << to_day(day) 
+        top_days << to_day(day)
       end
     end
     top_days
@@ -234,4 +234,11 @@ class SalesAnalyst
     sum = sum.round(2)
   end
 
+  def merchants_with_only_one_item
+    merchant_ids = @sales_engine.items.collection.map{|item| item.merchant_id}
+    merchants = merchant_ids.group_by(&:itself)
+    merchants = merchants.select{|key, val| val.length == 1}.keys
+    # require 'pry' ; binding.pry
+    @sales_engine.merchants.find_multiple_merchants_by_id(merchants)
+  end
 end
