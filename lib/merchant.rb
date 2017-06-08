@@ -1,11 +1,15 @@
 class Merchant
 
-  attr_reader :id, :name, :merchant_repo
+  attr_reader :id,
+              :name,
+              :created_at
+              :merchant_repo
 
   def initialize(id_name_hash, merchant_repo)
     @merchant_repo = merchant_repo
     @id = id_name_hash[:id].to_i
     @name = id_name_hash[:name]
+    @created_at = id_name_hash[:created_at]
   end
 
   def items

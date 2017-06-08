@@ -262,8 +262,19 @@ class SalesAnalyst
     @sales_engine.merchants_ranked_by_revenue
   end
 
+  def merchants_with_only_one_item_registered_in_month(month)
+    @sales_engine.merchants_with_only_one_item_registered_in_month(month)
+  end
+
   def revenue_by_merchant(merchant_id)
     @sales_engine.revenue_by_merchant(merchant_id)
   end
 
+  def most_sold_item_for_merchant(merchant_id)
+    @sales_engine.most_sold_item_for_merchant(merchant_id)
+  end
+
+  def best_item_for_merchant(merchant_id)
+    @sales_engine.best_item_for_merchant(merchant_id)
+  end
 end
