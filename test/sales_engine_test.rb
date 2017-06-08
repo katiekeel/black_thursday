@@ -3,7 +3,7 @@ require './lib/sales_engine'
 
 class SalesEngineTest < Minitest::Test
 
-  def test_it_exists
+  def test_it_exists_and_has_repos
     se = SalesEngine.from_csv({
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
@@ -11,10 +11,12 @@ class SalesEngineTest < Minitest::Test
       :invoice_items => "./data/invoice_items.csv",
       :transactions => "./data/transactions.csv",
       :customers => "./data/customers.csv"})
-    items = se.items
-    merchants = se.merchants
-    assert_instance_of ItemRepository, items
-    assert_instance_of MerchantRepository, merchants
+    assert_instance_of ItemRepository, se.items
+    assert_instance_of MerchantRepository, se.merchants
+    assert_instance_of InvoiceRepository, se.invoice_repo
+    assert_instance_of InvoiceItemRepository, se.invoice_items
+    assert_instance_of TransactionRepository, se.transactions
+    assert_instance_of CustomerRepository, se.customers
   end
 
   def test_items_can_searched_via_find_by_id
@@ -172,4 +174,68 @@ class SalesEngineTest < Minitest::Test
     assert_equal 5, result.length
     assert_equal "thepurplepenshop", result[4].name
   end
+
+  def test_merchant_items
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    merchant = se.merchants.find_by_id(12334105)
+    result = merchant.items
+    assert_instance_of Array, result
+    assert_instance_of Item, result.first
+    assert_equal 3, result.count
+    assert_equal "Vogue Paris Original Givenchy 2307", result.first.name
+  end
+
+  def test_item_merchant
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    item = se.items.find_by_id(263395237)
+    result = item.merchant
+    assert_instance_of Merchant, result
+    assert_equal 12334141, result.id
+  end
+
+  def test_merchant_invoices
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    merchant = se.merchants.find_by_id(12334105)
+    result = merchant.invoices
+    assert_instance_of Array, result
+    assert_equal 10, result.count
+  end
+
+  def test_invoice_merchant
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    invoice = se.invoice_repo.find_by_id(1)
+    result = invoice.merchant
+    assert_instance_of Merchant, result
+    assert_equal 12335938, result.id
+  end
+
+
 end
