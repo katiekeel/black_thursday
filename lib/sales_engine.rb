@@ -5,6 +5,8 @@ require_relative 'invoice_item_repository'
 require_relative 'customer_repository'
 require_relative 'transaction_repository'
 
+require 'pry'
+
 class SalesEngine
 
   attr_reader :merchants,
@@ -163,6 +165,7 @@ class SalesEngine
 
   def total_revenue_by_merchant_id(merchant_id)
     invoices = @invoice_repo.find_all_by_merchant_id(merchant_id)
+    invoices = invoices.select{|invoice| invoice.is_pending? == false}
     total = invoices.reduce(0){|sum, invoice| sum + invoice.total}
   end
 
@@ -178,62 +181,74 @@ class SalesEngine
     end
   end
 
+  def merchants_with_only_one_item_registered_in_month(month)
+    @merchants.collection.find_all do |merchant|
+      merchant.items.count == 1 && merchant.created_at.strftime('%B') == month
+    end
+  end
+
   def revenue_by_merchant(merchant_id)
     all_inv_by_merchant = @invoice_repo.find_all_by_merchant_id(merchant_id)
     totals = all_inv_by_merchant.map do |invoice|
-      invoice.total.to_f
+      invoice.total
     end
-    totals.sum.to_d
+    totals.reduce(:+)
+  end
+
+  def merchants_ranked_by_revenue
+    merchants = @merchants.all
+    revenue = {}
+    merchants.each do |merchant|
+      revenue[merchant] = total_revenue_by_merchant_id(merchant.id)
+    end
+    revenue = revenue.sort_by{|key, val| val}.reverse.to_h
+    revenue.keys
   end
 
   def most_sold_item_for_merchant(merchant_id)
-    items_by_merchant = @item_repo.find_all_by_merchant_id(merchant_id)
-    item_ids_merch = extract_item_ids(items_by_merchant)
-    merch_inv_items = @invoice_items.find_by_multiple_item_ids(item_ids_merch)
-    merch_inv_items = merch_inv_items.flatten
-    grouped_items_by_item_id = group_items_by_item_id(merch_inv_items)
-    items_by_quant = combine_quantity(grouped_items_by_item_id)
-    high_quant_items = check_for_tie(items_by_quant)
-    high_quant_items = find_highest(items_by_quant) if high_quant_items.nil?
-    @item_repo.find_by_multiple_item_ids(high_quantity_items)
-  end
+    all_invoices = @invoice_repo.find_all_by_merchant_id(merchant_id)
+    paid_invoice_ids = all_paid_invoices(all_invoices).compact
+    all_invoice_items =
+      @invoice_items.find_by_multiple_invoice_ids(paid_invoice_ids).flatten
+    top_invoice_item_by_quantity =
+      get_top_invoice_item_by_quantity(all_invoice_items)
 
-  def extract_item_ids(items_by_merchant)
-    items_by_merchant.map do |item|
-      item.id
+    all_top_invoice_items = all_invoice_items.find_all do |invoice_item|
+      invoice_item.quantity == top_invoice_item_by_quantity.quantity
+    end
+
+    all_top_invoice_items.map do |invoice_item|
+      @item_repo.find_by_id(invoice_item.item_id)
     end
   end
 
-  def group_items_by_item_id(merchant_invoice_items)
-    merchant_invoice_items.group_by do |invoice_item|
-      invoice_item.item_id
+  def all_paid_invoices(all_invoices)
+    all_invoices.map do |invoice|
+      invoice.id if invoice.is_paid_in_full?
     end
   end
 
-  def combine_quantity(grouped_items_by_item_id)
-    grouped_items_by_item_id.each do |key, value|
-      invoice_item_quantity = 0
-      value.each do |invoice_item|
-        invoice_item_quantity += invoice_item.quantity
-      end
-      grouped_items_by_item_id[key] = invoice_item_quantity
+  def get_top_invoice_item_by_quantity(all_invoice_items)
+    all_invoice_items.max_by do |invoice_item|
+      invoice_item.quantity
     end
   end
 
-  def check_for_tie(items_by_quantity)
-    tied_items = items_by_quantity.group_by {|key, value| value}
-    mult_items = []
-    tied_items.map do |key, value|
-      if value.length > 1
-        value.each do |value|
-          mult_items << value.first
-        end
-      end
+  def best_item_for_merchant(merchant_id)
+    all_invoices = @invoice_repo.find_all_by_merchant_id(merchant_id)
+    paid_invoice_ids = all_paid_invoices(all_invoices).compact
+    all_invoice_items =
+      @invoice_items.find_by_multiple_invoice_ids(paid_invoice_ids).flatten
+    top_invoice_item_by_revenue = all_invoice_items.max_by do |invoice_item|
+      invoice_item.quantity * invoice_item.unit_price
     end
-    mult_items
-  end
-
-  def find_highest(items_by_quantity)
-    items_by_quantity.max_by {|key, value| value}
+    all_top_invoice_items = all_invoice_items.find_all do |invoice_item|
+      invoice_item.quantity * invoice_item.unit_price ==
+        top_invoice_item_by_revenue.quantity * top_invoice_item_by_revenue.unit_price
+    end
+    item = all_top_invoice_items.map do |invoice_item|
+      @item_repo.find_by_id(invoice_item.item_id)
+    end
+    item.first
   end
 end

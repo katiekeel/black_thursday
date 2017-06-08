@@ -11,5 +11,6 @@ se = SalesEngine.from_csv({
   :customers => "./data/customers.csv"
 })
 
-item = se.item_repo.find_by_name("510+ RealPush Icon Set")
-puts item
+sa = SalesAnalyst.new(se)
+
+puts sa.most_sold_item_for_merchant(12334189)

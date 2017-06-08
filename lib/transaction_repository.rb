@@ -64,7 +64,7 @@ class TransactionRepository
     results = all_by_invoice_id.map do |transaction|
       transaction.result
     end
-    return true if results.include?("success")
-    return false if results.all?{|result| result == "failed"} || all_by_invoice_id.empty?
+    return false if results.include?("success")
+    return true if results.all?{|result| result == "failed"} || all_by_invoice_id.empty?
   end
 end
