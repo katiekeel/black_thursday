@@ -163,6 +163,7 @@ class SalesEngine
 
   def total_revenue_by_merchant_id(merchant_id)
     invoices = @invoice_repo.find_all_by_merchant_id(merchant_id)
+    invoices = invoices.select{|invoice| invoice.is_pending? == false}
     total = invoices.reduce(0){|sum, invoice| sum + invoice.total}
   end
 
@@ -181,9 +182,19 @@ class SalesEngine
   def revenue_by_merchant(merchant_id)
     all_inv_by_merchant = @invoice_repo.find_all_by_merchant_id(merchant_id)
     totals = all_inv_by_merchant.map do |invoice|
-      invoice.total.to_f
+      invoice.total
     end
-    totals.sum.to_d
+    totals.reduce(:+)
+  end
+
+  def merchants_ranked_by_revenue
+    merchants = @merchants.all
+    revenue = {}
+    merchants.each do |merchant|
+      revenue[merchant] = total_revenue_by_merchant_id(merchant.id)
+    end
+    revenue = revenue.sort_by{|key, val| val}.reverse.to_h
+    revenue.keys 
   end
 
   def most_sold_item_for_merchant(merchant_id)

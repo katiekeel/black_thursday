@@ -29,6 +29,19 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of Item, items.find_by_id(263395237)
   end
 
+  def test_item_dot_merchant_returns_items_merchant
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    item = se.items.find_by_id(263395237)
+    assert_instance_of Merchant, item.merchant
+  end
+
   def test_items_can_searched_via_find_by_name
     se = SalesEngine.from_csv({
       :items => "./data/items.csv",
