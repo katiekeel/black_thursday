@@ -28,10 +28,5 @@ class MerchantTest < Minitest::Test
     assert_instance_of String, merchant.name
   end
 
-  def test_merchant_carries_merchant_repo
-    merchant = Merchant.new({:id => 103383, :name => "Daniel"}, merchant_repo = nil)
-    assert_nil merchant.merchant_repo
-  end
-
 
 end

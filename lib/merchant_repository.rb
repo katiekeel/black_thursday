@@ -41,7 +41,6 @@ class MerchantRepository
 
   def top_revenue_earners(x)
     @collection.sort_by{|merchant| total_revenue(merchant.id)}.reverse[0..x-1]
-    # require 'pry' ; binding.pry    
   end
 
   def find_multiple_merchants_by_id(merchant_ids)

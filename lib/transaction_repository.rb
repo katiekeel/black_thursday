@@ -65,6 +65,7 @@ class TransactionRepository
       transaction.result
     end
     return false if results.include?("success")
-    return true if results.all?{|result| result == "failed"} || all_by_invoice_id.empty?
+    return true if results.all?{|result| result == "failed"} ||
+      all_by_invoice_id.empty?
   end
 end

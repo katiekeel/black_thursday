@@ -195,7 +195,6 @@ class SalesEngine
     totals.reduce(:+)
   end
 
-<<<<<<< HEAD
   def merchants_ranked_by_revenue
     merchants = @merchants.all
     revenue = {}
@@ -203,11 +202,9 @@ class SalesEngine
       revenue[merchant] = total_revenue_by_merchant_id(merchant.id)
     end
     revenue = revenue.sort_by{|key, val| val}.reverse.to_h
-    revenue.keys 
+    revenue.keys
   end
 
-=======
->>>>>>> d449330... THE FINAL COMMIT
   def most_sold_item_for_merchant(merchant_id)
     all_invoices = @invoice_repo.find_all_by_merchant_id(merchant_id)
     paid_invoice_ids = all_paid_invoices(all_invoices).compact
@@ -249,7 +246,9 @@ class SalesEngine
     end
 
     all_top_invoice_items = all_invoice_items.find_all do |invoice_item|
-      invoice_item.quantity * invoice_item.unit_price == top_invoice_item_by_revenue.quantity * top_invoice_item_by_revenue.unit_price
+      invoice_item.quantity * invoice_item.unit_price ==
+      top_invoice_item_by_revenue.quantity *
+      top_invoice_item_by_revenue.unit_price
     end
 
     item = all_top_invoice_items.map do |invoice_item|
