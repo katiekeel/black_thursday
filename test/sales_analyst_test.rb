@@ -473,6 +473,21 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 21067.77, result
   end
 
+  def test_merchants_with_only_one_invoice_in_month
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    result = sa.merchants_with_only_one_item_registered_in_month("March")
+    assert_equal result.length, 21
+    assert_instance_of Merchant, result.first
+  end
+
   def test_revenue_by_merchant
     se = SalesEngine.from_csv({
       :items => "./data/items.csv",
@@ -612,6 +627,35 @@ class SalesAnalystTest < Minitest::Test
     single_item_merchants = sa.merchants_with_only_one_item
     assert_equal single_item_merchants.length, 243
     assert_instance_of Merchant, single_item_merchants.first
+  end
+
+  def test_most_sold_item_for_merchant
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    result = sa.most_sold_item_for_merchant(12334189)
+    assert_instance_of Item, result.first
+  end
+
+  def test_best_item_for_merchant
+    se = SalesEngine.from_csv({
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
+      })
+    sa = SalesAnalyst.new(se)
+    result = sa.best_item_for_merchant(12334189)
+    assert_instance_of Item, result
+    assert_equal result.id, 263516130
   end
 
   def test_total_revenue_works
