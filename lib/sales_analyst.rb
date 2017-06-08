@@ -258,12 +258,34 @@ class SalesAnalyst
     merchants = invoices.map{|invoice| invoice.merchant}.uniq
   end
 
+<<<<<<< HEAD
+<<<<<<< HEAD
   def merchants_ranked_by_revenue
     @sales_engine.merchants_ranked_by_revenue
+=======
+  def merchants_with_only_one_item_registered_in_month(month)
+    @sales_engine.merchants_with_only_one_item_registered_in_month(month)
+>>>>>>> d449330... THE FINAL COMMIT
+=======
+  def merchants_with_only_one_item_registered_in_month(month)
+    @sales_engine.merchants_with_only_one_item_registered_in_month(month)
+>>>>>>> d449330... THE FINAL COMMIT
   end
 
   def revenue_by_merchant(merchant_id)
     @sales_engine.revenue_by_merchant(merchant_id)
   end
 
+<<<<<<< HEAD
+=======
+  def most_sold_item_for_merchant(merchant_id)
+    @sales_engine.most_sold_item_for_merchant(merchant_id)
+  end
+
+  def best_item_for_merchant(merchant_id)
+    @sales_engine.best_item_for_merchant(merchant_id)
+  end
+
+
+>>>>>>> d449330... THE FINAL COMMIT
 end

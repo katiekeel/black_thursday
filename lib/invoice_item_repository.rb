@@ -55,9 +55,9 @@ class InvoiceItemRepository
     item_hash
   end
 
-  def find_by_multiple_item_ids(item_ids)
-    item_ids.map do |item_id|
-      find_all_by_item_id(item_id)
+  def find_by_multiple_invoice_ids(invoices)
+    invoices.map do |invoice|
+      find_all_by_invoice_id(invoice)
     end
   end
 
