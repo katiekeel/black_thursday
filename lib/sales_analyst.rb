@@ -254,8 +254,8 @@ class SalesAnalyst
     merchants = pv.map{|invoice| invoice.merchant}.uniq
   end
 
-  def merchants_with_only_one_item_registered_in_month
-    @sales_engine.merchants_with_only_one_item_registered_in_month
+  def merchants_with_only_one_item_registered_in_month(month)
+    @sales_engine.merchants_with_only_one_item_registered_in_month(month)
   end
 
   def revenue_by_merchant(merchant_id)
@@ -269,34 +269,6 @@ class SalesAnalyst
   def best_item_for_merchant(merchant_id)
     @sales_engine.best_item_for_merchant(merchant_id)
   end
-  #
-  #   invoices = @sales_engine.invoices.collection.select {|invoice| invoice.is_paid_in_full?}
-  #   # invoices = invoices.delete_if{|invoice| invoice.status.to_s == "returned" || invoice.status.to_s == "pending"}
-  #   # invoices = invoices.map {|invoice| invoice.total}
-  #   require 'pry' ; binding.pry
-  #   invoice_ids = invoices.map{|invoice| invoice.id}
-  #   #invoice_totals = invoices.map{|invoice| invoice.total}
-  #   # merchant_ids = invoices.map{|invoice| invoice.merchant_id}
-  #   # merchants = merchant_ids.map{|merchant_id| @sales_engine.merchants.find_by_id(merchant_id)}
-  #   convert_to_merchants(create_revenue_hash(invoice_ids))
-  # end
-
-  # def create_revenue_hash(invoice_ids)
-  #   @sales_engine.invoice_items.create_revenue_hash(invoice_ids)
-  # end
-  #
-  # def convert_to_merchants(revenue_hash)
-  #   invoices_hash = {}
-  #   revenue_hash.each_key do |inv_id|
-  #     invoices_hash[@sales_engine.invoices.find_by_id(inv_id)] = revenue_hash[inv_id]
-  #   end
-  #   total_revenue_hash = {}
-  #   invoices_hash.each_key do |invoice|
-  #     total_revenue_hash[invoice.merchant] = invoices_hash[invoice]
-  #   end
-  #   total_revenue_hash
-  #   require 'pry' ;binding.pry
-  # end
 
 
 end

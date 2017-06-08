@@ -21,7 +21,8 @@ class CSVOpener
 
       if type == "merchant"
         item = Merchant.new({:id => row[:id],
-          :name => row[:name]},
+          :name => row[:name],
+          :created_at => Time.parse(row[:created_at])},
           repo)
 
       elsif type == "item"
